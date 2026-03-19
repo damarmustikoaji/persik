@@ -1,0 +1,3122 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HitSaurce — API Testing Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=optional');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --ink: #0f0f0f;
+            --ink2: #4a4a4a;
+            --ink3: #9a9a9a;
+            --ink4: #c8c8c8;
+            --paper: #fafaf8;
+            --paper2: #f3f2ef;
+            --paper3: #eae9e5;
+            --line: #e2e1dd;
+            --green: #1a7a5e;
+            --green-bg: #eef7f3;
+            --green-mid: #c8e8dc;
+            --red: #c0392b;
+            --amber: #b8760a;
+            --blue: #1a5276;
+            --font: 'DM Sans', system-ui, sans-serif;
+            --mono: 'DM Mono', 'Cascadia Code', 'Consolas', monospace;
+            --r: 6px;
+            --r2: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden;
+            font-size: 15px;
+            line-height: 1.6
+        }
+
+        ::-webkit-scrollbar {
+            width: 3px
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--line)
+        }
+
+        /* ── PAGES ── */
+        .page {
+            display: none
+        }
+
+        .page.active {
+            display: block
+        }
+
+        #app.active {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden
+        }
+
+        /* ══════════════════════════════════
+   LANDING
+══════════════════════════════════ */
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            height: 56px;
+            background: rgba(250, 250, 248, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        .logo-mark {
+            width: 26px;
+            height: 26px;
+            background: var(--ink);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-mark svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--paper)
+        }
+
+        .logo-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: -.2px
+        }
+
+        .logo-text span {
+            color: var(--green)
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            color: var(--ink2);
+            text-decoration: none;
+            padding: 5px 12px;
+            border-radius: var(--r);
+            transition: background .15s, color .15s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            background: var(--paper2);
+            color: var(--ink)
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .btn {
+            font-family: var(--font);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 7px 16px;
+            border-radius: var(--r);
+            border: none;
+            cursor: pointer;
+            transition: all .15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--ink)
+        }
+
+        .btn-outline:hover {
+            border-color: var(--ink4);
+            background: var(--paper2)
+        }
+
+        .btn-solid {
+            background: var(--ink);
+            color: var(--paper)
+        }
+
+        .btn-solid:hover {
+            background: #2a2a2a;
+            transform: translateY(-1px)
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: #fff
+        }
+
+        .btn-green:hover {
+            background: #158a6a;
+            transform: translateY(-1px)
+        }
+
+        .btn-lg {
+            padding: 11px 24px;
+            font-size: 14px;
+            border-radius: var(--r2)
+        }
+
+        /* HERO */
+        .hero {
+            padding: 140px 48px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* .hero-left {} */
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            color: var(--green);
+            border: 1px solid var(--green-mid);
+            background: var(--green-bg);
+            padding: 4px 10px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        .hero-tag-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 2s infinite
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .3
+            }
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.12;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            color: var(--ink);
+        }
+
+        .hero h1 strong {
+            font-weight: 600
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--green)
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--ink2);
+            line-height: 1.7;
+            margin-bottom: 36px;
+            max-width: 420px;
+            font-weight: 300;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 48px
+        }
+
+        .hero-stat {
+            display: flex;
+            gap: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--line);
+        }
+
+        /* .stat-item {} */
+
+        .stat-num {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--ink3);
+            margin-top: 2px
+        }
+
+        /* HERO VISUAL */
+        .hero-right {
+            position: relative
+        }
+
+        .hero-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .04), 0 12px 40px rgba(0, 0, 0, .06);
+        }
+
+        .hc-topbar {
+            padding: 10px 14px;
+            background: var(--paper2);
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hc-dots {
+            display: flex;
+            gap: 5px
+        }
+
+        .hc-dots i {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            display: block
+        }
+
+        .d-r {
+            background: #f87171
+        }
+
+        .d-y {
+            background: #fbbf24
+        }
+
+        .d-g {
+            background: #34d399
+        }
+
+        .hc-label {
+            font-size: 11px;
+            color: var(--ink3);
+            font-family: var(--mono);
+            flex: 1;
+            text-align: center
+        }
+
+        .hc-body {
+            padding: 16px
+        }
+
+        .hc-urlbar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .hc-method {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 5px 9px;
+            border-radius: 5px;
+            background: var(--green-bg);
+            color: var(--green);
+            border: 1px solid var(--green-mid);
+            white-space: nowrap;
+        }
+
+        .hc-url {
+            flex: 1;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink2);
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            padding: 5px 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .hc-send {
+            background: var(--ink);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font);
+            white-space: nowrap;
+        }
+
+        .hc-resp-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hc-status {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: var(--green-bg);
+            color: var(--green);
+            border: 1px solid var(--green-mid);
+        }
+
+        .hc-meta {
+            font-size: 11px;
+            color: var(--ink3);
+            font-family: var(--mono)
+        }
+
+        .hc-json {
+            font-family: var(--mono);
+            font-size: 11px;
+            line-height: 1.8;
+            color: var(--ink2);
+            background: var(--paper);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+        }
+
+        .j-k {
+            color: #1a5276
+        }
+
+        .j-s {
+            color: var(--green)
+        }
+
+        .j-n {
+            color: var(--amber)
+        }
+
+        .j-b {
+            color: #8e44ad
+        }
+
+        /* floating badges */
+        .hero-badge {
+            position: absolute;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r);
+            padding: 8px 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-badge.b1 {
+            top: -16px;
+            right: 24px;
+            animation-delay: 0s
+        }
+
+        .hero-badge.b2 {
+            bottom: -16px;
+            left: 24px;
+            animation-delay: 1s
+        }
+
+        .badge-dot-g {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            flex-shrink: 0
+        }
+
+        .badge-dot-a {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--amber);
+            flex-shrink: 0
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-6px)
+            }
+        }
+
+        /* ── SECTIONS ── */
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px
+        }
+
+        .section {
+            padding: 80px 0;
+            border-top: 1px solid var(--line)
+        }
+
+        .section-kicker {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--ink3);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 34px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            color: var(--ink);
+            margin-bottom: 12px;
+        }
+
+        .section-title strong {
+            font-weight: 600
+        }
+
+        .section-sub {
+            font-size: 15px;
+            color: var(--ink2);
+            line-height: 1.7;
+            max-width: 480px;
+            font-weight: 300
+        }
+
+        /* HOW IT WORKS */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            overflow: hidden;
+            margin-top: 48px
+        }
+
+        .step {
+            background: var(--paper);
+            padding: 28px 24px
+        }
+
+        .step:hover {
+            background: #fff
+        }
+
+        .step-num {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink3);
+            font-family: var(--mono);
+            letter-spacing: .5px;
+            margin-bottom: 16px;
+        }
+
+        .step h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: -.2px
+        }
+
+        .step p {
+            font-size: 13px;
+            color: var(--ink2);
+            line-height: 1.6;
+            font-weight: 300
+        }
+
+        .step-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        /* FEATURES TABLE */
+        .feat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .feat-cell {
+            background: var(--paper);
+            padding: 28px 28px
+        }
+
+        .feat-cell:hover {
+            background: #fff
+        }
+
+        .feat-tag {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 12px;
+        }
+
+        .feat-cell h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: -.2px
+        }
+
+        .feat-cell p {
+            font-size: 13px;
+            color: var(--ink2);
+            line-height: 1.65;
+            font-weight: 300
+        }
+
+        .feat-demo {
+            margin-top: 16px;
+            padding: 12px;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            border-radius: var(--r);
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink2);
+            line-height: 1.8;
+        }
+
+        /* PRICING */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .p-card {
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            padding: 28px;
+            background: #fff;
+            transition: border-color .2s, box-shadow .2s;
+            position: relative;
+        }
+
+        .p-card:hover {
+            border-color: var(--ink4);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .06)
+        }
+
+        .p-card.featured {
+            border-color: var(--green);
+            border-width: 1.5px
+        }
+
+        .p-featured-tag {
+            position: absolute;
+            top: -11px;
+            left: 20px;
+            background: var(--green);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 100px;
+        }
+
+        .p-plan {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink3);
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            margin-bottom: 10px
+        }
+
+        .p-price {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: var(--ink);
+            line-height: 1;
+            margin-bottom: 4px
+        }
+
+        .p-price sup {
+            font-size: 16px;
+            font-weight: 500;
+            vertical-align: top;
+            margin-top: 6px;
+            display: inline-block
+        }
+
+        .p-price small {
+            font-size: 14px;
+            color: var(--ink3);
+            font-weight: 400
+        }
+
+        .p-desc {
+            font-size: 13px;
+            color: var(--ink2);
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-weight: 300;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .p-list {
+            list-style: none;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .p-list li {
+            font-size: 13px;
+            color: var(--ink2);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.4
+        }
+
+        .p-list li::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--green-bg);
+            border: 1.5px solid var(--green);
+            flex-shrink: 0;
+            margin-top: 1px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2.5 2.5L8 3' stroke='%231a7a5e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-size: 10px;
+            background-position: center;
+            background-repeat: no-repeat
+        }
+
+        .p-list li.off::before {
+            background: var(--paper2);
+            border-color: var(--line);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M3 3l4 4M7 3l-4 4' stroke='%23c8c8c8' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-size: 10px;
+            background-position: center;
+            background-repeat: no-repeat
+        }
+
+        .p-list li.off {
+            color: var(--ink3)
+        }
+
+        .p-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--r);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--font);
+            transition: all .15s
+        }
+
+        /* FAQ */
+        .faq {
+            margin-top: 48px;
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            overflow: hidden
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--line)
+        }
+
+        .faq-item:last-child {
+            border-bottom: none
+        }
+
+        .faq-q {
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background .15s;
+            user-select: none;
+            background: #fff;
+        }
+
+        .faq-q:hover {
+            background: var(--paper2)
+        }
+
+        .faq-q .faq-ico {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--ink3);
+            flex-shrink: 0;
+            transition: transform .2s, background .15s;
+            font-style: normal;
+        }
+
+        .faq-item.open .faq-ico {
+            transform: rotate(45deg);
+            background: var(--ink);
+            color: #fff;
+            border-color: var(--ink)
+        }
+
+        .faq-a {
+            display: none;
+            padding: 0 24px 20px;
+            font-size: 14px;
+            color: var(--ink2);
+            line-height: 1.7;
+            font-weight: 300;
+            background: #fff;
+        }
+
+        .faq-item.open .faq-a {
+            display: block
+        }
+
+        /* CTA BAND */
+        .cta-band {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 72px 48px;
+            margin-top: 80px;
+        }
+
+        .cta-band-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px
+        }
+
+        .cta-band h2 {
+            font-size: 30px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            max-width: 420px
+        }
+
+        .cta-band h2 strong {
+            font-weight: 600
+        }
+
+        .cta-band p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, .5);
+            margin-top: 8px
+        }
+
+        .cta-right {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            flex-shrink: 0
+        }
+
+        .cta-note {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .4)
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 28px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            color: var(--ink3);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color .15s
+        }
+
+        .footer-links a:hover {
+            color: var(--ink)
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--ink4)
+        }
+
+        /* ══════════════════════════════════
+   APP
+══════════════════════════════════ */
+        .app-nav {
+            height: 44px;
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0 8px;
+            margin-right: 4px;
+        }
+
+        .app-logo .logo-mark {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px
+        }
+
+        .app-logo .logo-mark svg {
+            width: 11px;
+            height: 11px
+        }
+
+        .app-logo span {
+            color: var(--green)
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: var(--line);
+            margin: 0 4px
+        }
+
+        .mode-btn {
+            font-family: var(--font);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+            color: var(--ink3);
+            transition: all .15s;
+        }
+
+        .mode-btn:hover {
+            background: var(--paper2);
+            color: var(--ink)
+        }
+
+        .mode-btn.on {
+            background: var(--ink);
+            color: #fff
+        }
+
+        .spacer {
+            flex: 1
+        }
+
+        .env-sel {
+            font-family: var(--font);
+            font-size: 12px;
+            color: var(--ink2);
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            padding: 4px 10px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 5px;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            font-size: 12px;
+            color: var(--ink2);
+            cursor: pointer;
+        }
+
+        .user-av {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--ink);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .free-tag {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            background: var(--green-bg);
+            color: var(--green);
+            border: 1px solid var(--green-mid);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        /* APP BODY */
+        .app-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            background: #fff;
+            border-right: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sb-head {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sb-title {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            color: var(--ink3)
+        }
+
+        .sb-actions {
+            display: flex;
+            gap: 3px
+        }
+
+        .sb-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--line);
+            background: transparent;
+            cursor: pointer;
+            color: var(--ink2);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sb-btn:hover {
+            background: var(--paper2)
+        }
+
+        .sb-search {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .sb-search input {
+            width: 100%;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            padding: 5px 9px;
+            font-size: 11px;
+            color: var(--ink);
+            font-family: var(--font);
+            outline: none;
+        }
+
+        .sb-search input:focus {
+            border-color: var(--ink4)
+        }
+
+        .sb-search input::placeholder {
+            color: var(--ink3)
+        }
+
+        .sb-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 6px
+        }
+
+        .coll-head {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--ink2);
+            transition: background .15s;
+            user-select: none;
+        }
+
+        .coll-head:hover {
+            background: var(--paper2)
+        }
+
+        .coll-arr {
+            font-size: 9px;
+            color: var(--ink3);
+            transition: transform .15s
+        }
+
+        .coll-head.open .coll-arr {
+            transform: rotate(90deg)
+        }
+
+        .coll-items {
+            padding-left: 14px
+        }
+
+        .sb-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--ink2);
+            transition: all .12s;
+            margin-bottom: 1px;
+        }
+
+        .sb-item:hover {
+            background: var(--paper2);
+            color: var(--ink)
+        }
+
+        .sb-item.on {
+            background: var(--green-bg);
+            color: var(--green);
+            font-weight: 500
+        }
+
+        .m-tag {
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 500;
+            padding: 1px 4px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .mg {
+            background: var(--green-bg);
+            color: var(--green)
+        }
+
+        .mp {
+            background: #eef3f8;
+            color: var(--blue)
+        }
+
+        .mu {
+            background: #fef9ec;
+            color: var(--amber)
+        }
+
+        .md {
+            background: #fdf0ef;
+            color: var(--red)
+        }
+
+        /* MAIN */
+        .app-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--paper)
+        }
+
+        /* REQ TOP */
+        .req-top {
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .req-name {
+            background: transparent;
+            border: none;
+            font-family: var(--font);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ink2);
+            outline: none;
+            flex: 1;
+        }
+
+        .req-name:focus {
+            color: var(--ink)
+        }
+
+        .save-btn {
+            font-family: var(--font);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--ink3);
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: var(--paper2);
+            color: var(--ink)
+        }
+
+        /* URL BAR */
+        .url-row {
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            padding: 8px 14px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .m-sel {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            padding: 7px 10px;
+            color: var(--green);
+            outline: none;
+            cursor: pointer;
+            min-width: 80px;
+        }
+
+        .url-in {
+            flex: 1;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            padding: 7px 12px;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--ink);
+            outline: none;
+            transition: border-color .15s;
+        }
+
+        .url-in:focus {
+            border-color: var(--ink4);
+            background: #fff
+        }
+
+        .url-in::placeholder {
+            color: var(--ink3)
+        }
+
+        .send-b {
+            background: var(--ink);
+            color: #fff;
+            font-family: var(--font);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 7px 18px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all .15s;
+            white-space: nowrap;
+        }
+
+        .send-b:hover {
+            background: #2a2a2a
+        }
+
+        .send-b:active {
+            transform: scale(.98)
+        }
+
+        /* TABS ROW */
+        .tabs-row {
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            padding: 0 14px;
+            flex-shrink: 0;
+        }
+
+        .tab {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--ink3);
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: all .12s;
+            user-select: none;
+        }
+
+        .tab:hover {
+            color: var(--ink2)
+        }
+
+        .tab.on {
+            color: var(--ink);
+            border-color: var(--ink)
+        }
+
+        .tab-ct {
+            font-size: 10px;
+            background: var(--paper2);
+            color: var(--ink3);
+            padding: 1px 5px;
+            border-radius: 3px;
+            margin-left: 4px;
+            font-weight: 600;
+        }
+
+        .tab.on .tab-ct {
+            background: var(--ink);
+            color: #fff
+        }
+
+        /* PANEL AREA */
+        .panels-area {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column
+        }
+
+        .panel {
+            display: none;
+            flex: 1;
+            overflow-y: auto
+        }
+
+        .panel.on {
+            display: flex;
+            flex-direction: column
+        }
+
+        /* PARAMS */
+        .param-tbl {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .param-tbl th {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            color: var(--ink3);
+            padding: 8px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+            background: #fff;
+        }
+
+        .param-tbl td {
+            padding: 3px 14px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .param-tbl td input {
+            background: transparent;
+            border: none;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--ink);
+            outline: none;
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        .param-tbl td input::placeholder {
+            color: var(--ink3)
+        }
+
+        .param-tbl tr:hover td {
+            background: var(--paper2)
+        }
+
+        .p-chk {
+            width: 13px;
+            height: 13px;
+            accent-color: var(--green);
+            cursor: pointer
+        }
+
+        .add-row {
+            margin: 8px 14px;
+            width: calc(100% - 28px);
+            background: transparent;
+            border: 1px dashed var(--line);
+            border-radius: 5px;
+            padding: 6px;
+            font-size: 11px;
+            color: var(--ink3);
+            cursor: pointer;
+            font-family: var(--font);
+            transition: all .15s;
+        }
+
+        .add-row:hover {
+            border-color: var(--green);
+            color: var(--green)
+        }
+
+        /* BODY EDITOR */
+        .body-bar {
+            padding: 6px 14px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            gap: 6px;
+            background: #fff;
+            flex-shrink: 0;
+        }
+
+        .bt-btn {
+            font-family: var(--font);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 9px;
+            border-radius: 4px;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--ink2);
+            cursor: pointer;
+            transition: all .12s;
+        }
+
+        .bt-btn.on {
+            background: var(--ink);
+            color: #fff;
+            border-color: var(--ink)
+        }
+
+        .code-area {
+            flex: 1;
+            padding: 14px;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--ink);
+            line-height: 1.8;
+            background: var(--paper);
+            outline: none;
+            min-height: 120px;
+            overflow-y: auto;
+        }
+
+        /* DIVIDER */
+        .split-div {
+            height: 5px;
+            background: #fff;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            cursor: row-resize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .split-handle {
+            width: 36px;
+            height: 2px;
+            background: var(--line);
+            border-radius: 1px
+        }
+
+        /* RESPONSE */
+        .resp-area {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 180px
+        }
+
+        .resp-head {
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .resp-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            color: var(--ink3)
+        }
+
+        .s-badge {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 7px;
+            border-radius: 4px
+        }
+
+        .s-ok {
+            background: var(--green-bg);
+            color: var(--green);
+            border: 1px solid var(--green-mid)
+        }
+
+        .s-err {
+            background: #fdf0ef;
+            color: var(--red);
+            border: 1px solid #f5c6c2
+        }
+
+        .s-warn {
+            background: #fef9ec;
+            color: var(--amber);
+            border: 1px solid #f5e0a0
+        }
+
+        .resp-meta {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink3)
+        }
+
+        .copy-btn {
+            margin-left: auto;
+            font-family: var(--font);
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--ink3);
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background: var(--paper2);
+            color: var(--ink)
+        }
+
+        .resp-tabs {
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            padding: 0 14px;
+            flex-shrink: 0
+        }
+
+        .resp-body {
+            flex: 1;
+            padding: 14px;
+            font-family: var(--mono);
+            font-size: 12px;
+            line-height: 1.8;
+            overflow-y: auto;
+            background: var(--paper);
+        }
+
+        .resp-body-hidden {
+            display: none
+        }
+
+        /* ASSERTION ROWS */
+        .ass-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 14px;
+            border-bottom: 1px solid var(--line);
+            font-size: 12px;
+        }
+
+        .ass-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .dot-ok {
+            background: var(--green)
+        }
+
+        .dot-fail {
+            background: var(--red)
+        }
+
+        .dot-skip {
+            background: var(--ink4)
+        }
+
+        .ass-name {
+            flex: 1;
+            color: var(--ink2)
+        }
+
+        .ass-val {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink3)
+        }
+
+        .ass-head-bar {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            flex-shrink: 0;
+        }
+
+        /* FLOW MODE */
+        .flow-wrap {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px
+        }
+
+        .flow-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px
+        }
+
+        .flow-info h2 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -.3px;
+            margin-bottom: 3px
+        }
+
+        .flow-info p {
+            font-size: 12px;
+            color: var(--ink2)
+        }
+
+        .flow-btns {
+            display: flex;
+            gap: 6px
+        }
+
+        .flow-canvas {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0
+        }
+
+        .f-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            padding: 14px;
+            cursor: pointer;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .f-card:hover {
+            border-color: var(--ink4);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .04)
+        }
+
+        .f-card.pass {
+            border-color: var(--green-mid);
+            background: var(--green-bg)
+        }
+
+        .f-card.run {
+            border-color: var(--amber);
+            background: #fffcf0
+        }
+
+        .f-card.fail {
+            border-color: #f5c6c2;
+            background: #fdf0ef
+        }
+
+        .f-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px
+        }
+
+        .f-num {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--ink3);
+            flex-shrink: 0;
+        }
+
+        .f-card.pass .f-num {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff
+        }
+
+        .f-name {
+            font-size: 13px;
+            font-weight: 600;
+            flex: 1;
+            letter-spacing: -.2px
+        }
+
+        .f-status {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 3px
+        }
+
+        .fs-p {
+            background: var(--green-bg);
+            color: var(--green);
+            border: 1px solid var(--green-mid)
+        }
+
+        .fs-r {
+            background: #fef9ec;
+            color: var(--amber);
+            border: 1px solid #f5e0a0
+        }
+
+        .fs-w {
+            background: var(--paper2);
+            color: var(--ink3);
+            border: 1px solid var(--line)
+        }
+
+        .fs-f {
+            background: #fdf0ef;
+            color: var(--red);
+            border: 1px solid #f5c6c2
+        }
+
+        .f-url {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink3);
+            margin-bottom: 8px
+        }
+
+        .f-vars {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            padding-top: 8px;
+            border-top: 1px solid var(--line)
+        }
+
+        .v-chip {
+            font-family: var(--mono);
+            font-size: 10px;
+            background: var(--paper2);
+            border: 1px solid var(--line);
+            color: var(--green);
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        .f-connector {
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .f-connector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: var(--line)
+        }
+
+        .f-connector::after {
+            content: '↓';
+            color: var(--ink3);
+            font-size: 11px;
+            position: relative;
+            z-index: 1;
+            background: var(--paper);
+            padding: 0 4px
+        }
+
+        .add-step {
+            width: 100%;
+            padding: 11px;
+            border: 1px dashed var(--line);
+            border-radius: var(--r2);
+            font-size: 12px;
+            color: var(--ink3);
+            background: transparent;
+            cursor: pointer;
+            font-family: var(--font);
+            transition: all .15s;
+        }
+
+        .add-step:hover {
+            border-color: var(--green);
+            color: var(--green);
+            background: var(--green-bg)
+        }
+
+        /* PERF MODE */
+        .perf-wrap {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px
+        }
+
+        .perf-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px
+        }
+
+        .perf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px
+        }
+
+        .pc {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            padding: 16px;
+        }
+
+        .pc-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            color: var(--ink3);
+            margin-bottom: 10px
+        }
+
+        .pc-val {
+            font-size: 26px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: var(--ink);
+            margin-bottom: 4px;
+            line-height: 1
+        }
+
+        .pc-sub {
+            font-size: 11px;
+            color: var(--ink3)
+        }
+
+        .presets {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            flex-wrap: wrap
+        }
+
+        .pr-btn {
+            font-family: var(--font);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 5px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink2);
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .pr-btn.on {
+            background: var(--ink);
+            color: #fff;
+            border-color: var(--ink)
+        }
+
+        .pr-btn:hover:not(.on) {
+            background: var(--paper2)
+        }
+
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px
+        }
+
+        .mc {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            padding: 14px
+        }
+
+        .mc-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            color: var(--ink3);
+            margin-bottom: 6px
+        }
+
+        .mc-val {
+            font-family: var(--mono);
+            font-size: 20px;
+            font-weight: 500
+        }
+
+        .mc-val.ok {
+            color: var(--green)
+        }
+
+        .mc-val.warn {
+            color: var(--amber)
+        }
+
+        .mc-val.bad {
+            color: var(--red)
+        }
+
+        .mc-sub {
+            font-size: 11px;
+            color: var(--ink3);
+            margin-top: 2px
+        }
+
+        .chart-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r2);
+            padding: 16px
+        }
+
+        .chart-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink2);
+            margin-bottom: 12px;
+            letter-spacing: -.1px
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 80px
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 10px 16px;
+            border-radius: var(--r);
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateY(60px);
+            opacity: 0;
+            transition: all .25s cubic-bezier(.34, 1.56, .64, 1);
+            max-width: 320px;
+            line-height: 1.4;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1
+        }
+
+        /* LOADER */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--paper);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 14px;
+            z-index: 999;
+            transition: opacity .3s;
+        }
+
+        .loader-ring {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--line);
+            border-top-color: var(--ink);
+            border-radius: 50%;
+            animation: spin .7s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loader p {
+            font-size: 13px;
+            color: var(--ink3)
+        }
+
+        /* ANIMATIONS */
+        @keyframes up {
+            from {
+                opacity: 0;
+                transform: translateY(16px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .hero-left>* {
+            animation: up .5s ease both
+        }
+
+        .hero-tag {
+            animation-delay: .05s
+        }
+
+        .hero h1 {
+            animation-delay: .12s
+        }
+
+        .hero-sub {
+            animation-delay: .2s
+        }
+
+        .hero-actions {
+            animation-delay: .28s
+        }
+
+        .hero-stat {
+            animation-delay: .36s
+        }
+
+        .hero-right {
+            animation: up .6s .2s ease both
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+        <div class="loader-ring"></div>
+        <p>Memuat Saurce...</p>
+    </div>
+
+    <!-- ════════ LANDING ════════ -->
+    <div class="page active" id="landing">
+
+        <nav class="nav">
+            <div class="logo" onclick="goApp()">
+                <div class="logo-mark"><svg viewBox="0 0 14 14">
+                        <path d="M2 7l3.5 3.5L12 3" />
+                    </svg></div>
+                <span class="logo-text">HIT<span>Saurce</span></span>
+            </div>
+            <div class="nav-links">
+                <a onclick="goScroll('features')">Fitur</a>
+                <a onclick="goScroll('how')">Cara Kerja</a>
+                <a onclick="goScroll('pricing')">Harga</a>
+                <a onclick="goScroll('faq')">FAQ</a>
+            </div>
+            <div class="nav-right">
+                <button class="btn btn-outline" onclick="goApp()">Masuk</button>
+                <button class="btn btn-solid" onclick="goApp()">Mulai Gratis →</button>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-left">
+                <div class="hero-tag"><span class="hero-tag-dot"></span>Beta · Gratis · Tanpa install</div>
+                <h1>Testing<br>yang <em>benar-benar</em><br><strong>mudah dipakai.</strong></h1>
+                <p class="hero-sub">Dari hit satu hingga skenario E2E lengkap. Dirancang untuk semua level — tidak perlu baca manual untuk mulai.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-green btn-lg" onclick="goApp()">⚡ Coba Sekarang — Gratis</button>
+                    <button class="btn btn-outline btn-lg" onclick="goScroll('how')">Lihat cara kerja</button>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-item">
+                        <div class="stat-num">0</div>
+                        <div class="stat-label">Install dibutuhkan</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Rp 0</div>
+                        <div class="stat-label">Untuk mulai</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-badge b1"><span class="badge-dot-g"></span>200 OK · 142ms</div>
+                <div class="hero-card">
+                    <div class="hc-topbar">
+                        <div class="hc-dots"><i class="d-r"></i><i class="d-y"></i><i class="d-g"></i></div>
+                        <span class="hc-label">hitsaurce.app / workspace</span>
+                    </div>
+                    <div class="hc-body">
+                        <div class="hc-urlbar">
+                            <span class="hc-method">GET</span>
+                            <span class="hc-url">https://api.myapp.id/v1/products?limit=10</span>
+                            <button class="hc-send">Send</button>
+                        </div>
+                        <div class="hc-resp-head">
+                            <span class="hc-status">200 OK</span>
+                            <span class="hc-meta">142ms · 3.1KB</span>
+                        </div>
+                        <div class="hc-json">
+                            <span class="j-k">"data"</span>: [
+                            { <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span
+                                class="j-k">"name"</span>: <span class="j-s">"Laptop Pro X"</span>, <span
+                                class="j-k">"stock"</span>: <span class="j-n">42</span> },
+                            { <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span
+                                class="j-k">"name"</span>: <span class="j-s">"Mouse Wireless"</span>, <span
+                                class="j-k">"stock"</span>: <span class="j-n">98</span> }
+                            ],
+                            <span class="j-k">"total"</span>: <span class="j-n">24</span>, <span
+                                class="j-k">"page"</span>: <span class="j-n">1</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-badge b2"><span class="badge-dot-a"></span>Flow: 4/4 passed ✓</div>
+            </div>
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <div class="wrap" id="how">
+            <div class="section">
+                <div class="section-kicker">Cara kerja</div>
+                <h2 class="section-title">Tiga cara,<br><strong>satu platform.</strong></h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon">🎯</div>
+                        <!-- <div class="step-num">MODE 01</div> -->
+                        <h3>Playground</h3>
+                        <p>Hit manapun. Lihat response, headers, timing — semuanya dalam satu tampilan bersih
+                            tanpa konfigurasi.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">🔗</div>
+                        <!-- <div class="step-num">MODE 02</div> -->
+                        <h3>Runner</h3>
+                        <p>Susun step jadi skenario E2E. Token dari login otomatis tersedia di request berikutnya tanpa
+                            tulis script apapun.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">⚡</div>
+                        <!-- <div class="step-num">MODE 03</div> -->
+                        <h3>Performance</h3>
+                        <p>Load test langsung dari browser. Pilih preset jumlah user atau atur sendiri — hasilnya
+                            real-time.</p>
+                    </div>
+                    <div class="step" style="background:var(--ink);color:var(--paper)">
+                        <div class="step-icon"
+                            style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1)">📊</div>
+                        <div class="step-num" style="color:rgba(255,255,255,.4)">HASIL</div>
+                        <h3>Report siap bagikan</h3>
+                        <p style="color:rgba(255,255,255,.6)">Satu klik untuk generate laporan. Bagikan link ke tim atau
+                            klien — tidak perlu export file.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="wrap" id="features">
+            <div class="section">
+                <div class="section-kicker">Fitur</div>
+                <h2 class="section-title">Semua yang kamu butuhkan.<br><strong>Tidak lebih, tidak kurang.</strong></h2>
+                <p class="section-sub">Setiap fitur dipilih berdasarkan apa yang benar-benar dipakai testing sehari-hari — bukan fitur demi fitur.</p>
+                <div class="feat-grid">
+                    <div class="feat-cell">
+                        <div class="feat-tag">Request Builder</div>
+                        <h3>Visual, bukan kode</h3>
+                        <p>Isi method, URL, headers, dan body lewat form yang intuitif. Tidak perlu hafal format cURL
+                            atau syntax JSON.</p>
+                        <div class="feat-demo">
+                            <span style="color:var(--green)">POST</span> /v1/auth/login<br>
+                            Authorization: Bearer <span style="color:var(--amber)">{{token}}</span><br>
+                            Content-Type: application/json
+                        </div>
+                    </div>
+                    <div class="feat-cell">
+                        <div class="feat-tag">Variable Extraction</div>
+                        <h3>Ambil data antar request</h3>
+                        <p>Simpan nilai dari response (seperti token atau ID) lalu gunakan di request berikutnya —
+                            otomatis tanpa script.</p>
+                        <div class="feat-demo">
+                            Login → simpan <span style="color:var(--green)">{{token}}</span> ← data.token<br>
+                            Get Cart → pakai <span style="color:var(--green)">{{token}}</span> di header<br>
+                            Checkout → pakai <span style="color:var(--green)">{{cart_id}}</span>
+                        </div>
+                    </div>
+                    <div class="feat-cell">
+                        <div class="feat-tag">Assertions</div>
+                        <h3>Validasi otomatis, hasil jelas</h3>
+                        <p>Tentukan ekspektasi — status code, isi response, waktu. Setelah send, langsung tahu apa yang
+                            pass dan fail.</p>
+                        <div class="feat-demo">
+                            <span style="color:var(--green)">✓</span> Status code = 200<br>
+                            <span style="color:var(--green)">✓</span> Response time &lt; 500ms<br>
+                            <span style="color:var(--red)">✗</span> data.user.email = "test@…"
+                        </div>
+                    </div>
+                    <div class="feat-cell">
+                        <div class="feat-tag">Environment</div>
+                        <h3>Dev, Staging, Prod — 1 klik</h3>
+                        <p>Simpan base URL dan variabel per environment. Switch antara Dev/Staging/Production tanpa edit
+                            apapun secara manual.</p>
+                        <div class="feat-demo">
+                            🟢 Development → api.dev.myapp.id<br>
+                            🟡 Staging &nbsp;&nbsp;&nbsp;→ api.stg.myapp.id<br>
+                            🔴 Production → api.myapp.id
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRICING -->
+        <div class="wrap" id="pricing">
+            <div class="section">
+                <div class="section-kicker">Harga</div>
+                <h2 class="section-title">Transparan.<br><strong>Tanpa kejutan.</strong></h2>
+                <p class="section-sub">Tier gratis dirancang agar bisa dipakai sungguhan — bukan sekedar trial 7 hari.
+                </p>
+                <div class="pricing-grid">
+                    <div class="p-card">
+                        <div class="p-plan">Gratis</div>
+                        <div class="p-price">Rp0<small> / bulan</small></div>
+                        <p class="p-desc">Untuk testing yang baru mulai atau side project personal.</p>
+                        <ul class="p-list">
+                            <li>Unlimited single requests</li>
+                            <li>5 Flow Runner</li>
+                            <li>Load test hingga 10 VU</li>
+                            <li>3 Environment</li>
+                            <li>1 Workspace</li>
+                            <li>Riwayat 7 hari</li>
+                            <li class="off">Report link</li>
+                            <li class="off">Kolaborasi tim</li>
+                        </ul>
+                        <button class="p-btn btn-outline" onclick="goApp()">Mulai sekarang</button>
+                    </div>
+                    <div class="p-card featured">
+                        <div class="p-featured-tag">POPULER</div>
+                        <div class="p-plan">Pro</div>
+                        <div class="p-price"><sup>Rp</sup>79K<small> / bulan</small></div>
+                        <p class="p-desc">Untuk profesional yang butuh lebih banyak kapasitas dan fitur.</p>
+                        <ul class="p-list">
+                            <li>Unlimited single requests</li>
+                            <li>Unlimited Flow Runner</li>
+                            <li>Load test hingga 500 VU</li>
+                            <li>Unlimited Environment</li>
+                            <li>5 Workspace</li>
+                            <li>Riwayat 90 hari</li>
+                            <li>Report link ✓</li>
+                            <li>2 anggota tim</li>
+                        </ul>
+                        <button class="p-btn btn-green" onclick="goApp()">Coba 14 hari gratis</button>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-plan">Team</div>
+                        <div class="p-price"><sup>Rp</sup>249K<small> / bulan</small></div>
+                        <p class="p-desc">Untuk tim yang bekerja bersama dalam satu workspace.</p>
+                        <ul class="p-list">
+                            <li>Semua fitur Pro</li>
+                            <li>Load test unlimited VU</li>
+                            <li>Unlimited Workspace</li>
+                            <li>Riwayat unlimited</li>
+                            <li>Hingga 10 anggota</li>
+                            <li>SSO / SAML</li>
+                            <li>Audit log</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <button class="p-btn btn-outline"
+                            onclick="toast('Tim kami akan menghubungi kamu.','ok')">Hubungi kami</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="wrap" id="faq">
+            <div class="section">
+                <div class="section-kicker">FAQ</div>
+                <h2 class="section-title"><strong>Pertanyaan</strong> yang sering ditanya.</h2>
+                <div class="faq">
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Apakah tier gratis benar-benar gratis selamanya?<i
+                                class="faq-ico">+</i></div>
+                        <div class="faq-a">Ya. Tidak ada batas waktu, tidak perlu bayar. Upgrade hanya jika
+                            kapasitas kamu bertumbuh.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Apakah perlu install sesuatu?<i
+                                class="faq-ico">+</i></div>
+                        <div class="faq-a">Tidak sama sekali. HitSaurce berjalan sepenuhnya di browser — tidak ada
+                            ekstensi, tidak ada desktop app.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara kerja load test dengan K6?<i
+                                class="faq-ico">+</i></div>
+                        <div class="faq-a">Kamu mengatur jumlah virtual user dan durasi lewat UI. HitSaurce menjalankan K6
+                            di server kami dan streaming hasilnya secara real-time ke browser — tanpa install K6 lokal.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Bisa import dari Postman?<i class="faq-ico">+</i>
+                        </div>
+                        <div class="faq-a">Ya, import collection Postman format JSON tersedia di semua tier termasuk
+                            gratis.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Apakah data request saya aman?<i
+                                class="faq-ico">+</i></div>
+                        <div class="faq-a">Semua komunikasi dienkripsi via HTTPS. Data kamu tidak pernah dijual atau
+                            dibagikan ke pihak lain.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA BAND -->
+        <div class="cta-band">
+            <div class="cta-band-inner">
+                <div>
+                    <h2>Siap testing<br><strong>lebih singkat?</strong></h2>
+                    <p>Hit it. Test it. Source it.</p>
+                </div>
+                <div class="cta-right">
+                    <button class="btn btn-green btn-lg" onclick="goApp()">⚡ Mulai Gratis Sekarang</button>
+                    <span class="cta-note">Tidak perlu bayar dulu gapapa · Langsung pakai aja</span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="logo">
+                <div class="logo-mark"><svg viewBox="0 0 14 14">
+                        <path d="M2 7l3.5 3.5L12 3" />
+                    </svg></div>
+                <span class="logo-text">HIT<span>Saurce</span></span>
+            </div>
+            <div class="footer-links">
+                <a>Privacy</a><a>Terms</a>
+            </div>
+            <span class="footer-copy">© 2025 HitSaurce.sommy.my.id</span>
+        </footer>
+
+    </div><!-- /landing -->
+
+
+    <!-- ════════ APP ════════ -->
+    <div class="page" id="app">
+
+        <!-- APP NAV -->
+        <div class="app-nav">
+            <div class="app-logo" onclick="goLanding()">
+                <div class="logo-mark"><svg viewBox="0 0 14 14">
+                        <path d="M2 7l3.5 3.5L12 3" />
+                    </svg></div>
+                HIT<span>Saurce</span>
+            </div>
+            <div class="nav-divider"></div>
+            <button class="mode-btn on" id="mb-single" onclick="setMode('single')">Single</button>
+            <button class="mode-btn" id="mb-flow" onclick="setMode('flow')">Flow Runner</button>
+            <button class="mode-btn" id="mb-perf" onclick="setMode('perf')">Performance</button>
+            <div class="spacer"></div>
+            <select class="env-sel">
+                <option>🟢 Development</option>
+                <option>🟡 Staging</option>
+                <option>🔴 Production</option>
+            </select>
+            <div class="nav-divider"></div>
+            <div class="user-pill">
+                <div class="user-av">U</div>
+                <span>User</span>
+                <span class="free-tag">FREE</span>
+            </div>
+        </div>
+
+        <!-- APP BODY -->
+        <div class="app-body">
+
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <div class="sb-head">
+                    <span class="sb-title">Collections</span>
+                    <div class="sb-actions">
+                        <button class="sb-btn" title="Import">↑</button>
+                        <button class="sb-btn" title="New" onclick="toast('📁 Collection baru dibuat','ok')">+</button>
+                    </div>
+                </div>
+                <div class="sb-search"><input placeholder="Cari request…" type="text"></div>
+                <div class="sb-body">
+
+                    <div class="coll-head open" onclick="togColl(this)">
+                        <span class="coll-arr">▶</span> 📁 Auth API
+                    </div>
+                    <div class="coll-items">
+                        <div class="sb-item"
+                            onclick="loadR('POST','https://api.myapp.id/v1/auth/login','Login User',this)">
+                            <span class="m-tag mp">POST</span>Login
+                        </div>
+                        <div class="sb-item on"
+                            onclick="loadR('POST','https://api.myapp.id/v1/auth/register','Register User',this)">
+                            <span class="m-tag mp">POST</span>Register
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('GET','https://api.myapp.id/v1/auth/profile','Get Profile',this)">
+                            <span class="m-tag mg">GET</span>Profile
+                        </div>
+                    </div>
+
+                    <div class="coll-head open" onclick="togColl(this)" style="margin-top:4px">
+                        <span class="coll-arr">▶</span> 📁 Product API
+                    </div>
+                    <div class="coll-items">
+                        <div class="sb-item"
+                            onclick="loadR('GET','https://api.myapp.id/v1/products','List Products',this)">
+                            <span class="m-tag mg">GET</span>List Products
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('POST','https://api.myapp.id/v1/products','Create Product',this)">
+                            <span class="m-tag mp">POST</span>Create
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('PUT','https://api.myapp.id/v1/products/1','Update Product',this)">
+                            <span class="m-tag mu">PUT</span>Update
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('DELETE','https://api.myapp.id/v1/products/1','Delete Product',this)">
+                            <span class="m-tag md">DELETE</span>Delete
+                        </div>
+                    </div>
+
+                    <div class="coll-head" onclick="togColl(this)" style="margin-top:4px">
+                        <span class="coll-arr">▶</span> 📁 Order API
+                    </div>
+                    <div class="coll-items" style="display:none">
+                        <div class="sb-item"
+                            onclick="loadR('POST','https://api.myapp.id/v1/orders','Create Order',this)">
+                            <span class="m-tag mp">POST</span>Create Order
+                        </div>
+                        <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/orders','List Orders',this)">
+                            <span class="m-tag mg">GET</span>List Orders
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- MAIN -->
+            <div class="app-main">
+
+                <!-- ── SINGLE ── -->
+                <div id="m-single" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+                    <div class="req-top">
+                        <input class="req-name" id="rname" value="Register User" placeholder="Nama request…">
+                        <button class="save-btn" onclick="toast('💾 Disimpan','ok')">Simpan</button>
+                    </div>
+                    <div class="url-row">
+                        <select class="m-sel" id="msel" onchange="updMethod()">
+                            <option>GET</option>
+                            <option selected>POST</option>
+                            <option>PUT</option>
+                            <option>PATCH</option>
+                            <option>DELETE</option>
+                        </select>
+                        <input class="url-in" id="urlin" value="https://api.myapp.id/v1/auth/register"
+                            placeholder="https://api.example.com/endpoint">
+                        <button class="send-b" onclick="doSend()" id="sendb">▶ Send</button>
+                    </div>
+                    <div class="tabs-row">
+                        <div class="tab on" onclick="swTab(this,'tp')">Params</div>
+                        <div class="tab" onclick="swTab(this,'th')">Headers <span class="tab-ct">3</span></div>
+                        <div class="tab" onclick="swTab(this,'tb')">Body</div>
+                        <div class="tab" onclick="swTab(this,'ta')">Assertions <span class="tab-ct" id="act">2</span>
+                        </div>
+                    </div>
+
+                    <div class="panels-area">
+
+                        <!-- PARAMS -->
+                        <div class="panel on" id="tp">
+                            <table class="param-tbl">
+                                <thead>
+                                    <tr>
+                                        <th style="width:28px"></th>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                        <th style="width:32px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="param-body">
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Content-Type" placeholder="Key"></td>
+                                        <td><input value="application/json" placeholder="Value"></td>
+                                        <td><span style="color:var(--ink3);cursor:pointer"
+                                                onclick="this.closest('tr').remove()">×</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="page" placeholder="Key"></td>
+                                        <td><input value="1" placeholder="Value"></td>
+                                        <td><span style="color:var(--ink3);cursor:pointer"
+                                                onclick="this.closest('tr').remove()">×</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="add-row" onclick="addParam()">+ Tambah baris</button>
+                        </div>
+
+                        <!-- HEADERS -->
+                        <div class="panel" id="th">
+                            <table class="param-tbl">
+                                <thead>
+                                    <tr>
+                                        <th style="width:28px"></th>
+                                        <th>Header</th>
+                                        <th>Value</th>
+                                        <th style="width:32px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Content-Type"></td>
+                                        <td><input value="application/json"></td>
+                                        <td><span style="color:var(--ink3);cursor:pointer">×</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Accept"></td>
+                                        <td><input value="application/json"></td>
+                                        <td><span style="color:var(--ink3);cursor:pointer">×</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Authorization"></td>
+                                        <td><input value="Bearer {{token}}"></td>
+                                        <td><span style="color:var(--ink3);cursor:pointer">×</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="add-row">+ Tambah header</button>
+                        </div>
+
+                        <!-- BODY -->
+                        <div class="panel" id="tb">
+                            <div class="body-bar">
+                                <button class="bt-btn on">JSON</button>
+                                <button class="bt-btn">Form Data</button>
+                                <button class="bt-btn">Raw</button>
+                                <button class="bt-btn">None</button>
+                            </div>
+                            <div class="code-area" contenteditable="true" spellcheck="false"><span class="j-k">{</span>
+                                <span class="j-k">"email"</span>: <span class="j-s">"user@example.com"</span>,
+                                <span class="j-k">"password"</span>: <span class="j-s">"password123"</span>,
+                                <span class="j-k">"name"</span>: <span class="j-s">"John Doe"</span>
+                                <span class="j-k">}</span>
+                            </div>
+                        </div>
+
+                        <!-- ASSERTIONS -->
+                        <div class="panel" id="ta">
+                            <div class="ass-head-bar">
+                                <span style="font-size:12px;color:var(--ink2)">Validasi otomatis setiap send</span>
+                                <button class="save-btn" onclick="addAss()">+ Tambah</button>
+                            </div>
+                            <div id="ass-list">
+                                <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Status
+                                        code = 201</span><span class="ass-val">201 ✓</span></div>
+                                <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Response
+                                        time &lt; 2000ms</span><span class="ass-val">142ms ✓</span></div>
+                            </div>
+                        </div>
+
+                    </div><!-- /panels-area -->
+
+                    <!-- RESPONSE -->
+                    <div class="split-div">
+                        <div class="split-handle"></div>
+                    </div>
+                    <div class="resp-area">
+                        <div class="resp-head">
+                            <span class="resp-label">Response</span>
+                            <span class="s-badge s-ok" id="rstat">201 Created</span>
+                            <span class="resp-meta" id="rtime">142ms</span>
+                            <span class="resp-meta" id="rsize">1.2 KB</span>
+                            <button class="copy-btn" onclick="toast('📋 Disalin','ok')">Copy</button>
+                        </div>
+                        <div class="resp-tabs">
+                            <div class="tab on" onclick="swRTab(this,'rb')">Body</div>
+                            <div class="tab" onclick="swRTab(this,'rh')">Headers</div>
+                            <div class="tab" onclick="swRTab(this,'ra')">Assertions</div>
+                        </div>
+                        <div class="resp-body" id="rb"><span class="j-k">{</span>
+                            <span class="j-k">"success"</span>: <span class="j-b">true</span>,
+                            <span class="j-k">"message"</span>: <span class="j-s">"User registered successfully"</span>,
+                            <span class="j-k">"data"</span>: {
+                            <span class="j-k">"id"</span>: <span class="j-n">42</span>,
+                            <span class="j-k">"email"</span>: <span class="j-s">"user@example.com"</span>,
+                            <span class="j-k">"name"</span>: <span class="j-s">"John Doe"</span>,
+                            <span class="j-k">"token"</span>: <span
+                                class="j-s">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+                            }
+                            <span class="j-k">}</span>
+                        </div>
+                        <div class="resp-body resp-body-hidden" id="rh" style="display:none"><span
+                                class="j-k">content-type</span>: <span class="j-s">application/json;
+                                charset=utf-8</span>
+                            <span class="j-k">x-request-id</span>: <span class="j-s">req_abc123xyz</span>
+                            <span class="j-k">x-ratelimit-remaining</span>: <span class="j-n">99</span>
+                        </div>
+                        <div class="resp-body resp-body-hidden" id="ra" style="display:none;padding:0">
+                            <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Status code
+                                    = 201</span><span class="ass-val">✓ 201</span></div>
+                            <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Response
+                                    time &lt; 2000ms</span><span class="ass-val">✓ 142ms</span></div>
+                        </div>
+                    </div>
+                </div><!-- /m-single -->
+
+                <!-- ── FLOW ── -->
+                <div id="m-flow" style="display:none;flex:1;overflow:hidden">
+                    <div class="flow-wrap">
+                        <div class="flow-top">
+                            <div class="flow-info">
+                                <h2>Checkout E2E Flow</h2>
+                                <p>4 langkah · <span style="color:var(--green)">3 passed</span> · <span
+                                        style="color:var(--amber)">1 running</span> · terakhir 2 menit lalu</p>
+                            </div>
+                            <div class="flow-btns">
+                                <button class="btn btn-outline" style="font-size:12px;padding:6px 14px"
+                                    onclick="toast('➕ Tambah langkah','ok')">+ Langkah</button>
+                                <button class="btn btn-solid" style="font-size:12px;padding:6px 14px"
+                                    onclick="runFlow()">▶ Run Flow</button>
+                            </div>
+                        </div>
+                        <div class="flow-canvas" id="fcanvas">
+                            <div class="f-card pass">
+                                <div class="f-top">
+                                    <div class="f-num">1</div><span class="m-tag mp">POST</span>
+                                    <div class="f-name">Login User</div><span class="f-status fs-p">✓ PASSED</span>
+                                </div>
+                                <div class="f-url">/v1/auth/login · 201 · 89ms</div>
+                                <div class="f-vars"><span class="v-chip">{{token}} ← data.token</span><span
+                                        class="v-chip">{{user_id}} ← data.id</span></div>
+                            </div>
+                            <div class="f-connector"></div>
+                            <div class="f-card pass">
+                                <div class="f-top">
+                                    <div class="f-num">2</div><span class="m-tag mg">GET</span>
+                                    <div class="f-name">Get Cart</div><span class="f-status fs-p">✓ PASSED</span>
+                                </div>
+                                <div class="f-url">/v1/cart/{{user_id}} · 200 · 65ms</div>
+                                <div class="f-vars"><span class="v-chip">{{cart_id}} ← data.cart_id</span></div>
+                            </div>
+                            <div class="f-connector"></div>
+                            <div class="f-card run">
+                                <div class="f-top">
+                                    <div class="f-num">3</div><span class="m-tag mp">POST</span>
+                                    <div class="f-name">Checkout</div><span class="f-status fs-r">⟳ Running</span>
+                                </div>
+                                <div class="f-url">/v1/orders/checkout · menggunakan {{cart_id}}, {{token}}</div>
+                            </div>
+                            <div class="f-connector"></div>
+                            <div class="f-card">
+                                <div class="f-top">
+                                    <div class="f-num">4</div><span class="m-tag mg">GET</span>
+                                    <div class="f-name">Verify Order</div><span class="f-status fs-w">⏳ Waiting</span>
+                                </div>
+                                <div class="f-url">/v1/orders/{{order_id}} · menunggu step 3</div>
+                            </div>
+                            <div class="f-connector" style="opacity:.3"></div>
+                            <button class="add-step" onclick="toast('➕ Tambah langkah baru','ok')">+ Tambah
+                                Langkah</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PERF ── -->
+                <div id="m-perf" style="display:none;flex:1;overflow:hidden">
+                    <div class="perf-wrap">
+                        <div class="perf-top">
+                            <div class="flow-info">
+                                <h2>Performance Test</h2>
+                                <p>Powered by K6 · Konfigurasi dan jalankan load test langsung dari browser</p>
+                            </div>
+                            <button class="btn btn-green" style="font-size:12px;padding:8px 18px" onclick="runPerf()">▶
+                                Start Test</button>
+                        </div>
+
+                        <div
+                            style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">
+                            Preset</div>
+                        <div class="presets">
+                            <button class="pr-btn" onclick="setPr(this,1,30)">Smoke · 1 VU</button>
+                            <button class="pr-btn on" onclick="setPr(this,10,60)">Light · 10 VU</button>
+                            <button class="pr-btn" onclick="setPr(this,50,120)">Medium · 50 VU</button>
+                            <button class="pr-btn" onclick="setPr(this,200,300)">Heavy · 200 VU</button>
+                            <button class="pr-btn" onclick="setPr(this,0,0)">Custom</button>
+                        </div>
+
+                        <div class="perf-grid">
+                            <div class="pc">
+                                <div class="pc-label">Virtual Users</div>
+                                <div class="pc-val" id="pvu">10</div>
+                                <div class="pc-sub">concurrent</div>
+                                <input type="range" min="1" max="500" value="10"
+                                    style="width:100%;margin-top:10px;accent-color:var(--green)"
+                                    oninput="document.getElementById('pvu').textContent=this.value">
+                            </div>
+                            <div class="pc">
+                                <div class="pc-label">Durasi</div>
+                                <div class="pc-val" id="pdur">60<span style="font-size:14px;font-weight:300">s</span>
+                                </div>
+                                <div class="pc-sub">total duration</div>
+                                <input type="range" min="10" max="600" value="60"
+                                    style="width:100%;margin-top:10px;accent-color:var(--green)"
+                                    oninput="document.getElementById('pdur').innerHTML=this.value+'<span style=\'font-size:14px;font-weight:300\'>s</span>'">
+                            </div>
+                            <div class="pc">
+                                <div class="pc-label">Target URL</div>
+                                <input
+                                    style="width:100%;background:var(--paper2);border:1px solid var(--line);border-radius:5px;padding:6px 9px;font-size:11px;font-family:var(--mono);color:var(--ink);outline:none;margin-top:4px"
+                                    value="https://api.myapp.id/v1/products">
+                                <div class="pc-sub" style="margin-top:8px">GET · dengan auth header</div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">
+                            Hasil Run Terakhir</div>
+                        <div class="metric-row">
+                            <div class="mc">
+                                <div class="mc-label">Req / sec</div>
+                                <div class="mc-val ok">847</div>
+                                <div class="mc-sub">avg</div>
+                            </div>
+                            <div class="mc">
+                                <div class="mc-label">p95 Latency</div>
+                                <div class="mc-val warn">312ms</div>
+                                <div class="mc-sub">threshold 500ms</div>
+                            </div>
+                            <div class="mc">
+                                <div class="mc-label">Error Rate</div>
+                                <div class="mc-val ok">0.2%</div>
+                                <div class="mc-sub">threshold &lt;1%</div>
+                            </div>
+                            <div class="mc">
+                                <div class="mc-label">Total Req</div>
+                                <div class="mc-val">50,820</div>
+                                <div class="mc-sub">dalam 60 detik</div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-title">Latency over time (ms)</div>
+                            <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15" />
+                                        <stop offset="100%" stop-color="#1a7a5e" stop-opacity="0" />
+                                    </linearGradient>
+                                </defs>
+                                <path
+                                    d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22 L800,70 L0,70Z"
+                                    fill="url(#cg)" />
+                                <path
+                                    d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22"
+                                    fill="none" stroke="var(--green)" stroke-width="1.5" />
+                                <line x1="0" y1="35" x2="800" y2="35" stroke="var(--line)" stroke-width="1"
+                                    stroke-dasharray="4 4" />
+                                <text x="4" y="32" fill="#9a9a9a" font-size="9"
+                                    font-family="DM Mono,monospace">p95</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /app-main -->
+        </div><!-- /app-body -->
+
+    </div><!-- /app -->
+
+    <!-- TOAST -->
+    <div class="toast" id="toastEl">
+        <span id="toast-ico">✓</span>
+        <span id="toast-txt"></span>
+    </div>
+
+    <script>
+        // ── LOADER ──
+        (function () {
+            var el = document.getElementById('loader');
+            function hide() { el.style.opacity = '0'; el.style.pointerEvents = 'none' }
+            setTimeout(hide, 500);
+        })();
+
+        // ── NAV ──
+        function goApp() {
+            document.getElementById('landing').classList.remove('active');
+            document.getElementById('app').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        function goLanding() {
+            document.getElementById('app').classList.remove('active');
+            document.getElementById('landing').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        function goScroll(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ── MODE ──
+        function setMode(m) {
+            ['single', 'flow', 'perf'].forEach(function (x) {
+                document.getElementById('m-' + x).style.display = x === m ? 'flex' : 'none';
+                document.getElementById('mb-' + x).classList.toggle('on', x === m);
+            });
+        }
+
+        // ── SIDEBAR ──
+        function togColl(el) {
+            el.classList.toggle('open');
+            var next = el.nextElementSibling;
+            next.style.display = next.style.display === 'none' ? '' : 'none';
+        }
+        function loadR(method, url, name, el) {
+            document.querySelectorAll('.sb-item').forEach(function (i) { i.classList.remove('on') });
+            el.classList.add('on');
+            document.getElementById('msel').value = method;
+            document.getElementById('urlin').value = url;
+            document.getElementById('rname').value = name;
+            updMethod();
+            setMode('single');
+            toast('📂 ' + name + ' dimuat', 'ok');
+        }
+        function updMethod() {
+            var s = document.getElementById('msel');
+            var c = { GET: 'var(--green)', POST: '#1a5276', PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)' };
+            s.style.color = c[s.value] || 'var(--ink)';
+        }
+
+        // ── TABS ──
+        function swTab(el, id) {
+            el.closest('.tabs-row').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on') });
+            document.querySelectorAll('.panels-area .panel').forEach(function (p) { p.classList.remove('on') });
+            el.classList.add('on');
+            document.getElementById(id).classList.add('on');
+        }
+        function swRTab(el, id) {
+            el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on') });
+            ['rb', 'rh', 'ra'].forEach(function (i) {
+                var e = document.getElementById(i);
+                if (e) e.style.display = 'none';
+            });
+            el.classList.add('on');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        // ── SEND ──
+        var mockResp = {
+            GET: { st: '200 OK', sc: 's-ok', t: '89ms', sz: '3.1 KB', b: '<span class="j-k">{</span>\n  <span class="j-k">"success"</span>: <span class="j-b">true</span>,\n  <span class="j-k">"data"</span>: [\n    { <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span class="j-k">"name"</span>: <span class="j-s">"Product A"</span> },\n    { <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span class="j-k">"name"</span>: <span class="j-s">"Product B"</span> }\n  ],\n  <span class="j-k">"total"</span>: <span class="j-n">24</span>\n<span class="j-k">}</span>' },
+            POST: { st: '201 Created', sc: 's-ok', t: '142ms', sz: '1.2 KB', b: '<span class="j-k">{</span>\n  <span class="j-k">"success"</span>: <span class="j-b">true</span>,\n  <span class="j-k">"message"</span>: <span class="j-s">"Created successfully"</span>,\n  <span class="j-k">"data"</span>: { <span class="j-k">"id"</span>: <span class="j-n">42</span>, <span class="j-k">"token"</span>: <span class="j-s">"eyJhbGci..."</span> }\n<span class="j-k">}</span>' },
+            PUT: { st: '200 OK', sc: 's-ok', t: '108ms', sz: '0.8 KB', b: '<span class="j-k">{</span>\n  <span class="j-k">"success"</span>: <span class="j-b">true</span>,\n  <span class="j-k">"message"</span>: <span class="j-s">"Updated"</span>\n<span class="j-k">}</span>' },
+            DELETE: { st: '204 No Content', sc: 's-ok', t: '67ms', sz: '0 KB', b: '<span style="color:var(--ink3)">// 204 No Content — tidak ada body</span>' },
+            PATCH: { st: '200 OK', sc: 's-ok', t: '95ms', sz: '0.6 KB', b: '<span class="j-k">{ "success"</span>: <span class="j-b">true</span> }' }
+        };
+        function doSend() {
+            var btn = document.getElementById('sendb');
+            var m = document.getElementById('msel').value;
+            btn.textContent = '⟳'; btn.disabled = true;
+            setTimeout(function () {
+                var r = mockResp[m] || mockResp.GET;
+                document.getElementById('rstat').textContent = r.st;
+                document.getElementById('rstat').className = 's-badge ' + r.sc;
+                document.getElementById('rtime').textContent = r.t;
+                document.getElementById('rsize').textContent = r.sz;
+                document.getElementById('rb').innerHTML = r.b;
+                btn.textContent = '▶ Send'; btn.disabled = false;
+                toast('Response: ' + r.st, 'ok');
+            }, 400 + Math.random() * 500);
+        }
+
+        // ── PARAMS ──
+        function addParam() {
+            var tb = document.getElementById('param-body');
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td><input type="checkbox" class="p-chk" checked></td><td><input placeholder="Key"></td><td><input placeholder="Value"></td><td><span style="color:var(--ink3);cursor:pointer" onclick="this.closest(\'tr\').remove()">×</span></td>';
+            tb.appendChild(tr);
+        }
+        function addAss() {
+            var list = document.getElementById('ass-list');
+            var d = document.createElement('div');
+            d.className = 'ass-row';
+            d.innerHTML = '<span class="ass-dot dot-skip"></span><input style="flex:1;background:transparent;border:none;font-size:12px;font-family:var(--font);color:var(--ink2);outline:none" placeholder="Contoh: status = 200"><span style="color:var(--ink3);cursor:pointer;padding:0 8px" onclick="this.parentElement.remove()">×</span>';
+            list.appendChild(d);
+            document.getElementById('act').textContent = list.children.length;
+        }
+
+        // ── BODY TYPE ──
+        document.querySelectorAll('.bt-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                this.closest('.body-bar').querySelectorAll('.bt-btn').forEach(function (b) { b.classList.remove('on') });
+                this.classList.add('on');
+            });
+        });
+
+        // ── FLOW ──
+        function runFlow() {
+            var cards = document.querySelectorAll('.f-card');
+            var i = 0;
+            cards.forEach(function (c) {
+                c.className = 'f-card';
+                c.querySelector('.f-status').className = 'f-status fs-w';
+                c.querySelector('.f-status').textContent = '⏳ Waiting';
+                c.querySelector('.f-num').style.background = '';
+                c.querySelector('.f-num').style.color = '';
+                c.querySelector('.f-num').style.borderColor = '';
+            });
+            function next() {
+                if (i >= cards.length) { toast('✓ Flow selesai — semua passed', 'ok'); return }
+                var c = cards[i];
+                c.className = 'f-card run';
+                c.querySelector('.f-status').className = 'f-status fs-r';
+                c.querySelector('.f-status').textContent = '⟳ Running';
+                setTimeout(function () {
+                    c.className = 'f-card pass';
+                    c.querySelector('.f-status').className = 'f-status fs-p';
+                    c.querySelector('.f-status').textContent = '✓ PASSED';
+                    i++; next();
+                }, 800);
+            }
+            next();
+        }
+
+        // ── PERF ──
+        function setPr(btn, vu, dur) {
+            document.querySelectorAll('.pr-btn').forEach(function (b) { b.classList.remove('on') });
+            btn.classList.add('on');
+            if (vu > 0) {
+                document.getElementById('pvu').textContent = vu;
+                document.getElementById('pdur').innerHTML = dur + '<span style="font-size:14px;font-weight:300">s</span>';
+            }
+        }
+        function runPerf() {
+            toast('⚡ K6 test berjalan…', 'ok');
+            setTimeout(function () { toast('✓ Selesai — error rate 0.2%', 'ok') }, 3000);
+        }
+
+        // ── FAQ ──
+        function toggleFaq(el) {
+            el.parentElement.classList.toggle('open');
+        }
+
+        // ── TOAST ──
+        var tTimer;
+        function toast(msg, type) {
+            var el = document.getElementById('toastEl');
+            document.getElementById('toast-txt').textContent = msg;
+            document.getElementById('toast-ico').textContent = type === 'ok' ? '✓' : '✗';
+            el.classList.add('show');
+            clearTimeout(tTimer);
+            tTimer = setTimeout(function () { el.classList.remove('show') }, 2600);
+        }
+
+        updMethod();
+    </script>
+</body>
+
+</html>
