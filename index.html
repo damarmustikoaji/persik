@@ -3,944 +3,933 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QAFlow — API Testing Platform</title>
+<title>HITSaurce — API Testing Platform</title>
 <link rel="icon" href="public/assets/favicon.ico">
 <link rel="stylesheet" href="public/assets/css/style.css">
 </head>
-
 <body>
 
-    <!-- LOADER -->
-    <div class="loader" id="loader">
-        <div class="loader-ring"></div>
-        <p>Memuat Saurce...</p>
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-ring"></div>
+  <p>Memuat HITSaurce...</p>
+</div>
+
+<!-- ════════ LANDING ════════ -->
+<div class="page active" id="landing">
+
+  <nav class="nav">
+    <div class="logo" onclick="goApp()">
+      <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce">
+      <span class="logo-text">HIT<span>Saurce</span></span>
+    </div>
+    <div class="nav-links">
+      <a onclick="goScroll('how')">Cara Kerja</a>
+      <a onclick="goScroll('features')">Fitur</a>
+      <a onclick="goScroll('pricing')">Harga</a>
+      <a onclick="goScroll('faq')">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <button class="btn btn-solid" onclick="goApp()">Masuk</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>Beta - Gratis - Tanpa install
+      </div>
+      <h1>API Testing<br>yang <em>benar-benar</em><br><strong>mudah dipakai.</strong></h1>
+      <p class="hero-sub">Dari hit satu hingga skenario E2E lengkap. Dirancang untuk semua level, tidak perlu baca manual untuk mulai.</p>
+      <div class="hero-actions">
+        <button class="btn btn-green btn-lg" onclick="goApp()">Coba Sekarang - Gratis</button>
+        <button class="btn btn-outline btn-lg" onclick="goScroll('how')">Lihat cara kerja</button>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-item">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Playground</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">0</div>
+          <div class="stat-label">Install dibutuhkan</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Rp0</div>
+          <div class="stat-label">Untuk mulai</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-badge b1"><span class="badge-dot-g"></span>200 OK - 142ms</div>
+      <div class="hero-card">
+        <div class="hc-topbar">
+          <div class="hc-dots"><i class="d-r"></i><i class="d-y"></i><i class="d-g"></i></div>
+          <span class="hc-label">HITSaurce.app / workspace</span>
+        </div>
+        <div class="hc-body">
+          <div class="hc-urlbar">
+            <span class="hc-method">GET</span>
+            <span class="hc-url">https://api.myapp.id/v1/products?limit=10</span>
+            <button class="hc-send">Send</button>
+          </div>
+          <div class="hc-resp-head">
+            <span class="hc-status">200 OK</span>
+            <span class="hc-meta">142ms - 3.1KB</span>
+          </div>
+          <div class="hc-json">
+            <span class="j-k">"data"</span>: [<br>
+            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span class="j-k">"name"</span>: <span class="j-s">"Laptop Pro X"</span> },<br>
+            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span class="j-k">"name"</span>: <span class="j-s">"Mouse Wireless"</span> }<br>
+            ],<br>
+            <span class="j-k">"total"</span>: <span class="j-n">24</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-badge b2"><span class="badge-dot-a"></span>Flow: 4/4 passed</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="wrap" id="how">
+    <div class="section">
+      <div class="section-kicker">Cara kerja</div>
+      <h2 class="section-title">Tiga playground,<br><strong>satu platform.</strong></h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon">&#127919;</div>
+          <div class="step-num">PLAYGROUND 01</div>
+          <h3>Hit Saurce</h3>
+          <p>Hit manapun. Lihat response, headers, timing dalam satu tampilan bersih tanpa konfigurasi.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">&#128279;</div>
+          <div class="step-num">PLAYGROUND 02</div>
+          <h3>Runner</h3>
+          <p>Susun API jadi skenario E2E. Token dari login otomatis tersedia di request berikutnya tanpa tulis script.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">&#9889;</div>
+          <div class="step-num">PLAYGROUND 03</div>
+          <h3>Performance</h3>
+          <p>Load test langsung dari browser. Pilih preset jumlah user atau atur sendiri, hasilnya real-time.</p>
+        </div>
+        <div class="step step-dark">
+          <div class="step-icon step-icon-dark">&#128202;</div>
+          <div class="step-num step-num-dark">HASIL</div>
+          <h3>Report siap bagikan</h3>
+          <p class="step-p-dark">Satu klik untuk generate laporan. Bagikan link ke tim atau klien tanpa perlu export file.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="wrap" id="features">
+    <div class="section">
+      <div class="section-kicker">Fitur</div>
+      <h2 class="section-title">Semua yang kamu butuhkan.<br><strong>Tidak lebih, tidak kurang.</strong></h2>
+      <p class="section-sub">Setiap fitur dipilih berdasarkan apa yang benar-benar dipakai testing.</p>
+      <div class="feat-grid">
+        <div class="feat-cell">
+          <div class="feat-tag">Request Builder</div>
+          <h3>Visual, bukan kode</h3>
+          <p>Isi method, URL, headers, dan body lewat form intuitif. Tidak perlu hafal format cURL atau syntax JSON.</p>
+          <div class="feat-demo">
+            <span class="c-green">POST</span> /v1/auth/login<br>
+            Authorization: Bearer <span class="c-amber">{{token}}</span><br>
+            Content-Type: application/json
+          </div>
+        </div>
+        <div class="feat-cell">
+          <div class="feat-tag">Variable Extraction</div>
+          <h3>Ambil data antar request</h3>
+          <p>Simpan nilai dari response seperti token atau ID lalu gunakan di request berikutnya otomatis tanpa script.</p>
+          <div class="feat-demo">
+            Login - simpan <span class="c-green">{{token}}</span> dari data.token<br>
+            Get Cart - pakai <span class="c-green">{{token}}</span> di header<br>
+            Checkout - pakai <span class="c-green">{{cart_id}}</span>
+          </div>
+        </div>
+        <div class="feat-cell">
+          <div class="feat-tag">Assertions</div>
+          <h3>Validasi otomatis, hasil jelas</h3>
+          <p>Tentukan ekspektasi untuk status code, isi response, dan waktu. Setelah send langsung tahu pass atau fail.</p>
+          <div class="feat-demo">
+            <span class="c-green">OK</span> Status code = 200<br>
+            <span class="c-green">OK</span> Response time &lt; 500ms<br>
+            <span class="c-red">FAIL</span> data.user.email exists
+          </div>
+        </div>
+        <div class="feat-cell">
+          <div class="feat-tag">Environment</div>
+          <h3>Dev, Staging, Prod - 1 klik</h3>
+          <p>Simpan base URL dan variabel per environment. Switch antara Dev, Staging, dan Production tanpa edit manual.</p>
+          <div class="feat-demo">
+            Dev &nbsp;&nbsp;&nbsp;: api.dev.myapp.id<br>
+            Staging : api.stg.myapp.id<br>
+            Prod &nbsp;&nbsp;: api.myapp.id
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="wrap" id="pricing">
+    <div class="section">
+      <div class="section-kicker">Harga</div>
+      <h2 class="section-title">Transparan.<br><strong>Tanpa kejutan.</strong></h2>
+      <p class="section-sub">Tier gratis dirancang agar bisa dipakai sungguhan, bukan trial 7 hari.</p>
+      <div class="pricing-grid">
+
+        <div class="p-card">
+          <div class="p-plan">Gratis</div>
+          <div class="p-price">Rp0<small> / bulan</small></div>
+          <p class="p-desc">Untuk yang baru mulai atau side project personal.</p>
+          <ul class="p-list">
+            <li>Unlimited single requests</li>
+            <li>5 Flow Runner</li>
+            <li>Load test hingga 10 VU</li>
+            <li>3 Environment</li>
+            <li>1 Workspace</li>
+            <li>Riwayat 7 hari</li>
+            <li class="off">Report link</li>
+            <li class="off">Kolaborasi tim</li>
+          </ul>
+          <button class="p-btn btn-outline" onclick="goApp()">Mulai sekarang</button>
+        </div>
+
+        <div class="p-card featured">
+          <div class="p-featured-tag">FULL SUPPORT</div>
+          <div class="p-plan">Support</div>
+          <div class="p-price"><sup>Rp</sup>79K<small> / bulan</small></div>
+          <p class="p-desc">Untuk full support HIT Saurce, dan peningkatan layanan ini.</p>
+          <ul class="p-list">
+            <li>Unlimited single requests</li>
+            <li>Unlimited Flow Runner</li>
+            <li>Load test hingga 500 VU</li>
+            <li>Unlimited Environment</li>
+            <li>5 Workspace</li>
+            <li>Riwayat 90 hari</li>
+            <li>Report link</li>
+            <li>2 anggota tim</li>
+          </ul>
+          <button class="p-btn btn-green" onclick="goApp()">Support HITSaurce</button>
+        </div>
+
+        <div class="p-card">
+          <div class="p-plan">Next Level</div>
+          <div class="p-price"><sup>Rp</sup>???<small> / bulan</small></div>
+          <p class="p-desc">Untuk tim yang bekerja bersama dalam satu workspace.</p>
+          <ul class="p-list">
+            <li>Semua fitur Pro</li>
+            <li>Load test unlimited VU</li>
+            <li>Unlimited Workspace</li>
+            <li>Riwayat unlimited</li>
+            <li>Hingga 10 anggota</li>
+            <li>SSO / SAML</li>
+            <li>Audit log</li>
+            <li>Priority support</li>
+          </ul>
+          <button class="p-btn btn-outline" onclick="toast('Tim kami akan menghubungi kamu.','ok')">Hubungi kami</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="wrap" id="faq">
+    <div class="section">
+      <div class="section-kicker">FAQ</div>
+      <h2 class="section-title"><strong>Pertanyaan</strong> yang sering ditanya.</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Apakah tier gratis benar-benar gratis selamanya?
+            <i class="faq-ico">+</i>
+          </div>
+          <div class="faq-a">Ya. Tidak ada batas waktu, tidak perlu bayar dulu. Upgrade hanya jika kapasitas kamu bertumbuh.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Apakah perlu install sesuatu?
+            <i class="faq-ico">+</i>
+          </div>
+          <div class="faq-a">Tidak sama sekali. HITSaurce berjalan sepenuhnya di browser tanpa ekstensi atau desktop app.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Bagaimana cara kerja load test dengan K6?
+            <i class="faq-ico">+</i>
+          </div>
+          <div class="faq-a">Kamu mengatur jumlah virtual user dan durasi lewat UI. HITSaurce menjalankan K6 di server kami dan streaming hasilnya secara real-time ke browser tanpa install K6 lokal.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Bisa import dari Postman?
+            <i class="faq-ico">+</i>
+          </div>
+          <div class="faq-a">Ya, import collection Postman format JSON tersedia di semua tier termasuk gratis.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Apakah data request saya aman?
+            <i class="faq-ico">+</i>
+          </div>
+          <div class="faq-a">Semua komunikasi dienkripsi via HTTPS. Data kamu tidak pernah dijual atau dibagikan ke pihak lain.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="cta-band-inner">
+      <div>
+        <h2>Siap testing<br><strong>langsung?</strong></h2>
+        <p>Hit it. Test it. Source it.</p>
+      </div>
+      <div class="cta-right">
+        <button class="btn btn-green btn-lg" onclick="goApp()">Mulai Sekarang</button>
+        <span class="cta-note">Tidak perlu bayar dulu gapapa.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo">
+      <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce">
+      <span class="logo-text">HIT<span>Saurce</span></span>
+    </div>
+    <div class="footer-links">
+      <a>Docs</a>
+      <a>Blog</a>
+      <a>Status</a>
+      <a>Privacy</a>
+      <a>Terms</a>
+    </div>
+    <span class="footer-copy">2025 HITSaurce</span>
+  </footer>
+
+</div><!-- /landing -->
+
+
+<!-- ════════ APP ════════ -->
+<div class="page" id="app">
+
+  <div class="app-nav">
+    <div class="app-logo" onclick="goLanding()">
+      <img class="logo-img logo-img-sm" src="public/assets/logo.png" alt="HITSaurce">
+      HIT<span>Saurce</span>
+    </div>
+    <div class="nav-divider"></div>
+    <button class="mode-btn on" id="mb-single" onclick="setMode('single')">Playground</button>
+    <button class="mode-btn" id="mb-flow" onclick="setMode('flow')">Runner</button>
+    <button class="mode-btn" id="mb-perf" onclick="setMode('perf')">Performance</button>
+    <div class="spacer"></div>
+    <select class="env-sel">
+      <option>Dev</option>
+      <option>Staging</option>
+      <option>Production</option>
+    </select>
+    <div class="nav-divider"></div>
+    <div class="user-pill">
+      <div class="user-av">U</div>
+      <span>User</span>
+      <span class="free-tag">FREE</span>
+    </div>
+  </div>
+
+  <div class="app-body">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sb-head">
+        <span class="sb-title">Collections</span>
+        <div class="sb-actions">
+          <button class="sb-btn" title="Import">up</button>
+          <button class="sb-btn" onclick="toast('Collection baru dibuat','ok')">+</button>
+        </div>
+      </div>
+      <div class="sb-search">
+        <input placeholder="Cari request..." type="text">
+      </div>
+      <div class="sb-body">
+
+        <div class="coll-head open" onclick="togColl(this)">
+          <span class="coll-arr">&#9654;</span> Auth API
+        </div>
+        <div class="coll-items">
+          <div class="sb-item" onclick="loadR('POST','https://api.myapp.id/v1/auth/login','Login User',this)">
+            <span class="m-tag mp">POST</span>Login
+          </div>
+          <div class="sb-item on" onclick="loadR('POST','https://api.myapp.id/v1/auth/register','Register User',this)">
+            <span class="m-tag mp">POST</span>Register
+          </div>
+          <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/auth/profile','Get Profile',this)">
+            <span class="m-tag mg">GET</span>Profile
+          </div>
+        </div>
+
+        <div class="coll-head open coll-group-mt" onclick="togColl(this)">
+          <span class="coll-arr">&#9654;</span> Product API
+        </div>
+        <div class="coll-items">
+          <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/products','List Products',this)">
+            <span class="m-tag mg">GET</span>List Products
+          </div>
+          <div class="sb-item" onclick="loadR('POST','https://api.myapp.id/v1/products','Create Product',this)">
+            <span class="m-tag mp">POST</span>Create
+          </div>
+          <div class="sb-item" onclick="loadR('PUT','https://api.myapp.id/v1/products/1','Update Product',this)">
+            <span class="m-tag mu">PUT</span>Update
+          </div>
+          <div class="sb-item" onclick="loadR('DELETE','https://api.myapp.id/v1/products/1','Delete Product',this)">
+            <span class="m-tag md">DELETE</span>Delete
+          </div>
+        </div>
+
+        <div class="coll-head coll-group-mt" onclick="togColl(this)">
+          <span class="coll-arr">&#9654;</span> Order API
+        </div>
+        <div class="coll-items" style="display:none">
+          <div class="sb-item" onclick="loadR('POST','https://api.myapp.id/v1/orders','Create Order',this)">
+            <span class="m-tag mp">POST</span>Create Order
+          </div>
+          <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/orders','List Orders',this)">
+            <span class="m-tag mg">GET</span>List Orders
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- ════════ LANDING ════════ -->
-    <div class="page active" id="landing">
+    <!-- MAIN -->
+    <div class="app-main">
 
-        <nav class="nav">
-            <div class="logo" onclick="goApp()">
-                <div class="logo-mark"><svg viewBox="0 0 14 14">
-                        <path d="M2 7l3.5 3.5L12 3" />
-                    </svg></div>
-                <span class="logo-text">HIT<span>Saurce</span></span>
-            </div>
-            <div class="nav-links">
-                <a onclick="goScroll('features')">Fitur</a>
-                <a onclick="goScroll('how')">Cara Kerja</a>
-                <a onclick="goScroll('pricing')">Harga</a>
-                <a onclick="goScroll('faq')">FAQ</a>
-            </div>
-            <div class="nav-right">
-                <button class="btn btn-outline" onclick="goApp()">Masuk</button>
-                <button class="btn btn-solid" onclick="goApp()">Mulai Gratis →</button>
-            </div>
-        </nav>
+      <!-- SINGLE MODE -->
+      <div id="m-single" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
 
-        <!-- HERO -->
-        <div class="hero">
-            <div class="hero-left">
-                <div class="hero-tag"><span class="hero-tag-dot"></span>Beta · Gratis · Tanpa install</div>
-                <h1>Testing<br>yang <em>benar-benar</em><br><strong>mudah dipakai.</strong></h1>
-                <p class="hero-sub">Dari hit satu hingga skenario E2E lengkap. Dirancang untuk semua level — tidak perlu baca manual untuk mulai.</p>
-                <div class="hero-actions">
-                    <button class="btn btn-green btn-lg" onclick="goApp()">⚡ Coba Sekarang — Gratis</button>
-                    <button class="btn btn-outline btn-lg" onclick="goScroll('how')">Lihat cara kerja</button>
-                </div>
-                <div class="hero-stat">
-                    <div class="stat-item">
-                        <div class="stat-num">0</div>
-                        <div class="stat-label">Install dibutuhkan</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-num">Rp 0</div>
-                        <div class="stat-label">Untuk mulai</div>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-right">
-                <div class="hero-badge b1"><span class="badge-dot-g"></span>200 OK · 142ms</div>
-                <div class="hero-card">
-                    <div class="hc-topbar">
-                        <div class="hc-dots"><i class="d-r"></i><i class="d-y"></i><i class="d-g"></i></div>
-                        <span class="hc-label">hitsaurce.app / workspace</span>
-                    </div>
-                    <div class="hc-body">
-                        <div class="hc-urlbar">
-                            <span class="hc-method">GET</span>
-                            <span class="hc-url">https://api.myapp.id/v1/products?limit=10</span>
-                            <button class="hc-send">Send</button>
-                        </div>
-                        <div class="hc-resp-head">
-                            <span class="hc-status">200 OK</span>
-                            <span class="hc-meta">142ms · 3.1KB</span>
-                        </div>
-                        <div class="hc-json">
-                            <span class="j-k">"data"</span>: [
-                            { <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span
-                                class="j-k">"name"</span>: <span class="j-s">"Laptop Pro X"</span>, <span
-                                class="j-k">"stock"</span>: <span class="j-n">42</span> },
-                            { <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span
-                                class="j-k">"name"</span>: <span class="j-s">"Mouse Wireless"</span>, <span
-                                class="j-k">"stock"</span>: <span class="j-n">98</span> }
-                            ],
-                            <span class="j-k">"total"</span>: <span class="j-n">24</span>, <span
-                                class="j-k">"page"</span>: <span class="j-n">1</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-badge b2"><span class="badge-dot-a"></span>Flow: 4/4 passed ✓</div>
-            </div>
+        <div class="req-top">
+          <input class="req-name" id="rname" value="Register User" placeholder="Nama request...">
+          <button class="save-btn" onclick="toast('Disimpan','ok')">Simpan</button>
         </div>
 
-        <!-- HOW IT WORKS -->
-        <div class="wrap" id="how">
-            <div class="section">
-                <div class="section-kicker">Cara kerja</div>
-                <h2 class="section-title">Tiga cara,<br><strong>satu platform.</strong></h2>
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-icon">🎯</div>
-                        <!-- <div class="step-num">MODE 01</div> -->
-                        <h3>Playground</h3>
-                        <p>Hit manapun. Lihat response, headers, timing — semuanya dalam satu tampilan bersih
-                            tanpa konfigurasi.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-icon">🔗</div>
-                        <!-- <div class="step-num">MODE 02</div> -->
-                        <h3>Runner</h3>
-                        <p>Susun step jadi skenario E2E. Token dari login otomatis tersedia di request berikutnya tanpa
-                            tulis script apapun.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-icon">⚡</div>
-                        <!-- <div class="step-num">MODE 03</div> -->
-                        <h3>Performance</h3>
-                        <p>Load test langsung dari browser. Pilih preset jumlah user atau atur sendiri — hasilnya
-                            real-time.</p>
-                    </div>
-                    <div class="step" style="background:var(--ink);color:var(--paper)">
-                        <div class="step-icon"
-                            style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1)">📊</div>
-                        <div class="step-num" style="color:rgba(255,255,255,.4)">HASIL</div>
-                        <h3>Report siap bagikan</h3>
-                        <p style="color:rgba(255,255,255,.6)">Satu klik untuk generate laporan. Bagikan link ke tim atau
-                            klien — tidak perlu export file.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="url-row">
+          <select class="m-sel" id="msel" onchange="updMethod()">
+            <option>GET</option>
+            <option selected>POST</option>
+            <option>PUT</option>
+            <option>PATCH</option>
+            <option>DELETE</option>
+          </select>
+          <input class="url-in" id="urlin" value="https://api.myapp.id/v1/auth/register" placeholder="https://api.example.com/endpoint">
+          <button class="send-b" onclick="doSend()" id="sendb">Send</button>
         </div>
 
-        <!-- FEATURES -->
-        <div class="wrap" id="features">
-            <div class="section">
-                <div class="section-kicker">Fitur</div>
-                <h2 class="section-title">Semua yang kamu butuhkan.<br><strong>Tidak lebih, tidak kurang.</strong></h2>
-                <p class="section-sub">Setiap fitur dipilih berdasarkan apa yang benar-benar dipakai testing sehari-hari — bukan fitur demi fitur.</p>
-                <div class="feat-grid">
-                    <div class="feat-cell">
-                        <div class="feat-tag">Request Builder</div>
-                        <h3>Visual, bukan kode</h3>
-                        <p>Isi method, URL, headers, dan body lewat form yang intuitif. Tidak perlu hafal format cURL
-                            atau syntax JSON.</p>
-                        <div class="feat-demo">
-                            <span style="color:var(--green)">POST</span> /v1/auth/login<br>
-                            Authorization: Bearer <span style="color:var(--amber)">{{token}}</span><br>
-                            Content-Type: application/json
-                        </div>
-                    </div>
-                    <div class="feat-cell">
-                        <div class="feat-tag">Variable Extraction</div>
-                        <h3>Ambil data antar request</h3>
-                        <p>Simpan nilai dari response (seperti token atau ID) lalu gunakan di request berikutnya —
-                            otomatis tanpa script.</p>
-                        <div class="feat-demo">
-                            Login → simpan <span style="color:var(--green)">{{token}}</span> ← data.token<br>
-                            Get Cart → pakai <span style="color:var(--green)">{{token}}</span> di header<br>
-                            Checkout → pakai <span style="color:var(--green)">{{cart_id}}</span>
-                        </div>
-                    </div>
-                    <div class="feat-cell">
-                        <div class="feat-tag">Assertions</div>
-                        <h3>Validasi otomatis, hasil jelas</h3>
-                        <p>Tentukan ekspektasi — status code, isi response, waktu. Setelah send, langsung tahu apa yang
-                            pass dan fail.</p>
-                        <div class="feat-demo">
-                            <span style="color:var(--green)">✓</span> Status code = 200<br>
-                            <span style="color:var(--green)">✓</span> Response time &lt; 500ms<br>
-                            <span style="color:var(--red)">✗</span> data.user.email = "test@…"
-                        </div>
-                    </div>
-                    <div class="feat-cell">
-                        <div class="feat-tag">Environment</div>
-                        <h3>Dev, Staging, Prod — 1 klik</h3>
-                        <p>Simpan base URL dan variabel per environment. Switch antara Dev/Staging/Production tanpa edit
-                            apapun secara manual.</p>
-                        <div class="feat-demo">
-                            🟢 Development → api.dev.myapp.id<br>
-                            🟡 Staging &nbsp;&nbsp;&nbsp;→ api.stg.myapp.id<br>
-                            🔴 Production → api.myapp.id
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="tabs-row">
+          <div class="tab on" onclick="swTab(this,'tp')">Params</div>
+          <div class="tab" onclick="swTab(this,'th')">Headers <span class="tab-ct">3</span></div>
+          <div class="tab" onclick="swTab(this,'tb')">Body</div>
+          <div class="tab" onclick="swTab(this,'ta')">Assertions <span class="tab-ct" id="act">2</span></div>
         </div>
 
-        <!-- PRICING -->
-        <div class="wrap" id="pricing">
-            <div class="section">
-                <div class="section-kicker">Harga</div>
-                <h2 class="section-title">Transparan.<br><strong>Tanpa kejutan.</strong></h2>
-                <p class="section-sub">Tier gratis dirancang agar bisa dipakai sungguhan — bukan sekedar trial 7 hari.
-                </p>
-                <div class="pricing-grid">
-                    <div class="p-card">
-                        <div class="p-plan">Gratis</div>
-                        <div class="p-price">Rp0<small> / bulan</small></div>
-                        <p class="p-desc">Untuk testing yang baru mulai atau side project personal.</p>
-                        <ul class="p-list">
-                            <li>Unlimited single requests</li>
-                            <li>5 Flow Runner</li>
-                            <li>Load test hingga 10 VU</li>
-                            <li>3 Environment</li>
-                            <li>1 Workspace</li>
-                            <li>Riwayat 7 hari</li>
-                            <li class="off">Report link</li>
-                            <li class="off">Kolaborasi tim</li>
-                        </ul>
-                        <button class="p-btn btn-outline" onclick="goApp()">Mulai sekarang</button>
-                    </div>
-                    <div class="p-card featured">
-                        <div class="p-featured-tag">POPULER</div>
-                        <div class="p-plan">Pro</div>
-                        <div class="p-price"><sup>Rp</sup>79K<small> / bulan</small></div>
-                        <p class="p-desc">Untuk profesional yang butuh lebih banyak kapasitas dan fitur.</p>
-                        <ul class="p-list">
-                            <li>Unlimited single requests</li>
-                            <li>Unlimited Flow Runner</li>
-                            <li>Load test hingga 500 VU</li>
-                            <li>Unlimited Environment</li>
-                            <li>5 Workspace</li>
-                            <li>Riwayat 90 hari</li>
-                            <li>Report link ✓</li>
-                            <li>2 anggota tim</li>
-                        </ul>
-                        <button class="p-btn btn-green" onclick="goApp()">Coba 14 hari gratis</button>
-                    </div>
-                    <div class="p-card">
-                        <div class="p-plan">Team</div>
-                        <div class="p-price"><sup>Rp</sup>249K<small> / bulan</small></div>
-                        <p class="p-desc">Untuk tim yang bekerja bersama dalam satu workspace.</p>
-                        <ul class="p-list">
-                            <li>Semua fitur Pro</li>
-                            <li>Load test unlimited VU</li>
-                            <li>Unlimited Workspace</li>
-                            <li>Riwayat unlimited</li>
-                            <li>Hingga 10 anggota</li>
-                            <li>SSO / SAML</li>
-                            <li>Audit log</li>
-                            <li>Priority support</li>
-                        </ul>
-                        <button class="p-btn btn-outline"
-                            onclick="toast('Tim kami akan menghubungi kamu.','ok')">Hubungi kami</button>
-                    </div>
-                </div>
+        <div class="panels-area">
+
+          <div class="panel on" id="tp">
+            <table class="param-tbl">
+              <thead>
+                <tr>
+                  <th style="width:28px"></th>
+                  <th>Key</th>
+                  <th>Value</th>
+                  <th style="width:32px"></th>
+                </tr>
+              </thead>
+              <tbody id="param-body">
+                <tr>
+                  <td><input type="checkbox" class="p-chk" checked></td>
+                  <td><input value="Content-Type" placeholder="Key"></td>
+                  <td><input value="application/json" placeholder="Value"></td>
+                  <td><span class="row-del" onclick="this.closest('tr').remove()">x</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="p-chk" checked></td>
+                  <td><input value="page" placeholder="Key"></td>
+                  <td><input value="1" placeholder="Value"></td>
+                  <td><span class="row-del" onclick="this.closest('tr').remove()">x</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="add-row" onclick="addParam()">+ Tambah baris</button>
+          </div>
+
+          <div class="panel" id="th">
+            <table class="param-tbl">
+              <thead>
+                <tr>
+                  <th style="width:28px"></th>
+                  <th>Header</th>
+                  <th>Value</th>
+                  <th style="width:32px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="p-chk" checked></td>
+                  <td><input value="Content-Type"></td>
+                  <td><input value="application/json"></td>
+                  <td><span class="row-del">x</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="p-chk" checked></td>
+                  <td><input value="Accept"></td>
+                  <td><input value="application/json"></td>
+                  <td><span class="row-del">x</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="p-chk" checked></td>
+                  <td><input value="Authorization"></td>
+                  <td><input value="Bearer {{token}}"></td>
+                  <td><span class="row-del">x</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="add-row">+ Tambah header</button>
+          </div>
+
+          <div class="panel" id="tb">
+            <div class="body-bar">
+              <button class="bt-btn on">JSON</button>
+              <button class="bt-btn">Form Data</button>
+              <button class="bt-btn">Raw</button>
+              <button class="bt-btn">None</button>
             </div>
+            <div class="code-area" contenteditable="true" spellcheck="false">
+{
+  "email": "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="344147514674514c55594458511a575b59">[email&#160;protected]</a>",
+  "password": "password123",
+  "name": "John Doe"
+}
+            </div>
+          </div>
+
+          <div class="panel" id="ta">
+            <div class="ass-head-bar">
+              <!-- <span class="ass-head-label">Validasi otomatis setiap send</span> -->
+              <button class="save-btn" onclick="addAss()">+ Tambah</button>
+            </div>
+            <div id="ass-list">
+              <div class="ass-row">
+                <span class="ass-dot dot-ok"></span>
+                <span class="ass-name">Status code = 201</span>
+                <span class="ass-val">201 OK</span>
+              </div>
+              <div class="ass-row">
+                <span class="ass-dot dot-ok"></span>
+                <span class="ass-name">Response time kurang dari 2000ms</span>
+                <span class="ass-val">142ms OK</span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- FAQ -->
-        <div class="wrap" id="faq">
-            <div class="section">
-                <div class="section-kicker">FAQ</div>
-                <h2 class="section-title"><strong>Pertanyaan</strong> yang sering ditanya.</h2>
-                <div class="faq">
-                    <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">Apakah tier gratis benar-benar gratis selamanya?<i
-                                class="faq-ico">+</i></div>
-                        <div class="faq-a">Ya. Tidak ada batas waktu, tidak perlu bayar. Upgrade hanya jika
-                            kapasitas kamu bertumbuh.</div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">Apakah perlu install sesuatu?<i
-                                class="faq-ico">+</i></div>
-                        <div class="faq-a">Tidak sama sekali. HitSaurce berjalan sepenuhnya di browser — tidak ada
-                            ekstensi, tidak ada desktop app.</div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara kerja load test dengan K6?<i
-                                class="faq-ico">+</i></div>
-                        <div class="faq-a">Kamu mengatur jumlah virtual user dan durasi lewat UI. HitSaurce menjalankan K6
-                            di server kami dan streaming hasilnya secara real-time ke browser — tanpa install K6 lokal.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">Bisa import dari Postman?<i class="faq-ico">+</i>
-                        </div>
-                        <div class="faq-a">Ya, import collection Postman format JSON tersedia di semua tier termasuk
-                            gratis.</div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">Apakah data request saya aman?<i
-                                class="faq-ico">+</i></div>
-                        <div class="faq-a">Semua komunikasi dienkripsi via HTTPS. Data kamu tidak pernah dijual atau
-                            dibagikan ke pihak lain.</div>
-                    </div>
-                </div>
+        <div class="split-div"><div class="split-handle"></div></div>
+
+        <div class="resp-area">
+          <div class="resp-head">
+            <span class="resp-label">Response</span>
+            <span class="s-badge s-ok" id="rstat">201 Created</span>
+            <span class="resp-meta" id="rtime">142ms</span>
+            <span class="resp-meta" id="rsize">1.2 KB</span>
+            <button class="copy-btn" onclick="toast('Disalin','ok')">Copy</button>
+          </div>
+          <div class="resp-tabs">
+            <div class="tab on" onclick="swRTab(this,'rb')">Body</div>
+            <div class="tab" onclick="swRTab(this,'rh')">Headers</div>
+            <div class="tab" onclick="swRTab(this,'ra')">Assertions</div>
+          </div>
+          <div class="resp-body" id="rb">
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "id": 42,
+    "email": "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="196c6a7c6b597c61787469757c377a7674">[email&#160;protected]</a>",
+    "name": "John Doe",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+          </div>
+          <div class="resp-body" id="rh" style="display:none">
+content-type: application/json; charset=utf-8
+x-request-id: req_abc123xyz
+x-ratelimit-remaining: 99
+          </div>
+          <div class="resp-body resp-assert-panel" id="ra" style="display:none">
+            <div class="ass-row">
+              <span class="ass-dot dot-ok"></span>
+              <span class="ass-name">Status code = 201</span>
+              <span class="ass-val">OK 201</span>
             </div>
+            <div class="ass-row">
+              <span class="ass-dot dot-ok"></span>
+              <span class="ass-name">Response time kurang dari 2000ms</span>
+              <span class="ass-val">OK 142ms</span>
+            </div>
+          </div>
         </div>
 
-        <!-- CTA BAND -->
-        <div class="cta-band">
-            <div class="cta-band-inner">
-                <div>
-                    <h2>Siap testing<br><strong>lebih singkat?</strong></h2>
-                    <p>Hit it. Test it. Source it.</p>
-                </div>
-                <div class="cta-right">
-                    <button class="btn btn-green btn-lg" onclick="goApp()">⚡ Mulai Gratis Sekarang</button>
-                    <span class="cta-note">Tidak perlu bayar dulu gapapa · Langsung pakai aja</span>
-                </div>
+      </div>
+
+      <!-- FLOW MODE -->
+      <div id="m-flow" style="display:none;flex:1;overflow:hidden">
+        <div class="flow-wrap">
+          <div class="flow-top">
+            <div class="flow-info">
+              <h2>Checkout E2E Flow</h2>
+              <p>4 langkah - <span class="c-green">3 passed</span> - <span class="c-amber">1 running</span></p>
             </div>
+            <div class="flow-btns">
+              <button class="btn btn-outline btn-sm" onclick="toast('Tambah langkah','ok')">+ Langkah</button>
+              <button class="btn btn-solid btn-sm" onclick="runFlow()">Run Flow</button>
+            </div>
+          </div>
+          <div class="flow-canvas" id="fcanvas">
+
+            <div class="f-card pass">
+              <div class="f-top">
+                <div class="f-num">1</div>
+                <span class="m-tag mp">POST</span>
+                <div class="f-name">Login User</div>
+                <span class="f-status fs-p">PASSED</span>
+              </div>
+              <div class="f-url">/v1/auth/login - 201 - 89ms</div>
+              <div class="f-vars">
+                <span class="v-chip">{{token}} dari data.token</span>
+                <span class="v-chip">{{user_id}} dari data.id</span>
+              </div>
+            </div>
+
+            <div class="f-connector"></div>
+
+            <div class="f-card pass">
+              <div class="f-top">
+                <div class="f-num">2</div>
+                <span class="m-tag mg">GET</span>
+                <div class="f-name">Get Cart</div>
+                <span class="f-status fs-p">PASSED</span>
+              </div>
+              <div class="f-url">/v1/cart/{{user_id}} - 200 - 65ms</div>
+              <div class="f-vars">
+                <span class="v-chip">{{cart_id}} dari data.cart_id</span>
+              </div>
+            </div>
+
+            <div class="f-connector"></div>
+
+            <div class="f-card run">
+              <div class="f-top">
+                <div class="f-num">3</div>
+                <span class="m-tag mp">POST</span>
+                <div class="f-name">Checkout</div>
+                <span class="f-status fs-r">Running</span>
+              </div>
+              <div class="f-url">/v1/orders/checkout - pakai {{cart_id}}, {{token}}</div>
+            </div>
+
+            <div class="f-connector"></div>
+
+            <div class="f-card">
+              <div class="f-top">
+                <div class="f-num">4</div>
+                <span class="m-tag mg">GET</span>
+                <div class="f-name">Verify Order</div>
+                <span class="f-status fs-w">Waiting</span>
+              </div>
+              <div class="f-url">/v1/orders/{{order_id}} - menunggu step 3</div>
+            </div>
+
+            <div class="f-connector f-connector-dim"></div>
+            <button class="add-step" onclick="toast('Tambah langkah baru','ok')">+ Tambah Langkah</button>
+
+          </div>
         </div>
+      </div>
 
-        <footer>
-            <div class="logo">
-                <div class="logo-mark"><svg viewBox="0 0 14 14">
-                        <path d="M2 7l3.5 3.5L12 3" />
-                    </svg></div>
-                <span class="logo-text">HIT<span>Saurce</span></span>
+      <!-- PERF MODE -->
+      <div id="m-perf" style="display:none;flex:1;overflow:hidden">
+        <div class="perf-wrap">
+          <div class="perf-top">
+            <div class="flow-info">
+              <h2>Performance Test</h2>
+              <p>Powered by K6 - Konfigurasi dan jalankan load test langsung dari browser</p>
             </div>
-            <div class="footer-links">
-                <a>Privacy</a><a>Terms</a>
+            <button class="btn btn-green btn-sm" onclick="runPerf()">Start Test</button>
+          </div>
+
+          <span class="section-micro-label">Preset</span>
+          <div class="presets">
+            <button class="pr-btn" onclick="setPr(this,1,30)">Smoke 1 VU</button>
+            <button class="pr-btn on" onclick="setPr(this,10,60)">Light 10 VU</button>
+            <button class="pr-btn" onclick="setPr(this,50,120)">Medium 50 VU</button>
+            <button class="pr-btn" onclick="setPr(this,200,300)">Heavy 200 VU</button>
+            <button class="pr-btn" onclick="setPr(this,0,0)">Custom</button>
+          </div>
+
+          <div class="perf-grid">
+            <div class="pc">
+              <div class="pc-label">Virtual Users</div>
+              <div class="pc-val" id="pvu">10</div>
+              <div class="pc-sub">concurrent</div>
+              <input class="range-slider" type="range" min="1" max="500" value="10"
+                oninput="document.getElementById('pvu').textContent=this.value">
             </div>
-            <span class="footer-copy">© 2025 HitSaurce.sommy.my.id</span>
-        </footer>
-
-    </div><!-- /landing -->
-
-
-    <!-- ════════ APP ════════ -->
-    <div class="page" id="app">
-
-        <!-- APP NAV -->
-        <div class="app-nav">
-            <div class="app-logo" onclick="goLanding()">
-                <div class="logo-mark"><svg viewBox="0 0 14 14">
-                        <path d="M2 7l3.5 3.5L12 3" />
-                    </svg></div>
-                HIT<span>Saurce</span>
+            <div class="pc">
+              <div class="pc-label">Durasi</div>
+              <div class="pc-val" id="pdur">60s</div>
+              <div class="pc-sub">total duration</div>
+              <input class="range-slider" type="range" min="10" max="600" value="60"
+                oninput="document.getElementById('pdur').textContent=this.value+'s'">
             </div>
-            <div class="nav-divider"></div>
-            <button class="mode-btn on" id="mb-single" onclick="setMode('single')">Single</button>
-            <button class="mode-btn" id="mb-flow" onclick="setMode('flow')">Flow Runner</button>
-            <button class="mode-btn" id="mb-perf" onclick="setMode('perf')">Performance</button>
-            <div class="spacer"></div>
-            <select class="env-sel">
-                <option>🟢 Development</option>
-                <option>🟡 Staging</option>
-                <option>🔴 Production</option>
-            </select>
-            <div class="nav-divider"></div>
-            <div class="user-pill">
-                <div class="user-av">U</div>
-                <span>User</span>
-                <span class="free-tag">FREE</span>
+            <div class="pc">
+              <div class="pc-label">Target URL</div>
+              <input class="perf-url-input" value="https://api.myapp.id/v1/products">
+              <div class="pc-sub pc-sub-mt">GET dengan auth header</div>
             </div>
+          </div>
+
+          <span class="section-micro-label">Hasil Run Terakhir</span>
+          <div class="metric-row">
+            <div class="mc">
+              <div class="mc-label">Req / sec</div>
+              <div class="mc-val ok">847</div>
+              <div class="mc-sub">avg</div>
+            </div>
+            <div class="mc">
+              <div class="mc-label">p95 Latency</div>
+              <div class="mc-val warn">312ms</div>
+              <div class="mc-sub">threshold 500ms</div>
+            </div>
+            <div class="mc">
+              <div class="mc-label">Error Rate</div>
+              <div class="mc-val ok">0.2%</div>
+              <div class="mc-sub">threshold 1%</div>
+            </div>
+            <div class="mc">
+              <div class="mc-label">Total Req</div>
+              <div class="mc-val">50820</div>
+              <div class="mc-sub">dalam 60 detik</div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">Latency over time (ms)</div>
+            <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15"/>
+                  <stop offset="100%" stop-color="#1a7a5e" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22 L800,70 L0,70Z" fill="url(#cg)"/>
+              <path d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22" fill="none" stroke="#1a7a5e" stroke-width="1.5"/>
+              <line x1="0" y1="35" x2="800" y2="35" stroke="#e2e1dd" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="4" y="32" fill="#9a9a9a" font-size="9" font-family="monospace">p95</text>
+            </svg>
+          </div>
+
         </div>
+      </div>
 
-        <!-- APP BODY -->
-        <div class="app-body">
-
-            <!-- SIDEBAR -->
-            <div class="sidebar">
-                <div class="sb-head">
-                    <span class="sb-title">Collections</span>
-                    <div class="sb-actions">
-                        <button class="sb-btn" title="Import">↑</button>
-                        <button class="sb-btn" title="New" onclick="toast('📁 Collection baru dibuat','ok')">+</button>
-                    </div>
-                </div>
-                <div class="sb-search"><input placeholder="Cari request…" type="text"></div>
-                <div class="sb-body">
-
-                    <div class="coll-head open" onclick="togColl(this)">
-                        <span class="coll-arr">▶</span> 📁 Auth API
-                    </div>
-                    <div class="coll-items">
-                        <div class="sb-item"
-                            onclick="loadR('POST','https://api.myapp.id/v1/auth/login','Login User',this)">
-                            <span class="m-tag mp">POST</span>Login
-                        </div>
-                        <div class="sb-item on"
-                            onclick="loadR('POST','https://api.myapp.id/v1/auth/register','Register User',this)">
-                            <span class="m-tag mp">POST</span>Register
-                        </div>
-                        <div class="sb-item"
-                            onclick="loadR('GET','https://api.myapp.id/v1/auth/profile','Get Profile',this)">
-                            <span class="m-tag mg">GET</span>Profile
-                        </div>
-                    </div>
-
-                    <div class="coll-head open" onclick="togColl(this)" style="margin-top:4px">
-                        <span class="coll-arr">▶</span> 📁 Product API
-                    </div>
-                    <div class="coll-items">
-                        <div class="sb-item"
-                            onclick="loadR('GET','https://api.myapp.id/v1/products','List Products',this)">
-                            <span class="m-tag mg">GET</span>List Products
-                        </div>
-                        <div class="sb-item"
-                            onclick="loadR('POST','https://api.myapp.id/v1/products','Create Product',this)">
-                            <span class="m-tag mp">POST</span>Create
-                        </div>
-                        <div class="sb-item"
-                            onclick="loadR('PUT','https://api.myapp.id/v1/products/1','Update Product',this)">
-                            <span class="m-tag mu">PUT</span>Update
-                        </div>
-                        <div class="sb-item"
-                            onclick="loadR('DELETE','https://api.myapp.id/v1/products/1','Delete Product',this)">
-                            <span class="m-tag md">DELETE</span>Delete
-                        </div>
-                    </div>
-
-                    <div class="coll-head" onclick="togColl(this)" style="margin-top:4px">
-                        <span class="coll-arr">▶</span> 📁 Order API
-                    </div>
-                    <div class="coll-items" style="display:none">
-                        <div class="sb-item"
-                            onclick="loadR('POST','https://api.myapp.id/v1/orders','Create Order',this)">
-                            <span class="m-tag mp">POST</span>Create Order
-                        </div>
-                        <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/orders','List Orders',this)">
-                            <span class="m-tag mg">GET</span>List Orders
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- MAIN -->
-            <div class="app-main">
-
-                <!-- ── SINGLE ── -->
-                <div id="m-single" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-                    <div class="req-top">
-                        <input class="req-name" id="rname" value="Register User" placeholder="Nama request…">
-                        <button class="save-btn" onclick="toast('💾 Disimpan','ok')">Simpan</button>
-                    </div>
-                    <div class="url-row">
-                        <select class="m-sel" id="msel" onchange="updMethod()">
-                            <option>GET</option>
-                            <option selected>POST</option>
-                            <option>PUT</option>
-                            <option>PATCH</option>
-                            <option>DELETE</option>
-                        </select>
-                        <input class="url-in" id="urlin" value="https://api.myapp.id/v1/auth/register"
-                            placeholder="https://api.example.com/endpoint">
-                        <button class="send-b" onclick="doSend()" id="sendb">▶ Send</button>
-                    </div>
-                    <div class="tabs-row">
-                        <div class="tab on" onclick="swTab(this,'tp')">Params</div>
-                        <div class="tab" onclick="swTab(this,'th')">Headers <span class="tab-ct">3</span></div>
-                        <div class="tab" onclick="swTab(this,'tb')">Body</div>
-                        <div class="tab" onclick="swTab(this,'ta')">Assertions <span class="tab-ct" id="act">2</span>
-                        </div>
-                    </div>
-
-                    <div class="panels-area">
-
-                        <!-- PARAMS -->
-                        <div class="panel on" id="tp">
-                            <table class="param-tbl">
-                                <thead>
-                                    <tr>
-                                        <th style="width:28px"></th>
-                                        <th>Key</th>
-                                        <th>Value</th>
-                                        <th style="width:32px"></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="param-body">
-                                    <tr>
-                                        <td><input type="checkbox" class="p-chk" checked></td>
-                                        <td><input value="Content-Type" placeholder="Key"></td>
-                                        <td><input value="application/json" placeholder="Value"></td>
-                                        <td><span style="color:var(--ink3);cursor:pointer"
-                                                onclick="this.closest('tr').remove()">×</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="p-chk" checked></td>
-                                        <td><input value="page" placeholder="Key"></td>
-                                        <td><input value="1" placeholder="Value"></td>
-                                        <td><span style="color:var(--ink3);cursor:pointer"
-                                                onclick="this.closest('tr').remove()">×</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <button class="add-row" onclick="addParam()">+ Tambah baris</button>
-                        </div>
-
-                        <!-- HEADERS -->
-                        <div class="panel" id="th">
-                            <table class="param-tbl">
-                                <thead>
-                                    <tr>
-                                        <th style="width:28px"></th>
-                                        <th>Header</th>
-                                        <th>Value</th>
-                                        <th style="width:32px"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" class="p-chk" checked></td>
-                                        <td><input value="Content-Type"></td>
-                                        <td><input value="application/json"></td>
-                                        <td><span style="color:var(--ink3);cursor:pointer">×</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="p-chk" checked></td>
-                                        <td><input value="Accept"></td>
-                                        <td><input value="application/json"></td>
-                                        <td><span style="color:var(--ink3);cursor:pointer">×</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="p-chk" checked></td>
-                                        <td><input value="Authorization"></td>
-                                        <td><input value="Bearer {{token}}"></td>
-                                        <td><span style="color:var(--ink3);cursor:pointer">×</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <button class="add-row">+ Tambah header</button>
-                        </div>
-
-                        <!-- BODY -->
-                        <div class="panel" id="tb">
-                            <div class="body-bar">
-                                <button class="bt-btn on">JSON</button>
-                                <button class="bt-btn">Form Data</button>
-                                <button class="bt-btn">Raw</button>
-                                <button class="bt-btn">None</button>
-                            </div>
-                            <div class="code-area" contenteditable="true" spellcheck="false"><span class="j-k">{</span>
-                                <span class="j-k">"email"</span>: <span class="j-s">"user@example.com"</span>,
-                                <span class="j-k">"password"</span>: <span class="j-s">"password123"</span>,
-                                <span class="j-k">"name"</span>: <span class="j-s">"John Doe"</span>
-                                <span class="j-k">}</span>
-                            </div>
-                        </div>
-
-                        <!-- ASSERTIONS -->
-                        <div class="panel" id="ta">
-                            <div class="ass-head-bar">
-                                <span style="font-size:12px;color:var(--ink2)">Validasi otomatis setiap send</span>
-                                <button class="save-btn" onclick="addAss()">+ Tambah</button>
-                            </div>
-                            <div id="ass-list">
-                                <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Status
-                                        code = 201</span><span class="ass-val">201 ✓</span></div>
-                                <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Response
-                                        time &lt; 2000ms</span><span class="ass-val">142ms ✓</span></div>
-                            </div>
-                        </div>
-
-                    </div><!-- /panels-area -->
-
-                    <!-- RESPONSE -->
-                    <div class="split-div">
-                        <div class="split-handle"></div>
-                    </div>
-                    <div class="resp-area">
-                        <div class="resp-head">
-                            <span class="resp-label">Response</span>
-                            <span class="s-badge s-ok" id="rstat">201 Created</span>
-                            <span class="resp-meta" id="rtime">142ms</span>
-                            <span class="resp-meta" id="rsize">1.2 KB</span>
-                            <button class="copy-btn" onclick="toast('📋 Disalin','ok')">Copy</button>
-                        </div>
-                        <div class="resp-tabs">
-                            <div class="tab on" onclick="swRTab(this,'rb')">Body</div>
-                            <div class="tab" onclick="swRTab(this,'rh')">Headers</div>
-                            <div class="tab" onclick="swRTab(this,'ra')">Assertions</div>
-                        </div>
-                        <div class="resp-body" id="rb"><span class="j-k">{</span>
-                            <span class="j-k">"success"</span>: <span class="j-b">true</span>,
-                            <span class="j-k">"message"</span>: <span class="j-s">"User registered successfully"</span>,
-                            <span class="j-k">"data"</span>: {
-                            <span class="j-k">"id"</span>: <span class="j-n">42</span>,
-                            <span class="j-k">"email"</span>: <span class="j-s">"user@example.com"</span>,
-                            <span class="j-k">"name"</span>: <span class="j-s">"John Doe"</span>,
-                            <span class="j-k">"token"</span>: <span
-                                class="j-s">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
-                            }
-                            <span class="j-k">}</span>
-                        </div>
-                        <div class="resp-body resp-body-hidden" id="rh" style="display:none"><span
-                                class="j-k">content-type</span>: <span class="j-s">application/json;
-                                charset=utf-8</span>
-                            <span class="j-k">x-request-id</span>: <span class="j-s">req_abc123xyz</span>
-                            <span class="j-k">x-ratelimit-remaining</span>: <span class="j-n">99</span>
-                        </div>
-                        <div class="resp-body resp-body-hidden" id="ra" style="display:none;padding:0">
-                            <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Status code
-                                    = 201</span><span class="ass-val">✓ 201</span></div>
-                            <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Response
-                                    time &lt; 2000ms</span><span class="ass-val">✓ 142ms</span></div>
-                        </div>
-                    </div>
-                </div><!-- /m-single -->
-
-                <!-- ── FLOW ── -->
-                <div id="m-flow" style="display:none;flex:1;overflow:hidden">
-                    <div class="flow-wrap">
-                        <div class="flow-top">
-                            <div class="flow-info">
-                                <h2>Checkout E2E Flow</h2>
-                                <p>4 langkah · <span style="color:var(--green)">3 passed</span> · <span
-                                        style="color:var(--amber)">1 running</span> · terakhir 2 menit lalu</p>
-                            </div>
-                            <div class="flow-btns">
-                                <button class="btn btn-outline" style="font-size:12px;padding:6px 14px"
-                                    onclick="toast('➕ Tambah langkah','ok')">+ Langkah</button>
-                                <button class="btn btn-solid" style="font-size:12px;padding:6px 14px"
-                                    onclick="runFlow()">▶ Run Flow</button>
-                            </div>
-                        </div>
-                        <div class="flow-canvas" id="fcanvas">
-                            <div class="f-card pass">
-                                <div class="f-top">
-                                    <div class="f-num">1</div><span class="m-tag mp">POST</span>
-                                    <div class="f-name">Login User</div><span class="f-status fs-p">✓ PASSED</span>
-                                </div>
-                                <div class="f-url">/v1/auth/login · 201 · 89ms</div>
-                                <div class="f-vars"><span class="v-chip">{{token}} ← data.token</span><span
-                                        class="v-chip">{{user_id}} ← data.id</span></div>
-                            </div>
-                            <div class="f-connector"></div>
-                            <div class="f-card pass">
-                                <div class="f-top">
-                                    <div class="f-num">2</div><span class="m-tag mg">GET</span>
-                                    <div class="f-name">Get Cart</div><span class="f-status fs-p">✓ PASSED</span>
-                                </div>
-                                <div class="f-url">/v1/cart/{{user_id}} · 200 · 65ms</div>
-                                <div class="f-vars"><span class="v-chip">{{cart_id}} ← data.cart_id</span></div>
-                            </div>
-                            <div class="f-connector"></div>
-                            <div class="f-card run">
-                                <div class="f-top">
-                                    <div class="f-num">3</div><span class="m-tag mp">POST</span>
-                                    <div class="f-name">Checkout</div><span class="f-status fs-r">⟳ Running</span>
-                                </div>
-                                <div class="f-url">/v1/orders/checkout · menggunakan {{cart_id}}, {{token}}</div>
-                            </div>
-                            <div class="f-connector"></div>
-                            <div class="f-card">
-                                <div class="f-top">
-                                    <div class="f-num">4</div><span class="m-tag mg">GET</span>
-                                    <div class="f-name">Verify Order</div><span class="f-status fs-w">⏳ Waiting</span>
-                                </div>
-                                <div class="f-url">/v1/orders/{{order_id}} · menunggu step 3</div>
-                            </div>
-                            <div class="f-connector" style="opacity:.3"></div>
-                            <button class="add-step" onclick="toast('➕ Tambah langkah baru','ok')">+ Tambah
-                                Langkah</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ── PERF ── -->
-                <div id="m-perf" style="display:none;flex:1;overflow:hidden">
-                    <div class="perf-wrap">
-                        <div class="perf-top">
-                            <div class="flow-info">
-                                <h2>Performance Test</h2>
-                                <p>Powered by K6 · Konfigurasi dan jalankan load test langsung dari browser</p>
-                            </div>
-                            <button class="btn btn-green" style="font-size:12px;padding:8px 18px" onclick="runPerf()">▶
-                                Start Test</button>
-                        </div>
-
-                        <div
-                            style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">
-                            Preset</div>
-                        <div class="presets">
-                            <button class="pr-btn" onclick="setPr(this,1,30)">Smoke · 1 VU</button>
-                            <button class="pr-btn on" onclick="setPr(this,10,60)">Light · 10 VU</button>
-                            <button class="pr-btn" onclick="setPr(this,50,120)">Medium · 50 VU</button>
-                            <button class="pr-btn" onclick="setPr(this,200,300)">Heavy · 200 VU</button>
-                            <button class="pr-btn" onclick="setPr(this,0,0)">Custom</button>
-                        </div>
-
-                        <div class="perf-grid">
-                            <div class="pc">
-                                <div class="pc-label">Virtual Users</div>
-                                <div class="pc-val" id="pvu">10</div>
-                                <div class="pc-sub">concurrent</div>
-                                <input type="range" min="1" max="500" value="10"
-                                    style="width:100%;margin-top:10px;accent-color:var(--green)"
-                                    oninput="document.getElementById('pvu').textContent=this.value">
-                            </div>
-                            <div class="pc">
-                                <div class="pc-label">Durasi</div>
-                                <div class="pc-val" id="pdur">60<span style="font-size:14px;font-weight:300">s</span>
-                                </div>
-                                <div class="pc-sub">total duration</div>
-                                <input type="range" min="10" max="600" value="60"
-                                    style="width:100%;margin-top:10px;accent-color:var(--green)"
-                                    oninput="document.getElementById('pdur').innerHTML=this.value+'<span style=\'font-size:14px;font-weight:300\'>s</span>'">
-                            </div>
-                            <div class="pc">
-                                <div class="pc-label">Target URL</div>
-                                <input
-                                    style="width:100%;background:var(--paper2);border:1px solid var(--line);border-radius:5px;padding:6px 9px;font-size:11px;font-family:var(--mono);color:var(--ink);outline:none;margin-top:4px"
-                                    value="https://api.myapp.id/v1/products">
-                                <div class="pc-sub" style="margin-top:8px">GET · dengan auth header</div>
-                            </div>
-                        </div>
-
-                        <div
-                            style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">
-                            Hasil Run Terakhir</div>
-                        <div class="metric-row">
-                            <div class="mc">
-                                <div class="mc-label">Req / sec</div>
-                                <div class="mc-val ok">847</div>
-                                <div class="mc-sub">avg</div>
-                            </div>
-                            <div class="mc">
-                                <div class="mc-label">p95 Latency</div>
-                                <div class="mc-val warn">312ms</div>
-                                <div class="mc-sub">threshold 500ms</div>
-                            </div>
-                            <div class="mc">
-                                <div class="mc-label">Error Rate</div>
-                                <div class="mc-val ok">0.2%</div>
-                                <div class="mc-sub">threshold &lt;1%</div>
-                            </div>
-                            <div class="mc">
-                                <div class="mc-label">Total Req</div>
-                                <div class="mc-val">50,820</div>
-                                <div class="mc-sub">dalam 60 detik</div>
-                            </div>
-                        </div>
-
-                        <div class="chart-card">
-                            <div class="chart-title">Latency over time (ms)</div>
-                            <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
-                                <defs>
-                                    <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15" />
-                                        <stop offset="100%" stop-color="#1a7a5e" stop-opacity="0" />
-                                    </linearGradient>
-                                </defs>
-                                <path
-                                    d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22 L800,70 L0,70Z"
-                                    fill="url(#cg)" />
-                                <path
-                                    d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22"
-                                    fill="none" stroke="var(--green)" stroke-width="1.5" />
-                                <line x1="0" y1="35" x2="800" y2="35" stroke="var(--line)" stroke-width="1"
-                                    stroke-dasharray="4 4" />
-                                <text x="4" y="32" fill="#9a9a9a" font-size="9"
-                                    font-family="DM Mono,monospace">p95</text>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- /app-main -->
-        </div><!-- /app-body -->
-
-    </div><!-- /app -->
-
-    <!-- TOAST -->
-    <div class="toast" id="toastEl">
-        <span id="toast-ico">✓</span>
-        <span id="toast-txt"></span>
     </div>
+  </div>
 
-    <script>
-        // ── LOADER ──
-        (function () {
-            var el = document.getElementById('loader');
-            function hide() { el.style.opacity = '0'; el.style.pointerEvents = 'none' }
-            setTimeout(hide, 500);
-        })();
+</div><!-- /app -->
 
-        // ── NAV ──
-        function goApp() {
-            document.getElementById('landing').classList.remove('active');
-            document.getElementById('app').classList.add('active');
-            window.scrollTo(0, 0);
-        }
-        function goLanding() {
-            document.getElementById('app').classList.remove('active');
-            document.getElementById('landing').classList.add('active');
-            window.scrollTo(0, 0);
-        }
-        function goScroll(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
+<!-- TOAST -->
+<div class="toast" id="toastEl">
+  <span id="toast-ico">v</span>
+  <span id="toast-txt"></span>
+</div>
 
-        // ── MODE ──
-        function setMode(m) {
-            ['single', 'flow', 'perf'].forEach(function (x) {
-                document.getElementById('m-' + x).style.display = x === m ? 'flex' : 'none';
-                document.getElementById('mb-' + x).classList.toggle('on', x === m);
-            });
-        }
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+  var el = document.getElementById('loader');
+  function hide(){ el.style.opacity='0'; el.style.pointerEvents='none'; }
+  setTimeout(hide, 500);
+})();
 
-        // ── SIDEBAR ──
-        function togColl(el) {
-            el.classList.toggle('open');
-            var next = el.nextElementSibling;
-            next.style.display = next.style.display === 'none' ? '' : 'none';
-        }
-        function loadR(method, url, name, el) {
-            document.querySelectorAll('.sb-item').forEach(function (i) { i.classList.remove('on') });
-            el.classList.add('on');
-            document.getElementById('msel').value = method;
-            document.getElementById('urlin').value = url;
-            document.getElementById('rname').value = name;
-            updMethod();
-            setMode('single');
-            toast('📂 ' + name + ' dimuat', 'ok');
-        }
-        function updMethod() {
-            var s = document.getElementById('msel');
-            var c = { GET: 'var(--green)', POST: '#1a5276', PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)' };
-            s.style.color = c[s.value] || 'var(--ink)';
-        }
+function goApp(){
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('app').classList.add('active');
+  window.scrollTo(0,0);
+}
+function goLanding(){
+  document.getElementById('app').classList.remove('active');
+  document.getElementById('landing').classList.add('active');
+  window.scrollTo(0,0);
+}
+function goScroll(id){
+  document.getElementById(id).scrollIntoView({ behavior:'smooth' });
+}
 
-        // ── TABS ──
-        function swTab(el, id) {
-            el.closest('.tabs-row').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on') });
-            document.querySelectorAll('.panels-area .panel').forEach(function (p) { p.classList.remove('on') });
-            el.classList.add('on');
-            document.getElementById(id).classList.add('on');
-        }
-        function swRTab(el, id) {
-            el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on') });
-            ['rb', 'rh', 'ra'].forEach(function (i) {
-                var e = document.getElementById(i);
-                if (e) e.style.display = 'none';
-            });
-            el.classList.add('on');
-            document.getElementById(id).style.display = 'block';
-        }
+function setMode(m){
+  ['single','flow','perf'].forEach(function(x){
+    document.getElementById('m-'+x).style.display = x===m ? 'flex' : 'none';
+    document.getElementById('mb-'+x).classList.toggle('on', x===m);
+  });
+}
 
-        // ── SEND ──
-        var mockResp = {
-            GET: { st: '200 OK', sc: 's-ok', t: '89ms', sz: '3.1 KB', b: '<span class="j-k">{</span>\n  <span class="j-k">"success"</span>: <span class="j-b">true</span>,\n  <span class="j-k">"data"</span>: [\n    { <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span class="j-k">"name"</span>: <span class="j-s">"Product A"</span> },\n    { <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span class="j-k">"name"</span>: <span class="j-s">"Product B"</span> }\n  ],\n  <span class="j-k">"total"</span>: <span class="j-n">24</span>\n<span class="j-k">}</span>' },
-            POST: { st: '201 Created', sc: 's-ok', t: '142ms', sz: '1.2 KB', b: '<span class="j-k">{</span>\n  <span class="j-k">"success"</span>: <span class="j-b">true</span>,\n  <span class="j-k">"message"</span>: <span class="j-s">"Created successfully"</span>,\n  <span class="j-k">"data"</span>: { <span class="j-k">"id"</span>: <span class="j-n">42</span>, <span class="j-k">"token"</span>: <span class="j-s">"eyJhbGci..."</span> }\n<span class="j-k">}</span>' },
-            PUT: { st: '200 OK', sc: 's-ok', t: '108ms', sz: '0.8 KB', b: '<span class="j-k">{</span>\n  <span class="j-k">"success"</span>: <span class="j-b">true</span>,\n  <span class="j-k">"message"</span>: <span class="j-s">"Updated"</span>\n<span class="j-k">}</span>' },
-            DELETE: { st: '204 No Content', sc: 's-ok', t: '67ms', sz: '0 KB', b: '<span style="color:var(--ink3)">// 204 No Content — tidak ada body</span>' },
-            PATCH: { st: '200 OK', sc: 's-ok', t: '95ms', sz: '0.6 KB', b: '<span class="j-k">{ "success"</span>: <span class="j-b">true</span> }' }
-        };
-        function doSend() {
-            var btn = document.getElementById('sendb');
-            var m = document.getElementById('msel').value;
-            btn.textContent = '⟳'; btn.disabled = true;
-            setTimeout(function () {
-                var r = mockResp[m] || mockResp.GET;
-                document.getElementById('rstat').textContent = r.st;
-                document.getElementById('rstat').className = 's-badge ' + r.sc;
-                document.getElementById('rtime').textContent = r.t;
-                document.getElementById('rsize').textContent = r.sz;
-                document.getElementById('rb').innerHTML = r.b;
-                btn.textContent = '▶ Send'; btn.disabled = false;
-                toast('Response: ' + r.st, 'ok');
-            }, 400 + Math.random() * 500);
-        }
+function togColl(el){
+  el.classList.toggle('open');
+  var next = el.nextElementSibling;
+  next.style.display = next.style.display==='none' ? '' : 'none';
+}
 
-        // ── PARAMS ──
-        function addParam() {
-            var tb = document.getElementById('param-body');
-            var tr = document.createElement('tr');
-            tr.innerHTML = '<td><input type="checkbox" class="p-chk" checked></td><td><input placeholder="Key"></td><td><input placeholder="Value"></td><td><span style="color:var(--ink3);cursor:pointer" onclick="this.closest(\'tr\').remove()">×</span></td>';
-            tb.appendChild(tr);
-        }
-        function addAss() {
-            var list = document.getElementById('ass-list');
-            var d = document.createElement('div');
-            d.className = 'ass-row';
-            d.innerHTML = '<span class="ass-dot dot-skip"></span><input style="flex:1;background:transparent;border:none;font-size:12px;font-family:var(--font);color:var(--ink2);outline:none" placeholder="Contoh: status = 200"><span style="color:var(--ink3);cursor:pointer;padding:0 8px" onclick="this.parentElement.remove()">×</span>';
-            list.appendChild(d);
-            document.getElementById('act').textContent = list.children.length;
-        }
+function loadR(method, url, name, el){
+  document.querySelectorAll('.sb-item').forEach(function(i){ i.classList.remove('on'); });
+  el.classList.add('on');
+  document.getElementById('msel').value = method;
+  document.getElementById('urlin').value = url;
+  document.getElementById('rname').value = name;
+  updMethod();
+  setMode('single');
+  toast(name + ' dimuat', 'ok');
+}
 
-        // ── BODY TYPE ──
-        document.querySelectorAll('.bt-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                this.closest('.body-bar').querySelectorAll('.bt-btn').forEach(function (b) { b.classList.remove('on') });
-                this.classList.add('on');
-            });
-        });
+function updMethod(){
+  var s = document.getElementById('msel');
+  var c = { GET:'var(--green)', POST:'var(--blue)', PUT:'var(--amber)', PATCH:'var(--amber)', DELETE:'var(--red)' };
+  s.style.color = c[s.value] || 'var(--ink)';
+}
 
-        // ── FLOW ──
-        function runFlow() {
-            var cards = document.querySelectorAll('.f-card');
-            var i = 0;
-            cards.forEach(function (c) {
-                c.className = 'f-card';
-                c.querySelector('.f-status').className = 'f-status fs-w';
-                c.querySelector('.f-status').textContent = '⏳ Waiting';
-                c.querySelector('.f-num').style.background = '';
-                c.querySelector('.f-num').style.color = '';
-                c.querySelector('.f-num').style.borderColor = '';
-            });
-            function next() {
-                if (i >= cards.length) { toast('✓ Flow selesai — semua passed', 'ok'); return }
-                var c = cards[i];
-                c.className = 'f-card run';
-                c.querySelector('.f-status').className = 'f-status fs-r';
-                c.querySelector('.f-status').textContent = '⟳ Running';
-                setTimeout(function () {
-                    c.className = 'f-card pass';
-                    c.querySelector('.f-status').className = 'f-status fs-p';
-                    c.querySelector('.f-status').textContent = '✓ PASSED';
-                    i++; next();
-                }, 800);
-            }
-            next();
-        }
+function swTab(el, id){
+  el.closest('.tabs-row').querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
+  document.querySelectorAll('.panels-area .panel').forEach(function(p){ p.classList.remove('on'); });
+  el.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
 
-        // ── PERF ──
-        function setPr(btn, vu, dur) {
-            document.querySelectorAll('.pr-btn').forEach(function (b) { b.classList.remove('on') });
-            btn.classList.add('on');
-            if (vu > 0) {
-                document.getElementById('pvu').textContent = vu;
-                document.getElementById('pdur').innerHTML = dur + '<span style="font-size:14px;font-weight:300">s</span>';
-            }
-        }
-        function runPerf() {
-            toast('⚡ K6 test berjalan…', 'ok');
-            setTimeout(function () { toast('✓ Selesai — error rate 0.2%', 'ok') }, 3000);
-        }
+function swRTab(el, id){
+  el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
+  ['rb','rh','ra'].forEach(function(i){
+    var e = document.getElementById(i);
+    if(e) e.style.display = 'none';
+  });
+  el.classList.add('on');
+  document.getElementById(id).style.display = 'block';
+}
 
-        // ── FAQ ──
-        function toggleFaq(el) {
-            el.parentElement.classList.toggle('open');
-        }
+var mockResp = {
+  GET:    { st:'200 OK',         sc:'s-ok', t:'89ms',  sz:'3.1 KB', b:'{\n  "success": true,\n  "data": [\n    { "id": 1, "name": "Product A" },\n    { "id": 2, "name": "Product B" }\n  ],\n  "total": 24\n}' },
+  POST:   { st:'201 Created',    sc:'s-ok', t:'142ms', sz:'1.2 KB', b:'{\n  "success": true,\n  "message": "Created successfully",\n  "data": { "id": 42, "token": "eyJhbGci..." }\n}' },
+  PUT:    { st:'200 OK',         sc:'s-ok', t:'108ms', sz:'0.8 KB', b:'{\n  "success": true,\n  "message": "Updated"\n}' },
+  DELETE: { st:'204 No Content', sc:'s-ok', t:'67ms',  sz:'0 KB',   b:'// 204 No Content - tidak ada body' },
+  PATCH:  { st:'200 OK',         sc:'s-ok', t:'95ms',  sz:'0.6 KB', b:'{ "success": true }' }
+};
 
-        // ── TOAST ──
-        var tTimer;
-        function toast(msg, type) {
-            var el = document.getElementById('toastEl');
-            document.getElementById('toast-txt').textContent = msg;
-            document.getElementById('toast-ico').textContent = type === 'ok' ? '✓' : '✗';
-            el.classList.add('show');
-            clearTimeout(tTimer);
-            tTimer = setTimeout(function () { el.classList.remove('show') }, 2600);
-        }
+function doSend(){
+  var btn = document.getElementById('sendb');
+  var m   = document.getElementById('msel').value;
+  btn.textContent = '...'; btn.disabled = true;
+  setTimeout(function(){
+    var r = mockResp[m] || mockResp.GET;
+    document.getElementById('rstat').textContent = r.st;
+    document.getElementById('rstat').className   = 's-badge ' + r.sc;
+    document.getElementById('rtime').textContent = r.t;
+    document.getElementById('rsize').textContent = r.sz;
+    document.getElementById('rb').textContent    = r.b;
+    btn.textContent = 'Send'; btn.disabled = false;
+    toast('Response: ' + r.st, 'ok');
+  }, 400 + Math.random()*500);
+}
 
-        updMethod();
-    </script>
+function addParam(){
+  var tb = document.getElementById('param-body');
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td><input type="checkbox" class="p-chk" checked></td>'
+    + '<td><input placeholder="Key"></td>'
+    + '<td><input placeholder="Value"></td>'
+    + '<td><span class="row-del" onclick="this.closest(\'tr\').remove()">x</span></td>';
+  tb.appendChild(tr);
+}
+
+function addAss(){
+  var list = document.getElementById('ass-list');
+  var d = document.createElement('div');
+  d.className = 'ass-row';
+  d.innerHTML = '<span class="ass-dot dot-skip"></span>'
+    + '<input class="ass-inline-input" placeholder="Contoh: status = 200">'
+    + '<span class="ass-remove" onclick="this.parentElement.remove()">x</span>';
+  list.appendChild(d);
+  document.getElementById('act').textContent = list.children.length;
+}
+
+document.querySelectorAll('.bt-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    this.closest('.body-bar').querySelectorAll('.bt-btn').forEach(function(b){ b.classList.remove('on'); });
+    this.classList.add('on');
+  });
+});
+
+function runFlow(){
+  var cards = document.querySelectorAll('.f-card');
+  var i = 0;
+  cards.forEach(function(c){
+    c.className = 'f-card';
+    c.querySelector('.f-status').className   = 'f-status fs-w';
+    c.querySelector('.f-status').textContent = 'Waiting';
+  });
+  function next(){
+    if(i >= cards.length){ toast('Flow selesai - semua passed','ok'); return; }
+    var c = cards[i];
+    c.className = 'f-card run';
+    c.querySelector('.f-status').className   = 'f-status fs-r';
+    c.querySelector('.f-status').textContent = 'Running';
+    setTimeout(function(){
+      c.className = 'f-card pass';
+      c.querySelector('.f-status').className   = 'f-status fs-p';
+      c.querySelector('.f-status').textContent = 'PASSED';
+      i++; next();
+    }, 800);
+  }
+  next();
+}
+
+function setPr(btn, vu, dur){
+  document.querySelectorAll('.pr-btn').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  if(vu > 0){
+    document.getElementById('pvu').textContent = vu;
+    document.getElementById('pdur').textContent = dur + 's';
+  }
+}
+
+function runPerf(){
+  toast('K6 test berjalan...','ok');
+  setTimeout(function(){ toast('Selesai - error rate 0.2%','ok'); }, 3000);
+}
+
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+
+var tTimer;
+function toast(msg, type){
+  var el = document.getElementById('toastEl');
+  document.getElementById('toast-txt').textContent = msg;
+  document.getElementById('toast-ico').textContent = type==='ok' ? 'OK' : 'ERR';
+  el.classList.add('show');
+  clearTimeout(tTimer);
+  tTimer = setTimeout(function(){ el.classList.remove('show'); }, 2600);
+}
+
+updMethod();
+</script>
 </body>
-
 </html>

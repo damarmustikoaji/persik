@@ -110,21 +110,17 @@ body {
     text-decoration: none
 }
 
-.logo-mark {
-    width: 26px;
-    height: 26px;
-    background: var(--ink);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
     flex-shrink: 0;
 }
 
-.logo-mark svg {
-    width: 14px;
-    height: 14px;
-    fill: var(--paper)
+.logo-img-sm {
+    width: 24px;
+    height: 24px
 }
 
 .logo-text {
@@ -1002,17 +998,6 @@ footer {
     margin-right: 4px;
 }
 
-.app-logo .logo-mark {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px
-}
-
-.app-logo .logo-mark svg {
-    width: 11px;
-    height: 11px
-}
-
 .app-logo span {
     color: var(--green)
 }
@@ -1442,7 +1427,7 @@ footer {
 /* PANEL AREA */
 .panels-area {
     flex: 1;
-    overflow: hidden;
+    overflow:hidden;
     display: flex;
     flex-direction: column
 }
