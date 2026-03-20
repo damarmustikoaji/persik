@@ -33,7 +33,7 @@
                 <a onclick="goScroll('faq')">FAQ</a>
             </div>
             <div class="nav-right">
-                <button class="btn btn-solid" onclick="goApp()">Masuk</button>
+                <button class="btn btn-solid" onclick="openModal('login')">Masuk</button>
             </div>
         </nav>
 
@@ -104,7 +104,8 @@
                 <h2 class="section-title">Tiga playground,<br><strong>satu platform.</strong></h2>
                 <div class="steps">
                     <div class="step">
-                        <div class="step-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i></div>
+                        <div class="step-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i>
+                        </div>
                         <div class="step-num">PLAYGROUND 01</div>
                         <h3>Hit Saurce</h3>
                         <p>Hit manapun. Lihat response, headers, timing dalam satu tampilan bersih tanpa konfigurasi.
@@ -803,184 +804,483 @@
         <span id="toast-txt"></span>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script>
-        (function () {
-            var el = document.getElementById('loader');
-            function hide() { el.style.opacity = '0'; el.style.pointerEvents = 'none'; }
-            setTimeout(hide, 500);
-        })();
 
-        function goApp() {
-            document.getElementById('landing').classList.remove('active');
-            document.getElementById('app').classList.add('active');
-            window.scrollTo(0, 0);
-        }
-        function goLanding() {
-            document.getElementById('app').classList.remove('active');
-            document.getElementById('landing').classList.add('active');
-            window.scrollTo(0, 0);
-        }
-        function goScroll(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
+    <!-- ════════ AUTH MODAL ════════ -->
+    <div class="modal-overlay" id="authModal" onclick="modalOutsideClick(event)">
+        <div class="modal-box" id="modalBox">
 
-        function setMode(m) {
-            ['single', 'flow', 'perf'].forEach(function (x) {
-                document.getElementById('m-' + x).style.display = x === m ? 'flex' : 'none';
-                document.getElementById('mb-' + x).classList.toggle('on', x === m);
-            });
-        }
+            <div class="modal-head">
+                <div class="modal-logo">
+                    <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce" style="mix-blend-mode:multiply">
+                    HIT<span>Saurce</span>
+                </div>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
 
-        function togColl(el) {
-            el.classList.toggle('open');
-            var next = el.nextElementSibling;
-            next.style.display = next.style.display === 'none' ? '' : 'none';
-        }
+            <div class="modal-body">
 
-        function loadR(method, url, name, el) {
-            document.querySelectorAll('.sb-item').forEach(function (i) { i.classList.remove('on'); });
-            el.classList.add('on');
-            document.getElementById('msel').value = method;
-            document.getElementById('urlin').value = url;
-            document.getElementById('rname').value = name;
-            updMethod();
-            setMode('single');
-            toast(name + ' dimuat', 'ok');
-        }
+                <!-- ── VIEW: LOGIN ── -->
+                <div id="view-login">
+                    <div class="modal-title">Masuk</div>
+                    <div class="modal-sub">Mulai testing kamu.</div>
 
-        function updMethod() {
-            var s = document.getElementById('msel');
-            var c = { GET: 'var(--green)', POST: 'var(--blue)', PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)' };
-            s.style.color = c[s.value] || 'var(--ink)';
-        }
+                    <button class="btn-google" onclick="loginGoogle()">
+                        <!-- Google SVG icon -->
+                        <svg width="16" height="16" viewBox="0 0 48 48">
+                            <path fill="#EA4335"
+                                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.11 17.74 9.5 24 9.5z" />
+                            <path fill="#4285F4"
+                                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                            <path fill="#FBBC05"
+                                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                            <path fill="#34A853"
+                                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.61-13.47-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                            <path fill="none" d="M0 0h48v48H0z" />
+                        </svg>
+                        Lanjutkan dengan Google
+                    </button>
 
-        function swTab(el, id) {
-            el.closest('.tabs-row').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
-            document.querySelectorAll('.panels-area .panel').forEach(function (p) { p.classList.remove('on'); });
-            el.classList.add('on');
-            document.getElementById(id).classList.add('on');
-        }
+                    <div class="auth-divider">atau masuk dengan email</div>
 
-        function swRTab(el, id) {
-            el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
-            ['rb', 'rh', 'ra'].forEach(function (i) {
-                var e = document.getElementById(i);
-                if (e) e.style.display = 'none';
-            });
-            el.classList.add('on');
-            document.getElementById(id).style.display = 'block';
-        }
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" id="login-email" placeholder="kamu@email.com"
+                            oninput="clearErr('login-email')">
+                        <div class="field-err" id="err-login-email">Email tidak valid.</div>
+                    </div>
 
-        var mockResp = {
-            GET: { st: '200 OK', sc: 's-ok', t: '89ms', sz: '3.1 KB', b: '{\n  "success": true,\n  "data": [\n    { "id": 1, "name": "Product A" },\n    { "id": 2, "name": "Product B" }\n  ],\n  "total": 24\n}' },
-            POST: { st: '201 Created', sc: 's-ok', t: '142ms', sz: '1.2 KB', b: '{\n  "success": true,\n  "message": "Created successfully",\n  "data": { "id": 42, "token": "eyJhbGci..." }\n}' },
-            PUT: { st: '200 OK', sc: 's-ok', t: '108ms', sz: '0.8 KB', b: '{\n  "success": true,\n  "message": "Updated"\n}' },
-            DELETE: { st: '204 No Content', sc: 's-ok', t: '67ms', sz: '0 KB', b: '// 204 No Content - tidak ada body' },
-            PATCH: { st: '200 OK', sc: 's-ok', t: '95ms', sz: '0.6 KB', b: '{ "success": true }' }
-        };
+                    <div class="field">
+                        <label>
+                            Password
+                            <span class="forgot-link" onclick="showView('forgot')">Lupa password?</span>
+                        </label>
+                        <div class="pw-wrap">
+                            <input type="password" id="login-pass" placeholder="••••••••"
+                                oninput="clearErr('login-pass')">
+                            <button class="pw-toggle" type="button" onclick="togglePw('login-pass',this)" tabindex="-1">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <div class="field-err" id="err-login-pass">Password wajib diisi.</div>
+                    </div>
 
-        function doSend() {
-            var btn = document.getElementById('sendb');
-            var m = document.getElementById('msel').value;
-            btn.textContent = '...'; btn.disabled = true;
-            setTimeout(function () {
-                var r = mockResp[m] || mockResp.GET;
-                document.getElementById('rstat').textContent = r.st;
-                document.getElementById('rstat').className = 's-badge ' + r.sc;
-                document.getElementById('rtime').textContent = r.t;
-                document.getElementById('rsize').textContent = r.sz;
-                document.getElementById('rb').textContent = r.b;
-                btn.textContent = 'Send'; btn.disabled = false;
-                toast('Response: ' + r.st, 'ok');
-            }, 400 + Math.random() * 500);
-        }
+                    <button class="btn-auth" id="btn-login" onclick="doLogin()">
+                        Masuk
+                    </button>
 
-        function addParam() {
-            var tb = document.getElementById('param-body');
-            var tr = document.createElement('tr');
-            tr.innerHTML = '<td><input type="checkbox" class="p-chk" checked></td>'
-                + '<td><input placeholder="Key"></td>'
-                + '<td><input placeholder="Value"></td>'
-                + '<td><span class="row-del" onclick="this.closest(\'tr\').remove()">x</span></td>';
-            tb.appendChild(tr);
-        }
+                    <div class="auth-switch">
+                        Belum punya akun? <a onclick="showView('register')">Daftar gratis</a>
+                    </div>
+                </div>
 
-        function addAss() {
-            var list = document.getElementById('ass-list');
-            var d = document.createElement('div');
-            d.className = 'ass-row';
-            d.innerHTML = '<span class="ass-dot dot-skip"></span>'
-                + '<input class="ass-inline-input" placeholder="Contoh: status = 200">'
-                + '<span class="ass-remove" onclick="this.parentElement.remove()">x</span>';
-            list.appendChild(d);
-            document.getElementById('act').textContent = list.children.length;
-        }
+                <!-- ── VIEW: REGISTER ── -->
+                <div id="view-register" style="display:none">
+                    <div class="modal-title">Buat akun gratis ✨</div>
+                    <div class="modal-sub">Tidak perlu kartu kredit. Langsung testing.</div>
 
-        document.querySelectorAll('.bt-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                this.closest('.body-bar').querySelectorAll('.bt-btn').forEach(function (b) { b.classList.remove('on'); });
-                this.classList.add('on');
-            });
-        });
+                    <button class="btn-google" onclick="loginGoogle()">
+                        <svg width="16" height="16" viewBox="0 0 48 48">
+                            <path fill="#EA4335"
+                                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.11 17.74 9.5 24 9.5z" />
+                            <path fill="#4285F4"
+                                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                            <path fill="#FBBC05"
+                                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                            <path fill="#34A853"
+                                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.61-13.47-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                            <path fill="none" d="M0 0h48v48H0z" />
+                        </svg>
+                        Daftar dengan Google
+                    </button>
 
-        function runFlow() {
-            var cards = document.querySelectorAll('.f-card');
-            var i = 0;
-            cards.forEach(function (c) {
-                c.className = 'f-card';
-                c.querySelector('.f-status').className = 'f-status fs-w';
-                c.querySelector('.f-status').textContent = 'Waiting';
-            });
-            function next() {
-                if (i >= cards.length) { toast('Flow selesai - semua passed', 'ok'); return; }
-                var c = cards[i];
-                c.className = 'f-card run';
-                c.querySelector('.f-status').className = 'f-status fs-r';
-                c.querySelector('.f-status').textContent = 'Running';
-                setTimeout(function () {
-                    c.className = 'f-card pass';
-                    c.querySelector('.f-status').className = 'f-status fs-p';
-                    c.querySelector('.f-status').textContent = 'PASSED';
-                    i++; next();
-                }, 800);
-            }
-            next();
-        }
+                    <div class="auth-divider">atau daftar dengan email</div>
 
-        function setPr(btn, vu, dur) {
-            document.querySelectorAll('.pr-btn').forEach(function (b) { b.classList.remove('on'); });
-            btn.classList.add('on');
-            if (vu > 0) {
-                document.getElementById('pvu').textContent = vu;
-                document.getElementById('pdur').textContent = dur + 's';
-            }
-        }
+                    <div class="field">
+                        <label>Nama lengkap</label>
+                        <input type="text" id="reg-name" placeholder="John Doe" oninput="clearErr('reg-name')">
+                        <div class="field-err" id="err-reg-name">Nama wajib diisi.</div>
+                    </div>
 
-        function runPerf() {
-            toast('K6 test berjalan...', 'ok');
-            setTimeout(function () { toast('Selesai - error rate 0.2%', 'ok'); }, 3000);
-        }
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" id="reg-email" placeholder="kamu@email.com" oninput="clearErr('reg-email')">
+                        <div class="field-err" id="err-reg-email">Email tidak valid.</div>
+                    </div>
 
-        function toggleFaq(el) {
-            el.parentElement.classList.toggle('open');
-        }
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="pw-wrap">
+                            <input type="password" id="reg-pass" placeholder="Min. 8 karakter"
+                                oninput="clearErr('reg-pass')">
+                            <button class="pw-toggle" type="button" onclick="togglePw('reg-pass',this)" tabindex="-1">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <div class="field-err" id="err-reg-pass">Password min. 8 karakter.</div>
+                    </div>
 
-        var tTimer;
-        function toast(msg, type) {
-            var el = document.getElementById('toastEl');
-            document.getElementById('toast-txt').textContent = msg;
-            var ico = document.getElementById('toast-ico');
-            ico.className = type === 'ok'
-                ? 'bi bi-check-circle-fill toast-ico-ok'
-                : 'bi bi-x-circle-fill toast-ico-err';
-            el.classList.add('show');
-            clearTimeout(tTimer);
-            tTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
-        }
+                    <button class="btn-auth" id="btn-register" onclick="doRegister()">
+                        Buat akun gratis
+                    </button>
 
-        updMethod();
-    </script>
+                    <div class="auth-terms">
+                        Dengan mendaftar, kamu setuju dengan
+                        <a>Syarat & Ketentuan</a> dan <a>Kebijakan Privasi</a> kami.
+                    </div>
+
+                    <div class="auth-switch">
+                        Sudah punya akun? <a onclick="showView('login')">Masuk</a>
+                    </div>
+                </div>
+
+                <!-- ── VIEW: FORGOT PASSWORD ── -->
+                <div id="view-forgot" style="display:none">
+                    <div class="modal-title">Reset password 🔑</div>
+                    <div class="modal-sub">Masukkan email kamu, kami kirimkan link reset.</div>
+
+                    <div id="forgot-form">
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="email" id="forgot-email" placeholder="kamu@email.com"
+                                oninput="clearErr('forgot-email')">
+                            <div class="field-err" id="err-forgot-email">Email tidak valid.</div>
+                        </div>
+
+                        <button class="btn-auth" id="btn-forgot" onclick="doForgot()">
+                            Kirim link reset
+                        </button>
+                    </div>
+
+                    <!-- State setelah email dikirim -->
+                    <div id="forgot-sent" style="display:none">
+                        <div class="auth-success">
+                            <div class="auth-success-icon">
+                                <i class="bi bi-envelope-check-fill"></i>
+                            </div>
+                            <div class="auth-success-title">Email terkirim!</div>
+                            <div class="auth-success-desc">
+                                Cek inbox kamu dan klik link reset password yang kami kirimkan.
+                                Link berlaku 15 menit.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="auth-switch" style="margin-top:12px">
+
+                        <script data-cfasync="false"
+                            src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                        <script>
+                            (function () {
+                                var el = document.getElementById('loader');
+                                function hide() { el.style.opacity = '0'; el.style.pointerEvents = 'none'; }
+                                setTimeout(hide, 500);
+                            })();
+
+                            function goApp() {
+                                document.getElementById('landing').classList.remove('active');
+                                document.getElementById('app').classList.add('active');
+                                window.scrollTo(0, 0);
+                            }
+                            function goLanding() {
+                                document.getElementById('app').classList.remove('active');
+                                document.getElementById('landing').classList.add('active');
+                                window.scrollTo(0, 0);
+                            }
+                            function goScroll(id) {
+                                document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+                            }
+
+                            function setMode(m) {
+                                ['single', 'flow', 'perf'].forEach(function (x) {
+                                    document.getElementById('m-' + x).style.display = x === m ? 'flex' : 'none';
+                                    document.getElementById('mb-' + x).classList.toggle('on', x === m);
+                                });
+                            }
+
+                            function togColl(el) {
+                                el.classList.toggle('open');
+                                var next = el.nextElementSibling;
+                                next.style.display = next.style.display === 'none' ? '' : 'none';
+                            }
+
+                            function loadR(method, url, name, el) {
+                                document.querySelectorAll('.sb-item').forEach(function (i) { i.classList.remove('on'); });
+                                el.classList.add('on');
+                                document.getElementById('msel').value = method;
+                                document.getElementById('urlin').value = url;
+                                document.getElementById('rname').value = name;
+                                updMethod();
+                                setMode('single');
+                                toast(name + ' dimuat', 'ok');
+                            }
+
+                            function updMethod() {
+                                var s = document.getElementById('msel');
+                                var c = { GET: 'var(--green)', POST: 'var(--blue)', PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)' };
+                                s.style.color = c[s.value] || 'var(--ink)';
+                            }
+
+                            function swTab(el, id) {
+                                el.closest('.tabs-row').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
+                                document.querySelectorAll('.panels-area .panel').forEach(function (p) { p.classList.remove('on'); });
+                                el.classList.add('on');
+                                document.getElementById(id).classList.add('on');
+                            }
+
+                            function swRTab(el, id) {
+                                el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
+                                ['rb', 'rh', 'ra'].forEach(function (i) {
+                                    var e = document.getElementById(i);
+                                    if (e) e.style.display = 'none';
+                                });
+                                el.classList.add('on');
+                                document.getElementById(id).style.display = 'block';
+                            }
+
+                            var mockResp = {
+                                GET: { st: '200 OK', sc: 's-ok', t: '89ms', sz: '3.1 KB', b: '{\n  "success": true,\n  "data": [\n    { "id": 1, "name": "Product A" },\n    { "id": 2, "name": "Product B" }\n  ],\n  "total": 24\n}' },
+                                POST: { st: '201 Created', sc: 's-ok', t: '142ms', sz: '1.2 KB', b: '{\n  "success": true,\n  "message": "Created successfully",\n  "data": { "id": 42, "token": "eyJhbGci..." }\n}' },
+                                PUT: { st: '200 OK', sc: 's-ok', t: '108ms', sz: '0.8 KB', b: '{\n  "success": true,\n  "message": "Updated"\n}' },
+                                DELETE: { st: '204 No Content', sc: 's-ok', t: '67ms', sz: '0 KB', b: '// 204 No Content - tidak ada body' },
+                                PATCH: { st: '200 OK', sc: 's-ok', t: '95ms', sz: '0.6 KB', b: '{ "success": true }' }
+                            };
+
+                            function doSend() {
+                                var btn = document.getElementById('sendb');
+                                var m = document.getElementById('msel').value;
+                                btn.textContent = '...'; btn.disabled = true;
+                                setTimeout(function () {
+                                    var r = mockResp[m] || mockResp.GET;
+                                    document.getElementById('rstat').textContent = r.st;
+                                    document.getElementById('rstat').className = 's-badge ' + r.sc;
+                                    document.getElementById('rtime').textContent = r.t;
+                                    document.getElementById('rsize').textContent = r.sz;
+                                    document.getElementById('rb').textContent = r.b;
+                                    btn.textContent = 'Send'; btn.disabled = false;
+                                    toast('Response: ' + r.st, 'ok');
+                                }, 400 + Math.random() * 500);
+                            }
+
+                            function addParam() {
+                                var tb = document.getElementById('param-body');
+                                var tr = document.createElement('tr');
+                                tr.innerHTML = '<td><input type="checkbox" class="p-chk" checked></td>'
+                                    + '<td><input placeholder="Key"></td>'
+                                    + '<td><input placeholder="Value"></td>'
+                                    + '<td><span class="row-del" onclick="this.closest(\'tr\').remove()">x</span></td>';
+                                tb.appendChild(tr);
+                            }
+
+                            function addAss() {
+                                var list = document.getElementById('ass-list');
+                                var d = document.createElement('div');
+                                d.className = 'ass-row';
+                                d.innerHTML = '<span class="ass-dot dot-skip"></span>'
+                                    + '<input class="ass-inline-input" placeholder="Contoh: status = 200">'
+                                    + '<span class="ass-remove" onclick="this.parentElement.remove()">x</span>';
+                                list.appendChild(d);
+                                document.getElementById('act').textContent = list.children.length;
+                            }
+
+                            document.querySelectorAll('.bt-btn').forEach(function (btn) {
+                                btn.addEventListener('click', function () {
+                                    this.closest('.body-bar').querySelectorAll('.bt-btn').forEach(function (b) { b.classList.remove('on'); });
+                                    this.classList.add('on');
+                                });
+                            });
+
+                            function runFlow() {
+                                var cards = document.querySelectorAll('.f-card');
+                                var i = 0;
+                                cards.forEach(function (c) {
+                                    c.className = 'f-card';
+                                    c.querySelector('.f-status').className = 'f-status fs-w';
+                                    c.querySelector('.f-status').textContent = 'Waiting';
+                                });
+                                function next() {
+                                    if (i >= cards.length) { toast('Flow selesai - semua passed', 'ok'); return; }
+                                    var c = cards[i];
+                                    c.className = 'f-card run';
+                                    c.querySelector('.f-status').className = 'f-status fs-r';
+                                    c.querySelector('.f-status').textContent = 'Running';
+                                    setTimeout(function () {
+                                        c.className = 'f-card pass';
+                                        c.querySelector('.f-status').className = 'f-status fs-p';
+                                        c.querySelector('.f-status').textContent = 'PASSED';
+                                        i++; next();
+                                    }, 800);
+                                }
+                                next();
+                            }
+
+                            function setPr(btn, vu, dur) {
+                                document.querySelectorAll('.pr-btn').forEach(function (b) { b.classList.remove('on'); });
+                                btn.classList.add('on');
+                                if (vu > 0) {
+                                    document.getElementById('pvu').textContent = vu;
+                                    document.getElementById('pdur').textContent = dur + 's';
+                                }
+                            }
+
+                            function runPerf() {
+                                toast('K6 test berjalan...', 'ok');
+                                setTimeout(function () { toast('Selesai - error rate 0.2%', 'ok'); }, 3000);
+                            }
+
+                            function toggleFaq(el) {
+                                el.parentElement.classList.toggle('open');
+                            }
+
+                            var tTimer;
+                            function toast(msg, type) {
+                                var el = document.getElementById('toastEl');
+                                document.getElementById('toast-txt').textContent = msg;
+                                var ico = document.getElementById('toast-ico');
+                                ico.className = type === 'ok'
+                                    ? 'bi bi-check-circle-fill toast-ico-ok'
+                                    : 'bi bi-x-circle-fill toast-ico-err';
+                                el.classList.add('show');
+                                clearTimeout(tTimer);
+                                tTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+                            }
+
+                            updMethod();
+
+                            /* ── AUTH MODAL ── */
+                            function openModal(view) {
+                                view = view || 'login';
+                                showView(view);
+                                document.getElementById('authModal').classList.add('open');
+                                document.body.style.overflow = 'hidden';
+                                // Focus field pertama setelah animasi
+                                setTimeout(function () {
+                                    var first = document.querySelector('#view-' + view + ' input');
+                                    if (first) first.focus();
+                                }, 280);
+                            }
+
+                            function closeModal() {
+                                document.getElementById('authModal').classList.remove('open');
+                                document.body.style.overflow = '';
+                            }
+
+                            function modalOutsideClick(e) {
+                                if (e.target === document.getElementById('authModal')) closeModal();
+                            }
+
+                            // Tutup modal dengan Escape
+                            document.addEventListener('keydown', function (e) {
+                                if (e.key === 'Escape') closeModal();
+                            });
+
+                            function showView(v) {
+                                ['login', 'register', 'forgot'].forEach(function (name) {
+                                    document.getElementById('view-' + name).style.display = name === v ? 'block' : 'none';
+                                });
+                            }
+
+                            function togglePw(inputId, btn) {
+                                var inp = document.getElementById(inputId);
+                                var icon = btn.querySelector('i');
+                                if (inp.type === 'password') {
+                                    inp.type = 'text';
+                                    icon.className = 'bi bi-eye-slash';
+                                } else {
+                                    inp.type = 'password';
+                                    icon.className = 'bi bi-eye';
+                                }
+                            }
+
+                            function clearErr(inputId) {
+                                var inp = document.getElementById(inputId);
+                                var err = document.getElementById('err-' + inputId);
+                                if (inp) inp.classList.remove('err');
+                                if (err) err.classList.remove('show');
+                            }
+
+                            function showErr(inputId, msg) {
+                                var inp = document.getElementById(inputId);
+                                var err = document.getElementById('err-' + inputId);
+                                if (inp) inp.classList.add('err');
+                                if (err) { if (msg) err.textContent = msg; err.classList.add('show'); }
+                                if (inp) inp.focus();
+                            }
+
+                            /* Validasi & simulasi Login */
+                            function doLogin() {
+                                var email = document.getElementById('login-email').value.trim();
+                                var pass = document.getElementById('login-pass').value;
+                                var ok = true;
+                                if (!email || !/\S+@\S+\.\S+/.test(email)) { showErr('login-email'); ok = false; }
+                                if (!pass) { showErr('login-pass'); ok = false; }
+                                if (!ok) return;
+
+                                var btn = document.getElementById('btn-login');
+                                btn.classList.add('loading');
+                                btn.textContent = 'Memverifikasi...';
+
+                                // Simulasi API call
+                                setTimeout(function () {
+                                    btn.classList.remove('loading');
+                                    btn.textContent = 'Masuk';
+                                    closeModal();
+                                    goApp(); // masuk ke app
+                                    toast('Selamat datang kembali! 👋', 'ok');
+                                }, 1400);
+                            }
+
+                            /* Validasi & simulasi Register */
+                            function doRegister() {
+                                var name = document.getElementById('reg-name').value.trim();
+                                var email = document.getElementById('reg-email').value.trim();
+                                var pass = document.getElementById('reg-pass').value;
+                                var ok = true;
+                                if (!name) { showErr('reg-name'); ok = false; }
+                                if (!email || !/\S+@\S+\.\S+/.test(email)) { showErr('reg-email'); ok = false; }
+                                if (!pass || pass.length < 8) { showErr('reg-pass'); ok = false; }
+                                if (!ok) return;
+
+                                var btn = document.getElementById('btn-register');
+                                btn.classList.add('loading');
+                                btn.textContent = 'Membuat akun...';
+
+                                setTimeout(function () {
+                                    btn.classList.remove('loading');
+                                    btn.textContent = 'Buat akun gratis';
+                                    closeModal();
+                                    goApp();
+                                    toast('Akun berhasil dibuat! Selamat datang 🎉', 'ok');
+                                }, 1600);
+                            }
+
+                            /* Simulasi Forgot Password */
+                            function doForgot() {
+                                var email = document.getElementById('forgot-email').value.trim();
+                                if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                                    showErr('forgot-email', 'Masukkan email yang valid.');
+                                    return;
+                                }
+
+                                var btn = document.getElementById('btn-forgot');
+                                btn.classList.add('loading');
+                                btn.textContent = 'Mengirim...';
+
+                                setTimeout(function () {
+                                    document.getElementById('forgot-form').style.display = 'none';
+                                    document.getElementById('forgot-sent').style.display = 'block';
+                                }, 1400);
+                            }
+
+                            /* Simulasi Google Login */
+                            function loginGoogle() {
+                                closeModal();
+                                toast('Google login akan tersedia saat backend live 🔧', 'ok');
+                                // Nanti: window.location.href = '/auth/google'
+                            }
+
+                        </script>
 </body>
 
 </html>
