@@ -73,26 +73,22 @@
                 <div class="hero-card">
                     <div class="hc-topbar">
                         <div class="hc-dots"><i class="d-r"></i><i class="d-y"></i><i class="d-g"></i></div>
-                        <span class="hc-label">HITSaurce · Playground</span>
+                        <span class="hc-label">HITSaurce · Live Demo</span>
+                        <span class="hc-live-dot"></span>
                     </div>
                     <div class="hc-body">
                         <div class="hc-urlbar">
                             <span class="hc-method">GET</span>
-                            <span class="hc-url">https://api.myapp.id/v1/products?limit=10</span>
-                            <button class="hc-send">Send</button>
+                            <span class="hc-url" id="demoUrl" contenteditable="true" spellcheck="false"
+                                style="outline:none;cursor:text">https://jsonplaceholder.typicode.com/posts/1</span>
+                            <button class="hc-send" id="demoSendBtn" onclick="demoSend()">Send</button>
                         </div>
-                        <div class="hc-resp-head">
-                            <span class="hc-status">200 OK</span>
-                            <span class="hc-meta">142ms · 3.1KB</span>
+                        <div class="hc-resp-head" id="demoRespHead" style="display:none">
+                            <span class="hc-status" id="demoStatus">200 OK</span>
+                            <span class="hc-meta" id="demoMeta">—</span>
                         </div>
-                        <div class="hc-json">
-                            <span class="j-k">"data"</span>: [<br>
-                            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span
-                                class="j-k">"name"</span>: <span class="j-s">"Laptop Pro X"</span> },<br>
-                            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span
-                                class="j-k">"name"</span>: <span class="j-s">"Mouse Wireless"</span> }<br>
-                            ],<br>
-                            <span class="j-k">"total"</span>: <span class="j-n">24</span>
+                        <div class="hc-json" id="demoBody" style="min-height:80px;overflow-y:auto;max-height:160px">
+                            <span style="color:var(--ink3);font-size:11px">Klik Send untuk coba langsung ↑</span>
                         </div>
                     </div>
                 </div>
@@ -1294,6 +1290,108 @@
             b.style.transition = 'opacity .3s';
             setTimeout(function () { b.style.display = 'none'; }, 300);
             localStorage.setItem('hs_banner_dismissed', '1');
+        }
+
+        /* ── HERO DEMO SEND ── */
+        function demoSend() {
+            var btn = document.getElementById('demoSendBtn');
+            var urlEl = document.getElementById('demoUrl');
+            var body = document.getElementById('demoBody');
+            var head = document.getElementById('demoRespHead');
+            var stat = document.getElementById('demoStatus');
+            var meta = document.getElementById('demoMeta');
+
+            var url = urlEl.textContent.trim();
+            if (!url || !url.startsWith('http')) {
+                body.innerHTML = '<span style="color:var(--red);font-size:11px">⚠ Masukkan URL yang valid (https://...)</span>';
+                return;
+            }
+
+            // Loading state
+            btn.textContent = '...';
+            btn.disabled = true;
+            body.innerHTML = '<span style="color:var(--ink3);font-size:11px">Mengirim request...</span>';
+            head.style.display = 'none';
+
+            var t0 = Date.now();
+
+            fetch(url, { method: 'GET' })
+                .then(function (res) {
+                    var ms = Date.now() - t0;
+                    var sc = res.status;
+
+                    // Status badge
+                    stat.textContent = sc + ' ' + (res.statusText || statusText(sc));
+                    stat.style.background = sc >= 200 && sc < 300 ? 'var(--green-bg)' :
+                        sc >= 400 ? 'var(--red-bg)' : 'var(--amber-bg)';
+                    stat.style.color = sc >= 200 && sc < 300 ? 'var(--green)' :
+                        sc >= 400 ? 'var(--red)' : 'var(--amber)';
+                    stat.style.border = sc >= 200 && sc < 300 ? '1px solid var(--green-mid)' :
+                        sc >= 400 ? '1px solid var(--red-mid)' : '1px solid var(--amber-mid)';
+
+                    // Ukuran & waktu
+                    var ct = res.headers.get('content-type') || '';
+                    meta.textContent = ms + 'ms';
+                    head.style.display = 'flex';
+
+                    return res.text().then(function (text) {
+                        // Coba pretty-print JSON
+                        var display = text;
+                        try {
+                            var parsed = JSON.parse(text);
+                            display = JSON.stringify(parsed, null, 2);
+                            // Hitung ukuran
+                            meta.textContent = ms + 'ms · ' + (new Blob([text]).size / 1024).toFixed(1) + ' KB';
+                        } catch (e) { }
+
+                        // Syntax highlight sederhana
+                        body.innerHTML = syntaxHL(display);
+                        btn.textContent = 'Send';
+                        btn.disabled = false;
+                    });
+                })
+                .catch(function (err) {
+                    head.style.display = 'flex';
+                    stat.textContent = 'Error';
+                    stat.style.background = 'var(--red-bg)';
+                    stat.style.color = 'var(--red)';
+                    stat.style.border = '1px solid var(--red-mid)';
+                    meta.textContent = Date.now() - t0 + 'ms';
+
+                    // Cek apakah CORS error
+                    var isCors = err.message && err.message.toLowerCase().includes('fetch');
+                    body.innerHTML = '<span style="color:var(--red);font-size:11px">'
+                        + (isCors
+                            ? '⚠ CORS blocked — API ini tidak mengizinkan akses dari browser.\nCoba: https://jsonplaceholder.typicode.com/posts/1'
+                            : '⚠ ' + err.message)
+                        + '</span>';
+                    btn.textContent = 'Send';
+                    btn.disabled = false;
+                });
+        }
+
+        function statusText(code) {
+            var t = {
+                200: 'OK', 201: 'Created', 204: 'No Content', 400: 'Bad Request',
+                401: 'Unauthorized', 403: 'Forbidden', 404: 'Not Found',
+                422: 'Unprocessable', 429: 'Too Many Requests', 500: 'Server Error'
+            };
+            return t[code] || '';
+        }
+
+        function syntaxHL(str) {
+            // Escape HTML dulu
+            str = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            // Warnai key, string, number, boolean
+            return str
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")\s*:/g,
+                    '<span style="color:var(--blue)">$1</span>:')
+                .replace(/:\s*("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g,
+                    ': <span style="color:var(--green)">$2</span>')
+                .replace(/:\s*(\b(true|false)\b)/g,
+                    ': <span style="color:var(--amber)">$1</span>')
+                .replace(/:\s*(\b\d+\.?\d*\b)/g,
+                    ': <span style="color:#8e44ad">$1</span>');
         }
 
         /* ── REQUEST BUILDER ── */

@@ -473,6 +473,22 @@ body {
   white-space: nowrap;
 }
 
+.hc-live-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);margin-left:auto;flex-shrink:0;
+  animation:blink 2s infinite;
+}
+.hc-url[contenteditable="true"]{
+  cursor:text;
+}
+.hc-url[contenteditable="true"]:focus{
+  background:#fff;
+  border-color:var(--green-mid);
+}
+.hc-send:disabled{
+  background:var(--ink3);cursor:not-allowed;
+}
+
 .hc-resp-head {
   display: flex;
   align-items: center;
