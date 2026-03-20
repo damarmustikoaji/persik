@@ -1,1659 +1,1712 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HITSaurce — API Testing Platform</title>
-  <link rel="icon" href="public/assets/favicon.ico">
-  <link rel="stylesheet" href="public/assets/css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HITSaurce — API Testing Platform</title>
+    <link rel="icon" href="public/assets/favicon.ico">
+    <link rel="stylesheet" href="public/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
+
 <body>
 
-<!-- ════════ LOADER ════════ -->
-<div class="loader" id="loader">
-  <div class="loader-ring"></div>
-  <p>Memuat HITSaurce...</p>
-</div>
-
-<!-- ════════ LANDING ════════ -->
-<div class="page active" id="landing">
-
-  <nav class="nav">
-    <div class="logo" onclick="goLanding()">
-      <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce">
-      <span class="logo-text">HIT<span>Saurce</span></span>
-    </div>
-    <div class="nav-links">
-      <a onclick="goScroll('how')">Cara Kerja</a>
-      <a onclick="goScroll('features')">Fitur</a>
-      <a onclick="goScroll('pricing')">Support</a>
-      <a onclick="goScroll('faq')">FAQ</a>
-    </div>
-    <div class="nav-right">
-      <button class="btn btn-outline btn-sm" onclick="openModal('register')">Daftar</button>
-      <button class="btn btn-solid btn-sm" onclick="openModal('login')">Masuk</button>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-left">
-      <div class="hero-tag">
-        <span class="hero-tag-dot"></span>Beta · Gratis · Tanpa install
-      </div>
-      <h1>API Testing<br>yang <em>benar-benar</em><br><strong>mudah dipakai.</strong></h1>
-      <p class="hero-sub">Dari hit satu hingga skenario E2E lengkap. Dirancang untuk semua level — tidak perlu baca manual untuk mulai.</p>
-      <div class="hero-actions">
-        <button class="btn btn-green btn-lg" onclick="goApp()">
-          <i class="bi bi-rocket-takeoff"></i> Coba Gratis Sekarang
-        </button>
-        <button class="btn btn-outline btn-lg" onclick="goScroll('how')">Lihat cara kerja</button>
-      </div>
-      <div class="hero-stat">
-        <div class="stat-item">
-          <div class="stat-num">3</div>
-          <div class="stat-label">Playground</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">0</div>
-          <div class="stat-label">Install dibutuhkan</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">Rp0</div>
-          <div class="stat-label">Untuk mulai</div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-badge b1"><span class="badge-dot-g"></span>200 OK · 142ms</div>
-      <div class="hero-card">
-        <div class="hc-topbar">
-          <div class="hc-dots"><i class="d-r"></i><i class="d-y"></i><i class="d-g"></i></div>
-          <span class="hc-label">HITSaurce · Playground</span>
-        </div>
-        <div class="hc-body">
-          <div class="hc-urlbar">
-            <span class="hc-method">GET</span>
-            <span class="hc-url">https://api.myapp.id/v1/products?limit=10</span>
-            <button class="hc-send">Send</button>
-          </div>
-          <div class="hc-resp-head">
-            <span class="hc-status">200 OK</span>
-            <span class="hc-meta">142ms · 3.1KB</span>
-          </div>
-          <div class="hc-json">
-            <span class="j-k">"data"</span>: [<br>
-            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span class="j-k">"name"</span>: <span class="j-s">"Laptop Pro X"</span> },<br>
-            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span class="j-k">"name"</span>: <span class="j-s">"Mouse Wireless"</span> }<br>
-            ],<br>
-            <span class="j-k">"total"</span>: <span class="j-n">24</span>
-          </div>
-        </div>
-      </div>
-      <div class="hero-badge b2"><span class="badge-dot-a"></span>Flow: 4/4 passed</div>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS -->
-  <div class="wrap" id="how">
-    <div class="section">
-      <div class="section-kicker">Cara kerja</div>
-      <h2 class="section-title">Tiga playground,<br><strong>satu platform.</strong></h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i></div>
-          <div class="step-num">PLAYGROUND 01</div>
-          <h3>Hit Saurce</h3>
-          <p>Hit manapun. Lihat response, headers, timing dalam satu tampilan bersih tanpa konfigurasi.</p>
-        </div>
-        <div class="step">
-          <div class="step-icon"><i class="bi bi-puzzle-fill" style="color:var(--blue)"></i></div>
-          <div class="step-num">PLAYGROUND 02</div>
-          <h3>Runner</h3>
-          <p>Susun API jadi skenario E2E. Token dari login otomatis tersedia di request berikutnya tanpa tulis script.</p>
-        </div>
-        <div class="step">
-          <div class="step-icon"><i class="bi bi-speedometer" style="color:var(--amber)"></i></div>
-          <div class="step-num">PLAYGROUND 03</div>
-          <h3>Performance</h3>
-          <p>Load test langsung dari browser. Pilih preset jumlah user atau atur sendiri, hasilnya real-time.</p>
-        </div>
-        <div class="step step-dark">
-          <div class="step-icon step-icon-dark"><i class="bi bi-newspaper" style="color:#fff"></i></div>
-          <div class="step-num step-num-dark">HASIL</div>
-          <h3>Report siap bagikan</h3>
-          <p class="step-p-dark">Satu klik untuk generate laporan. Bagikan link ke tim atau klien tanpa perlu export file.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FEATURES -->
-  <div class="wrap" id="features">
-    <div class="section">
-      <div class="section-kicker">Fitur</div>
-      <h2 class="section-title">Semua yang kamu butuhkan.<br><strong>Tidak lebih, tidak kurang.</strong></h2>
-      <p class="section-sub">Setiap fitur dipilih berdasarkan apa yang benar-benar dipakai saat testing.</p>
-      <div class="feat-grid">
-        <div class="feat-cell">
-          <div class="feat-tag">Request Builder</div>
-          <h3>Visual, bukan kode</h3>
-          <p>Isi method, URL, headers, dan body lewat form intuitif. Tidak perlu hafal format cURL atau syntax JSON.</p>
-          <div class="feat-demo">
-            <span class="c-green">POST</span> /v1/auth/login<br>
-            Authorization: Bearer <span class="c-amber">{{token}}</span><br>
-            Content-Type: application/json
-          </div>
-        </div>
-        <div class="feat-cell">
-          <div class="feat-tag">Variable Extraction</div>
-          <h3>Ambil data antar request</h3>
-          <p>Simpan nilai dari response seperti token atau ID lalu gunakan di request berikutnya — otomatis, tanpa script.</p>
-          <div class="feat-demo">
-            Login → simpan <span class="c-green">{{token}}</span> dari data.token<br>
-            Get Cart → pakai <span class="c-green">{{token}}</span> di header<br>
-            Checkout → pakai <span class="c-green">{{cart_id}}</span>
-          </div>
-        </div>
-        <div class="feat-cell">
-          <div class="feat-tag">Assertions</div>
-          <h3>Validasi otomatis, hasil jelas</h3>
-          <p>Tentukan ekspektasi untuk status code, isi response, dan waktu. Setelah send langsung tahu pass atau fail.</p>
-          <div class="feat-demo">
-            <span class="c-green">✓ PASS</span> Status code = 200<br>
-            <span class="c-green">✓ PASS</span> Response time &lt; 500ms<br>
-            <span class="c-red">✗ FAIL</span> data.user.email exists
-          </div>
-        </div>
-        <div class="feat-cell">
-          <div class="feat-tag">Environment</div>
-          <h3>Dev, Staging, Prod — 1 klik</h3>
-          <p>Simpan base URL dan variabel per environment. Switch antara Dev, Staging, dan Production tanpa edit manual.</p>
-          <div class="feat-demo">
-            Dev &nbsp;&nbsp;&nbsp;→ api.dev.myapp.id<br>
-            Staging → api.stg.myapp.id<br>
-            Prod &nbsp;&nbsp;→ api.myapp.id
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PRICING -->
-  <div class="wrap" id="pricing">
-    <div class="section">
-      <div class="section-kicker">Support</div>
-      <h2 class="section-title">Transparan.<br><strong>Tanpa kejutan.</strong></h2>
-      <p class="section-sub">Tier gratis dirancang agar bisa dipakai sungguhan, bukan sekedar trial 7 hari.</p>
-      <div class="pricing-grid">
-
-        <div class="p-card">
-          <div class="p-plan">Gratis</div>
-          <div class="p-price">Rp0<small> / bulan</small></div>
-          <p class="p-desc">Untuk yang baru mulai atau side project personal.</p>
-          <ul class="p-list">
-            <li>Unlimited single requests</li>
-            <li>5 Flow Runner</li>
-            <li>Load test hingga 10 VU</li>
-            <li>3 Environment</li>
-            <li>1 Workspace</li>
-            <li>Riwayat 7 hari</li>
-            <li class="off">Report link</li>
-            <li class="off">Kolaborasi tim</li>
-          </ul>
-          <button class="p-btn btn-outline" onclick="openModal('register')">Mulai gratis</button>
-        </div>
-
-        <div class="p-card featured">
-          <div class="p-featured-tag">MOST POPULAR</div>
-          <div class="p-plan">Support</div>
-          <div class="p-price"><sup>Rp</sup>79K<small> / bulan</small></div>
-          <p class="p-desc">Support penuh untuk HITSaurce dan nikmati semua fitur tanpa batas.</p>
-          <ul class="p-list">
-            <li>Unlimited single requests</li>
-            <li>Unlimited Flow Runner</li>
-            <li>Load test hingga 500 VU</li>
-            <li>Unlimited Environment</li>
-            <li>5 Workspace</li>
-            <li>Riwayat 90 hari</li>
-            <li>Report link</li>
-            <li>2 anggota tim</li>
-          </ul>
-          <button class="p-btn btn-green" onclick="openModal('register')">Mulai & Support</button>
-        </div>
-
-        <div class="p-card">
-          <div class="p-plan">Next Level</div>
-          <div class="p-price">Coming<small> soon</small></div>
-          <p class="p-desc">Untuk tim yang bekerja bersama dalam satu workspace besar.</p>
-          <ul class="p-list">
-            <li>Semua fitur Support</li>
-            <li>Load test unlimited VU</li>
-            <li>Unlimited Workspace</li>
-            <li>Riwayat unlimited</li>
-            <li>Hingga 10 anggota</li>
-            <li>SSO / SAML</li>
-            <li>Audit log</li>
-            <li>Priority support</li>
-          </ul>
-          <button class="p-btn btn-outline" onclick="toast('Tim kami akan menghubungi kamu segera!','ok')">Hubungi Kami</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- FAQ -->
-  <div class="wrap" id="faq">
-    <div class="section">
-      <div class="section-kicker">FAQ</div>
-      <h2 class="section-title"><strong>Pertanyaan</strong> yang sering ditanya.</h2>
-      <div class="faq">
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            Apakah tier gratis benar-benar gratis selamanya?
-            <i class="faq-ico">+</i>
-          </div>
-          <div class="faq-a">Ya. Tidak ada batas waktu, tidak perlu kartu kredit. Upgrade hanya jika kapasitas kamu bertumbuh dan ingin mendukung pengembangan HITSaurce.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            Apakah perlu install sesuatu?
-            <i class="faq-ico">+</i>
-          </div>
-          <div class="faq-a">Tidak sama sekali. HITSaurce berjalan sepenuhnya di browser — tidak perlu ekstensi, tidak perlu desktop app, tidak perlu Node.js atau Python.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            Bagaimana cara kerja load test dengan K6?
-            <i class="faq-ico">+</i>
-          </div>
-          <div class="faq-a">Kamu mengatur jumlah virtual user dan durasi lewat UI. HITSaurce menjalankan K6 di server kami dan streaming hasilnya secara real-time ke browser — tanpa install K6 lokal sama sekali.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            Bisa import collection dari Postman?
-            <i class="faq-ico">+</i>
-          </div>
-          <div class="faq-a">Ya, import collection Postman format JSON tersedia di semua tier termasuk gratis. Kamu bisa langsung pakai collection yang sudah ada tanpa setup ulang.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            Apakah data request saya aman?
-            <i class="faq-ico">+</i>
-          </div>
-          <div class="faq-a">Semua komunikasi dienkripsi via HTTPS. Data kamu tidak pernah dijual atau dibagikan ke pihak lain. Request yang kamu buat hanya bisa dilihat oleh kamu dan anggota workspace-mu.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            Apakah bisa dipakai untuk QA yang belum tahu coding?
-            <i class="faq-ico">+</i>
-          </div>
-          <div class="faq-a">Justru itu target utama kami. HITSaurce dirancang agar QA manual bisa langsung testing API tanpa perlu belajar coding, cURL, atau Postman dulu. Semua visual dan ada panduan inline di setiap langkah.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA BAND -->
-  <div class="cta-band">
-    <div class="cta-band-inner">
-      <div>
-        <h2>Siap testing<br><strong>langsung?</strong></h2>
-        <p>Hit it. Test it. Source it.</p>
-      </div>
-      <div class="cta-right">
-        <button class="btn btn-green btn-lg" onclick="openModal('register')">
-          <i class="bi bi-rocket-takeoff"></i> Mulai Sekarang — Gratis
-        </button>
-        <span class="cta-note">Tidak perlu kartu kredit.</span>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <div class="logo">
-      <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce">
-      <span class="logo-text">HIT<span>Saurce</span></span>
-    </div>
-    <div class="footer-links">
-      <a>Docs</a>
-      <a>Blog</a>
-      <a>Status</a>
-      <a>Privacy</a>
-      <a>Terms</a>
-    </div>
-    <span class="footer-copy">© 2025 HITSaurce</span>
-  </footer>
-
-</div><!-- /landing -->
-
-
-<!-- ════════ ONBOARDING ════════ -->
-<div class="page" id="onboarding">
-  <div class="onb-wrap">
-
-    <!-- Progress -->
-    <div class="onb-progress">
-      <div class="onb-dot active" id="dot-1"></div>
-      <div class="onb-line" id="line-1"></div>
-      <div class="onb-dot" id="dot-2"></div>
-      <div class="onb-line" id="line-2"></div>
-      <div class="onb-dot" id="dot-3"></div>
+    <!-- ════════ LOADER ════════ -->
+    <div class="loader" id="loader">
+        <div class="loader-ring"></div>
+        <p>Memuat HITSaurce...</p>
     </div>
 
-    <!-- STEP 1: Profil -->
-    <div class="onb-step active" id="onb-1">
-      <div class="onb-icon"><i class="bi bi-hand-wave" style="color:var(--green)"></i></div>
-      <h2 class="onb-title">Halo! Kenalin diri dulu yuk</h2>
-      <p class="onb-sub">Ini membantu kami menyesuaikan pengalaman dan panduan yang tepat untukmu.</p>
-      <div class="onb-form">
-        <div class="field">
-          <label>Nama panggilan</label>
-          <input type="text" id="onb-displayname" placeholder="Contoh: Budi, Sarah, Tim QA Alpha...">
-        </div>
-        <div class="field">
-          <label>Saya adalah seorang...</label>
-          <div class="role-grid" id="role-grid">
-            <div class="role-card" onclick="selectRole(this,'qa_manual')">
-              <div class="role-icon"><i class="bi bi-clipboard-check-fill"></i></div>
-              <div class="role-label">QA Manual</div>
-              <div class="role-desc">Testing tanpa coding</div>
+    <!-- ════════ LANDING ════════ -->
+    <div class="page active" id="landing">
+
+        <nav class="nav">
+            <div class="logo" onclick="goLanding()">
+                <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce">
+                <span class="logo-text">HIT<span>Saurce</span></span>
             </div>
-            <div class="role-card" onclick="selectRole(this,'qa_auto')">
-              <div class="role-icon"><i class="bi bi-code-slash"></i></div>
-              <div class="role-label">QA Automation</div>
-              <div class="role-desc">Testing dengan script</div>
+            <div class="nav-links">
+                <a onclick="goScroll('how')">Cara Kerja</a>
+                <a onclick="goScroll('features')">Fitur</a>
+                <a onclick="goScroll('pricing')">Support</a>
+                <a onclick="goScroll('faq')">FAQ</a>
             </div>
-            <div class="role-card" onclick="selectRole(this,'developer')">
-              <div class="role-icon"><i class="bi bi-terminal-fill"></i></div>
-              <div class="role-label">Developer</div>
-              <div class="role-desc">Build &amp; test API</div>
+            <div class="nav-right">
+                <button class="btn btn-outline btn-sm" onclick="openModal('register')">Daftar</button>
+                <button class="btn btn-solid btn-sm" onclick="openModal('login')">Masuk</button>
             </div>
-            <div class="role-card" onclick="selectRole(this,'manager')">
-              <div class="role-icon"><i class="bi bi-people-fill"></i></div>
-              <div class="role-label">Tech Lead / Manager</div>
-              <div class="role-desc">Pantau tim &amp; kualitas</div>
+        </nav>
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-left">
+                <div class="hero-tag">
+                    <span class="hero-tag-dot"></span>Beta · Gratis · Tanpa install
+                </div>
+                <h1>API Testing<br>yang <em>benar-benar</em><br><strong>mudah dipakai.</strong></h1>
+                <p class="hero-sub">Dari hit satu hingga skenario E2E lengkap. Dirancang untuk semua level — tidak perlu
+                    baca manual untuk mulai.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-green btn-lg" onclick="goApp()">
+                        <i class="bi bi-rocket-takeoff"></i> Coba Gratis Sekarang
+                    </button>
+                    <button class="btn btn-outline btn-lg" onclick="goScroll('how')">Lihat cara kerja</button>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-item">
+                        <div class="stat-num">3</div>
+                        <div class="stat-label">Playground</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">0</div>
+                        <div class="stat-label">Install dibutuhkan</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Rp0</div>
+                        <div class="stat-label">Untuk mulai</div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="field">
-          <label>Pengalaman dengan API testing</label>
-          <div class="exp-row">
-            <button class="exp-btn" onclick="selectExp(this,'beginner')">Baru mulai 🌱</button>
-            <button class="exp-btn" onclick="selectExp(this,'intermediate')">Paham dasar 🌿</button>
-            <button class="exp-btn" onclick="selectExp(this,'advanced')">Berpengalaman 🌳</button>
-          </div>
-        </div>
-      </div>
-      <button class="onb-next" onclick="onbNext(1)">
-        Lanjut <i class="bi bi-arrow-right"></i>
-      </button>
-    </div>
-
-    <!-- STEP 2: Workspace -->
-    <div class="onb-step" id="onb-2">
-      <div class="onb-icon"><i class="bi bi-folder2-open" style="color:var(--green)"></i></div>
-      <h2 class="onb-title">Buat workspace pertamamu</h2>
-      <p class="onb-sub">Workspace adalah tempat semua collection dan request kamu tersimpan dan terorganisir.</p>
-      <div class="onb-form">
-        <div class="field">
-          <label>Nama workspace</label>
-          <input type="text" id="onb-wsname" placeholder="Contoh: Project Alpha, MyApp API, Tim QA...">
-        </div>
-        <div class="field">
-          <label>Tujuan utama workspace ini</label>
-          <div class="purpose-grid">
-            <div class="purpose-card" onclick="selectPurpose(this,'personal')">
-              <i class="bi bi-person-fill"></i>
-              <span>Personal / belajar</span>
+            <div class="hero-right">
+                <div class="hero-badge b1"><span class="badge-dot-g"></span>200 OK · 142ms</div>
+                <div class="hero-card">
+                    <div class="hc-topbar">
+                        <div class="hc-dots"><i class="d-r"></i><i class="d-y"></i><i class="d-g"></i></div>
+                        <span class="hc-label">HITSaurce · Playground</span>
+                    </div>
+                    <div class="hc-body">
+                        <div class="hc-urlbar">
+                            <span class="hc-method">GET</span>
+                            <span class="hc-url">https://api.myapp.id/v1/products?limit=10</span>
+                            <button class="hc-send">Send</button>
+                        </div>
+                        <div class="hc-resp-head">
+                            <span class="hc-status">200 OK</span>
+                            <span class="hc-meta">142ms · 3.1KB</span>
+                        </div>
+                        <div class="hc-json">
+                            <span class="j-k">"data"</span>: [<br>
+                            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">1</span>, <span
+                                class="j-k">"name"</span>: <span class="j-s">"Laptop Pro X"</span> },<br>
+                            &nbsp;&nbsp;{ <span class="j-k">"id"</span>: <span class="j-n">2</span>, <span
+                                class="j-k">"name"</span>: <span class="j-s">"Mouse Wireless"</span> }<br>
+                            ],<br>
+                            <span class="j-k">"total"</span>: <span class="j-n">24</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-badge b2"><span class="badge-dot-a"></span>Flow: 4/4 passed</div>
             </div>
-            <div class="purpose-card" onclick="selectPurpose(this,'project')">
-              <i class="bi bi-kanban-fill"></i>
-              <span>Project tertentu</span>
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <div class="wrap" id="how">
+            <div class="section">
+                <div class="section-kicker">Cara kerja</div>
+                <h2 class="section-title">Tiga playground,<br><strong>satu platform.</strong></h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i>
+                        </div>
+                        <div class="step-num">PLAYGROUND 01</div>
+                        <h3>Hit Saurce</h3>
+                        <p>Hit manapun. Lihat response, headers, timing dalam satu tampilan bersih tanpa konfigurasi.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="bi bi-puzzle-fill" style="color:var(--blue)"></i></div>
+                        <div class="step-num">PLAYGROUND 02</div>
+                        <h3>Runner</h3>
+                        <p>Susun API jadi skenario E2E. Token dari login otomatis tersedia di request berikutnya tanpa
+                            tulis script.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="bi bi-speedometer" style="color:var(--amber)"></i></div>
+                        <div class="step-num">PLAYGROUND 03</div>
+                        <h3>Performance</h3>
+                        <p>Load test langsung dari browser. Pilih preset jumlah user atau atur sendiri, hasilnya
+                            real-time.</p>
+                    </div>
+                    <div class="step step-green">
+                        <div class="step-icon step-icon-dark"><i class="bi bi-newspaper" style="color:#fff"></i></div>
+                        <div class="step-num step-num-green">HASIL</div>
+                        <h3>Report siap bagikan</h3>
+                        <p class="step-p-green">Satu klik untuk generate laporan. Bagikan link ke tim atau klien tanpa
+                            perlu export file.</p>
+                    </div>
+                </div>
             </div>
-            <div class="purpose-card" onclick="selectPurpose(this,'team')">
-              <i class="bi bi-people-fill"></i>
-              <span>Dipakai tim</span>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="wrap" id="features">
+            <div class="section">
+                <div class="section-kicker">Fitur</div>
+                <h2 class="section-title">Semua yang kamu butuhkan.<br><strong>Tidak lebih, tidak kurang.</strong></h2>
+                <p class="section-sub">Setiap fitur dipilih berdasarkan apa yang benar-benar dipakai saat testing.</p>
+                <div class="feat-grid">
+                    <div class="feat-cell">
+                        <div class="feat-tag">Request Builder</div>
+                        <h3>Visual, bukan kode</h3>
+                        <p>Isi method, URL, headers, dan body lewat form intuitif. Tidak perlu hafal format cURL atau
+                            syntax JSON.</p>
+                        <div class="feat-demo">
+                            <span class="c-green">POST</span> /v1/auth/login<br>
+                            Authorization: Bearer <span class="c-amber">{{token}}</span><br>
+                            Content-Type: application/json
+                        </div>
+                    </div>
+                    <div class="feat-cell">
+                        <div class="feat-tag">Variable Extraction</div>
+                        <h3>Ambil data antar request</h3>
+                        <p>Simpan nilai dari response seperti token atau ID lalu gunakan di request berikutnya —
+                            otomatis, tanpa script.</p>
+                        <div class="feat-demo">
+                            Login → simpan <span class="c-green">{{token}}</span> dari data.token<br>
+                            Get Cart → pakai <span class="c-green">{{token}}</span> di header<br>
+                            Checkout → pakai <span class="c-green">{{cart_id}}</span>
+                        </div>
+                    </div>
+                    <div class="feat-cell">
+                        <div class="feat-tag">Assertions</div>
+                        <h3>Validasi otomatis, hasil jelas</h3>
+                        <p>Tentukan ekspektasi untuk status code, isi response, dan waktu. Setelah send langsung tahu
+                            pass atau fail.</p>
+                        <div class="feat-demo">
+                            <span class="c-green">✓ PASS</span> Status code = 200<br>
+                            <span class="c-green">✓ PASS</span> Response time &lt; 500ms<br>
+                            <span class="c-red">✗ FAIL</span> data.user.email exists
+                        </div>
+                    </div>
+                    <div class="feat-cell">
+                        <div class="feat-tag">Environment</div>
+                        <h3>Dev, Staging, Prod — 1 klik</h3>
+                        <p>Simpan base URL dan variabel per environment. Switch antara Dev, Staging, dan Production
+                            tanpa edit manual.</p>
+                        <div class="feat-demo">
+                            Dev &nbsp;&nbsp;&nbsp;→ api.dev.myapp.id<br>
+                            Staging → api.stg.myapp.id<br>
+                            Prod &nbsp;&nbsp;→ api.myapp.id
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="onb-tier-info">
-          <div class="onb-tier-icon"><i class="bi bi-info-circle-fill"></i></div>
-          <div>
-            <div class="onb-tier-title">Kamu di tier Gratis</div>
-            <div class="onb-tier-desc">1 workspace · 5 flow runner · unlimited single request. Upgrade kapanpun.</div>
-          </div>
-        </div>
-      </div>
-      <div class="onb-nav">
-        <button class="onb-back" onclick="onbBack(2)"><i class="bi bi-arrow-left"></i> Kembali</button>
-        <button class="onb-next" onclick="onbNext(2)">Lanjut <i class="bi bi-arrow-right"></i></button>
-      </div>
-    </div>
 
-    <!-- STEP 3: Mulai dari mana -->
-    <div class="onb-step" id="onb-3">
-      <div class="onb-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i></div>
-      <h2 class="onb-title">Siap! Mau mulai dari mana?</h2>
-      <p class="onb-sub">Pilih cara yang paling nyaman untukmu — bisa diganti kapanpun dari dashboard.</p>
-      <div class="start-grid">
-        <div class="start-card" onclick="selectStart(this,'tour')">
-          <div class="start-card-top">
-            <div class="start-icon sc-green"><i class="bi bi-map-fill"></i></div>
-            <span class="start-badge">Rekomendasi</span>
-          </div>
-          <div class="start-title">Guided tour</div>
-          <div class="start-desc">Kami siapkan contoh API dan tunjukkan cara kerjanya step by step. Cocok kalau kamu baru mulai.</div>
-        </div>
-        <div class="start-card" onclick="selectStart(this,'import')">
-          <div class="start-card-top">
-            <div class="start-icon sc-blue"><i class="bi bi-box-arrow-in-down"></i></div>
-          </div>
-          <div class="start-title">Import dari Postman</div>
-          <div class="start-desc">Punya collection Postman? Import langsung, semua request langsung tersedia.</div>
-        </div>
-        <div class="start-card" onclick="selectStart(this,'blank')">
-          <div class="start-card-top">
-            <div class="start-icon sc-gray"><i class="bi bi-plus-circle-fill"></i></div>
-          </div>
-          <div class="start-title">Mulai dari kosong</div>
-          <div class="start-desc">Langsung buat request pertama sendiri. Untuk yang sudah tahu apa yang mau di-test.</div>
-        </div>
-      </div>
-      <div class="onb-nav">
-        <button class="onb-back" onclick="onbBack(3)"><i class="bi bi-arrow-left"></i> Kembali</button>
-        <button class="onb-next" id="onb-finish" onclick="finishOnboarding()" disabled>
-          Masuk ke HITSaurce <i class="bi bi-arrow-right"></i>
-        </button>
-      </div>
-    </div>
+        <!-- PRICING -->
+        <div class="wrap" id="pricing">
+            <div class="section">
+                <div class="section-kicker">Support</div>
+                <h2 class="section-title">Transparan.<br><strong>Tanpa kejutan.</strong></h2>
+                <p class="section-sub">Tier gratis dirancang agar bisa dipakai sungguhan, bukan sekedar trial 7 hari.
+                </p>
+                <div class="pricing-grid">
 
-  </div>
-</div><!-- /onboarding -->
+                    <div class="p-card">
+                        <div class="p-plan">Gratis</div>
+                        <div class="p-price">Rp0<small> / bulan</small></div>
+                        <p class="p-desc">Untuk yang baru mulai atau side project personal.</p>
+                        <ul class="p-list">
+                            <li>Unlimited single requests</li>
+                            <li>5 Flow Runner</li>
+                            <li>Load test hingga 10 VU</li>
+                            <li>3 Environment</li>
+                            <li>1 Workspace</li>
+                            <li>Riwayat 7 hari</li>
+                            <li class="off">Report link</li>
+                            <li class="off">Kolaborasi tim</li>
+                        </ul>
+                        <button class="p-btn btn-outline" onclick="goApp()">Langsung Mulai</button>
+                    </div>
 
+                    <div class="p-card featured">
+                        <div class="p-featured-tag">MOST POPULAR</div>
+                        <div class="p-plan">Support</div>
+                        <div class="p-price"><sup>Rp</sup>79K<small> / bulan</small></div>
+                        <p class="p-desc">Support penuh untuk HITSaurce dan nikmati semua fiturnya.</p>
+                        <ul class="p-list">
+                            <li>Unlimited single requests</li>
+                            <li>Unlimited Flow Runner</li>
+                            <li>Load test hingga 500 VU</li>
+                            <li>Unlimited Environment</li>
+                            <li>5 Workspace</li>
+                            <li>Riwayat 90 hari</li>
+                            <li>Report link</li>
+                            <li>2 anggota tim</li>
+                        </ul>
+                        <button class="p-btn btn-green" onclick="openModal('register')">Mulai & Support</button>
+                    </div>
 
-<!-- ════════ APP ════════ -->
-<div class="page" id="app">
+                    <div class="p-card">
+                        <div class="p-plan">Next Level</div>
+                        <div class="p-price">Coming<small> soon</small></div>
+                        <p class="p-desc">Untuk tim yang bekerja bersama dalam satu workspace besar.</p>
+                        <ul class="p-list">
+                            <li>Semua fitur Support</li>
+                            <li>Load test unlimited VU</li>
+                            <li>Unlimited Workspace</li>
+                            <li>Riwayat unlimited</li>
+                            <li>Hingga 10 anggota</li>
+                            <li>SSO / SAML</li>
+                            <li>Audit log</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <button class="p-btn btn-outline"
+                            onclick="toast('Tim kami akan menghubungi kamu segera!','ok')">Hubungi Kami</button>
+                    </div>
 
-  <div class="app-nav">
-    <div class="app-logo" onclick="goLanding()">
-      <img class="logo-img logo-img-sm" src="public/assets/logo.png" alt="HITSaurce">
-      HIT<span>Saurce</span>
-    </div>
-    <div class="nav-divider"></div>
-    <button class="mode-btn on" id="mb-single" onclick="setMode('single')">
-      <i class="bi bi-rocket-takeoff"></i> Playground
-    </button>
-    <button class="mode-btn" id="mb-flow" onclick="setMode('flow')">
-      <i class="bi bi-puzzle"></i> Runner
-    </button>
-    <button class="mode-btn" id="mb-perf" onclick="setMode('perf')">
-      <i class="bi bi-speedometer"></i> Performance
-    </button>
-    <div class="spacer"></div>
-    <select class="env-sel" id="envSel" onchange="onEnvChange()">
-      <option value="dev">🟡 Dev</option>
-      <option value="staging">🟠 Staging</option>
-      <option value="prod">🟢 Production</option>
-    </select>
-    <div class="nav-divider"></div>
-    <div class="user-pill" id="userPill" onclick="toast('Profil & pengaturan segera hadir','ok')">
-      <div class="user-av" id="userAv">D</div>
-      <span id="userName">Demo</span>
-      <span class="free-tag">FREE</span>
-    </div>
-  </div>
-
-  <div class="app-body">
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-      <div class="sb-head">
-        <span class="sb-title">Collections</span>
-        <div class="sb-actions">
-          <button class="sb-btn" title="Import Collection" onclick="toast('Import Postman collection segera hadir','ok')">
-            <i class="bi bi-upload"></i>
-          </button>
-          <button class="sb-btn" title="Collection baru" onclick="toast('Collection baru dibuat','ok')">
-            <i class="bi bi-plus-lg"></i>
-          </button>
-        </div>
-      </div>
-      <div class="sb-search">
-        <input placeholder="Cari request..." type="text" id="sbSearch" oninput="filterSidebar(this.value)">
-      </div>
-      <div class="sb-body" id="sbBody">
-
-        <!-- Onboarding banner — hanya tampil untuk user baru -->
-        <div class="onboard-banner" id="onboardBanner">
-          <div class="onboard-inner">
-            <div class="onboard-title"><i class="bi bi-stars"></i> Tips untuk kamu</div>
-            <div class="onboard-body">Klik request di bawah untuk mulai, atau buat collection baru.</div>
-            <div class="onboard-steps">
-              <div class="onboard-step">
-                <div class="onboard-step-num">1</div>
-                <div>Pilih request dari daftar</div>
-              </div>
-              <div class="onboard-step">
-                <div class="onboard-step-num">2</div>
-                <div>Tekan tombol <strong>Send</strong></div>
-              </div>
-              <div class="onboard-step">
-                <div class="onboard-step-num">3</div>
-                <div>Lihat response di bawah</div>
-              </div>
+                </div>
             </div>
-          </div>
-          <button class="onboard-dismiss" onclick="dismissOnboardBanner()">
-            Mengerti, tutup panduan ini
-          </button>
         </div>
 
-        <div class="coll-head open" onclick="togColl(this)">
-          <span class="coll-arr">&#9654;</span> Auth API
-        </div>
-        <div class="coll-items">
-          <div class="sb-item" onclick="loadR('POST','https://api.myapp.id/v1/auth/login','Login User',this)">
-            <span class="m-tag mp">POST</span>Login
-          </div>
-          <div class="sb-item on" onclick="loadR('POST','https://api.myapp.id/v1/auth/register','Register User',this)">
-            <span class="m-tag mp">POST</span>Register
-          </div>
-          <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/auth/profile','Get Profile',this)">
-            <span class="m-tag mg">GET</span>Profile
-          </div>
-        </div>
-
-        <div class="coll-head open coll-group-mt" onclick="togColl(this)">
-          <span class="coll-arr">&#9654;</span> Product API
-        </div>
-        <div class="coll-items">
-          <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/products','List Products',this)">
-            <span class="m-tag mg">GET</span>List Products
-          </div>
-          <div class="sb-item" onclick="loadR('POST','https://api.myapp.id/v1/products','Create Product',this)">
-            <span class="m-tag mp">POST</span>Create
-          </div>
-          <div class="sb-item" onclick="loadR('PUT','https://api.myapp.id/v1/products/1','Update Product',this)">
-            <span class="m-tag mu">PUT</span>Update
-          </div>
-          <div class="sb-item" onclick="loadR('DELETE','https://api.myapp.id/v1/products/1','Delete Product',this)">
-            <span class="m-tag md">DELETE</span>Delete
-          </div>
-        </div>
-
-        <div class="coll-head coll-group-mt" onclick="togColl(this)">
-          <span class="coll-arr">&#9654;</span> Order API
-        </div>
-        <div class="coll-items" style="display:none">
-          <div class="sb-item" onclick="loadR('POST','https://api.myapp.id/v1/orders','Create Order',this)">
-            <span class="m-tag mp">POST</span>Create Order
-          </div>
-          <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/orders','List Orders',this)">
-            <span class="m-tag mg">GET</span>List Orders
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- MAIN -->
-    <div class="app-main">
-
-      <!-- SINGLE MODE -->
-      <div id="m-single" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-
-        <div class="req-top">
-          <input class="req-name" id="rname" value="Register User" placeholder="Nama request...">
-          <div style="display:flex;gap:6px;align-items:center">
-            <span class="req-method-badge" id="reqMethodBadge">POST</span>
-            <button class="save-btn" onclick="toast('Tersimpan ke collection','ok')">
-              <i class="bi bi-check2"></i> Simpan
-            </button>
-          </div>
-        </div>
-
-        <div class="url-row">
-          <select class="m-sel" id="msel" onchange="updMethod()">
-            <option>GET</option>
-            <option selected>POST</option>
-            <option>PUT</option>
-            <option>PATCH</option>
-            <option>DELETE</option>
-          </select>
-          <input class="url-in" id="urlin"
-            value="https://api.myapp.id/v1/auth/register"
-            placeholder="https://api.example.com/endpoint">
-          <button class="send-b" onclick="doSend()" id="sendb">
-            <i class="bi bi-send-fill"></i> Send
-          </button>
-        </div>
-
-        <!-- Hint bar: inline tip untuk user baru -->
-        <div class="hint-bar" id="hintBar">
-          <i class="bi bi-lightbulb-fill" style="flex-shrink:0;font-size:12px"></i>
-          <span><strong>Tips:</strong> Params = query string di URL (?key=value). Headers = metadata request. Body = data yang dikirim.</span>
-          <button class="hint-dismiss" onclick="document.getElementById('hintBar').style.display='none'" title="Tutup">
-            <i class="bi bi-x"></i>
-          </button>
-        </div>
-
-        <div class="tabs-row">
-          <div class="tab on" onclick="swTab(this,'tp')">
-            <i class="bi bi-list-ul"></i> Params
-          </div>
-          <div class="tab" onclick="swTab(this,'th')">
-            Headers <span class="tab-ct">3</span>
-          </div>
-          <div class="tab" onclick="swTab(this,'tb')">Body</div>
-          <div class="tab" onclick="swTab(this,'ta')">
-            Assertions <span class="tab-ct" id="act">2</span>
-          </div>
-        </div>
-
-        <div class="panels-area">
-
-          <div class="panel on" id="tp">
-            <table class="param-tbl">
-              <thead>
-                <tr>
-                  <th style="width:28px"></th>
-                  <th>Key</th>
-                  <th>Value</th>
-                  <th style="width:32px"></th>
-                </tr>
-              </thead>
-              <tbody id="param-body">
-                <tr>
-                  <td><input type="checkbox" class="p-chk" checked></td>
-                  <td><input value="Content-Type" placeholder="Key"></td>
-                  <td><input value="application/json" placeholder="Value"></td>
-                  <td><span class="row-del" onclick="this.closest('tr').remove()"><i class="bi bi-trash3"></i></span></td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" class="p-chk" checked></td>
-                  <td><input value="page" placeholder="Key"></td>
-                  <td><input value="1" placeholder="Value"></td>
-                  <td><span class="row-del" onclick="this.closest('tr').remove()"><i class="bi bi-trash3"></i></span></td>
-                </tr>
-              </tbody>
-            </table>
-            <button class="add-row" onclick="addParam()">
-              <i class="bi bi-plus"></i> Tambah baris
-            </button>
-          </div>
-
-          <div class="panel" id="th">
-            <table class="param-tbl">
-              <thead>
-                <tr>
-                  <th style="width:28px"></th>
-                  <th>Header</th>
-                  <th>Value</th>
-                  <th style="width:32px"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox" class="p-chk" checked></td>
-                  <td><input value="Content-Type"></td>
-                  <td><input value="application/json"></td>
-                  <td><span class="row-del"><i class="bi bi-trash3"></i></span></td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" class="p-chk" checked></td>
-                  <td><input value="Accept"></td>
-                  <td><input value="application/json"></td>
-                  <td><span class="row-del"><i class="bi bi-trash3"></i></span></td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" class="p-chk" checked></td>
-                  <td><input value="Authorization"></td>
-                  <td><input value="Bearer {{token}}"></td>
-                  <td><span class="row-del"><i class="bi bi-trash3"></i></span></td>
-                </tr>
-              </tbody>
-            </table>
-            <button class="add-row"><i class="bi bi-plus"></i> Tambah header</button>
-          </div>
-
-          <div class="panel" id="tb">
-            <div class="body-bar">
-              <button class="bt-btn on">JSON</button>
-              <button class="bt-btn">Form Data</button>
-              <button class="bt-btn">Raw</button>
-              <button class="bt-btn">None</button>
+        <!-- FAQ -->
+        <div class="wrap" id="faq">
+            <div class="section">
+                <div class="section-kicker">FAQ</div>
+                <h2 class="section-title"><strong>Pertanyaan</strong> yang sering ditanya.</h2>
+                <div class="faq">
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Apakah tier gratis benar-benar gratis selamanya?
+                            <i class="faq-ico">+</i>
+                        </div>
+                        <div class="faq-a">Ya. Tidak ada batas waktu, tidak perlu kartu kredit. Upgrade hanya jika
+                            kapasitas kamu bertumbuh dan ingin mendukung pengembangan HITSaurce.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Apakah perlu install sesuatu?
+                            <i class="faq-ico">+</i>
+                        </div>
+                        <div class="faq-a">Tidak sama sekali. HITSaurce berjalan sepenuhnya di browser — tidak perlu
+                            ekstensi, tidak perlu desktop app, tidak perlu Node.js atau Python.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Bagaimana cara kerja load test dengan K6?
+                            <i class="faq-ico">+</i>
+                        </div>
+                        <div class="faq-a">Kamu mengatur jumlah virtual user dan durasi lewat UI. HITSaurce menjalankan
+                            K6 di server kami dan streaming hasilnya secara real-time ke browser — tanpa install K6
+                            lokal sama sekali.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Bisa import collection dari Postman?
+                            <i class="faq-ico">+</i>
+                        </div>
+                        <div class="faq-a">Ya, import collection Postman format JSON tersedia di semua tier termasuk
+                            gratis. Kamu bisa langsung pakai collection yang sudah ada tanpa setup ulang.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Apakah data request saya aman?
+                            <i class="faq-ico">+</i>
+                        </div>
+                        <div class="faq-a">Semua komunikasi dienkripsi via HTTPS. Data kamu tidak pernah dijual atau
+                            dibagikan ke pihak lain. Request yang kamu buat hanya bisa dilihat oleh kamu dan anggota
+                            workspace-mu.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Apakah bisa dipakai untuk QA yang belum tahu coding?
+                            <i class="faq-ico">+</i>
+                        </div>
+                        <div class="faq-a">Justru itu target utama kami. HITSaurce dirancang agar QA manual bisa
+                            langsung testing API tanpa perlu belajar coding, cURL, atau Postman dulu. Semua visual dan
+                            ada panduan inline di setiap langkah.</div>
+                    </div>
+                </div>
             </div>
-            <div class="code-area" contenteditable="true" spellcheck="false">{
-  "email": "user@example.com",
-  "password": "password123",
-  "name": "John Doe"
-}</div>
-          </div>
+        </div>
 
-          <div class="panel" id="ta">
-            <!-- Quick-pick assertions -->
-            <div class="ass-quickpick">
-              <div class="ass-qp-label">Tambah assertion cepat</div>
-              <div class="ass-qp-row">
-                <button class="ass-qp-btn" onclick="addAssQuick('Status code = 200')">
-                  <span class="qp-dot"></span> Status 200
+        <!-- CTA BAND -->
+        <div class="cta-band">
+            <div class="cta-band-inner">
+                <div>
+                    <h2>Siap testing<br><strong>langsung?</strong></h2>
+                    <p>Hit it. Test it. Source it.</p>
+                </div>
+                <div class="cta-right">
+                    <button class="btn btn-green btn-lg" onclick="openModal('register')">
+                        <i class="bi bi-rocket-takeoff"></i> Mulai Sekarang — Gratis
+                    </button>
+                    <span class="cta-note">Tidak perlu bayar dulu gapapa.</span>
+                    <span class="footer-copy">© 2025 HITSaurce</span>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /landing -->
+
+
+    <!-- ════════ ONBOARDING ════════ -->
+    <div class="page" id="onboarding">
+        <div class="onb-wrap">
+
+            <!-- Progress -->
+            <div class="onb-progress">
+                <div class="onb-dot active" id="dot-1"></div>
+                <div class="onb-line" id="line-1"></div>
+                <div class="onb-dot" id="dot-2"></div>
+                <div class="onb-line" id="line-2"></div>
+                <div class="onb-dot" id="dot-3"></div>
+            </div>
+
+            <!-- STEP 1: Profil -->
+            <div class="onb-step active" id="onb-1">
+                <div class="onb-icon"><i class="bi bi-hand-wave" style="color:var(--green)"></i></div>
+                <h2 class="onb-title">Halo! Kenalin diri dulu yuk</h2>
+                <p class="onb-sub">Ini membantu kami menyesuaikan pengalaman dan panduan yang tepat untukmu.</p>
+                <div class="onb-form">
+                    <div class="field">
+                        <label>Nama panggilan</label>
+                        <input type="text" id="onb-displayname" placeholder="Contoh: Budi, Sarah, Tim QA Alpha...">
+                    </div>
+                    <div class="field">
+                        <label>Saya adalah seorang...</label>
+                        <div class="role-grid" id="role-grid">
+                            <div class="role-card" onclick="selectRole(this,'qa_manual')">
+                                <div class="role-icon"><i class="bi bi-clipboard-check-fill"></i></div>
+                                <div class="role-label">QA Manual</div>
+                                <div class="role-desc">Testing tanpa coding</div>
+                            </div>
+                            <div class="role-card" onclick="selectRole(this,'qa_auto')">
+                                <div class="role-icon"><i class="bi bi-code-slash"></i></div>
+                                <div class="role-label">QA Automation</div>
+                                <div class="role-desc">Testing dengan script</div>
+                            </div>
+                            <div class="role-card" onclick="selectRole(this,'developer')">
+                                <div class="role-icon"><i class="bi bi-terminal-fill"></i></div>
+                                <div class="role-label">Developer</div>
+                                <div class="role-desc">Build &amp; test API</div>
+                            </div>
+                            <div class="role-card" onclick="selectRole(this,'manager')">
+                                <div class="role-icon"><i class="bi bi-people-fill"></i></div>
+                                <div class="role-label">Tech Lead / Manager</div>
+                                <div class="role-desc">Pantau tim &amp; kualitas</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Pengalaman dengan API testing</label>
+                        <div class="exp-row">
+                            <button class="exp-btn" onclick="selectExp(this,'beginner')">Baru mulai 🌱</button>
+                            <button class="exp-btn" onclick="selectExp(this,'intermediate')">Paham dasar 🌿</button>
+                            <button class="exp-btn" onclick="selectExp(this,'advanced')">Berpengalaman 🌳</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="onb-next" onclick="onbNext(1)">
+                    Lanjut <i class="bi bi-arrow-right"></i>
                 </button>
-                <button class="ass-qp-btn" onclick="addAssQuick('Status code = 201')">
-                  <span class="qp-dot"></span> Status 201
-                </button>
-                <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 500ms')">
-                  <span class="qp-dot"></span> Time &lt; 500ms
-                </button>
-                <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 2000ms')">
-                  <span class="qp-dot"></span> Time &lt; 2s
-                </button>
-                <button class="ass-qp-btn" onclick="addAssQuick('Body contains success: true')">
-                  <span class="qp-dot"></span> success: true
-                </button>
-                <button class="ass-qp-btn" onclick="addAssQuick('Body contains data')">
-                  <span class="qp-dot"></span> data exists
-                </button>
-              </div>
-            </div>
-            <div class="ass-head-bar">
-              <span style="font-size:11px;color:var(--ink3)">Validasi otomatis setiap Send</span>
-              <button class="save-btn" onclick="addAss()">
-                <i class="bi bi-plus"></i> Tambah manual
-              </button>
-            </div>
-            <div id="ass-list">
-              <div class="ass-row">
-                <span class="ass-dot dot-ok"></span>
-                <span class="ass-name">Status code = 201</span>
-                <span class="ass-val">201 ✓</span>
-              </div>
-              <div class="ass-row">
-                <span class="ass-dot dot-ok"></span>
-                <span class="ass-name">Response time kurang dari 2000ms</span>
-                <span class="ass-val">142ms ✓</span>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /panels-area -->
-
-        <div class="split-div"><div class="split-handle"></div></div>
-
-        <div class="resp-area">
-          <div class="resp-head">
-            <span class="resp-label">Response</span>
-            <div class="status-wrap">
-              <span class="s-badge s-ok" id="rstat">201 Created</span>
-              <div class="s-tooltip" id="statTooltip">201 = Data berhasil dibuat di server</div>
-            </div>
-            <span class="resp-meta" id="rtime">142ms</span>
-            <span class="resp-meta" id="rsize">1.2 KB</span>
-            <button class="copy-btn" onclick="copyResponse()">
-              <i class="bi bi-clipboard"></i> Copy
-            </button>
-          </div>
-          <div class="resp-tabs">
-            <div class="tab on" onclick="swRTab(this,'rb')">Body</div>
-            <div class="tab" onclick="swRTab(this,'rh')">Headers</div>
-            <div class="tab" onclick="swRTab(this,'ra')">Assertions</div>
-          </div>
-          <div class="resp-body" id="rb">{
-  "success": true,
-  "message": "User registered successfully",
-  "data": {
-    "id": 42,
-    "email": "user@example.com",
-    "name": "John Doe",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  }
-}</div>
-          <div class="resp-body" id="rh" style="display:none">content-type: application/json; charset=utf-8
-x-request-id: req_abc123xyz
-x-ratelimit-remaining: 99
-x-response-time: 142ms</div>
-          <div class="resp-body resp-assert-panel" id="ra" style="display:none">
-            <div class="ass-row">
-              <span class="ass-dot dot-ok"></span>
-              <span class="ass-name">Status code = 201</span>
-              <span class="ass-val">OK · 201</span>
-            </div>
-            <div class="ass-row">
-              <span class="ass-dot dot-ok"></span>
-              <span class="ass-name">Response time kurang dari 2000ms</span>
-              <span class="ass-val">OK · 142ms</span>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /m-single -->
-
-      <!-- FLOW MODE -->
-      <div id="m-flow" style="display:none;flex:1;overflow:hidden">
-        <div class="flow-wrap">
-          <div class="flow-top">
-            <div class="flow-info">
-              <h2>Checkout E2E Flow</h2>
-              <p>4 langkah · <span class="c-green">3 passed</span> · <span class="c-amber">1 running</span></p>
-            </div>
-            <div class="flow-btns">
-              <button class="btn btn-outline btn-sm" onclick="toast('Tambah langkah baru','ok')">
-                <i class="bi bi-plus"></i> Langkah
-              </button>
-              <button class="btn btn-solid btn-sm" onclick="runFlow()">
-                <i class="bi bi-play-fill"></i> Run Flow
-              </button>
-            </div>
-          </div>
-          <div class="flow-canvas" id="fcanvas">
-
-            <div class="f-card pass">
-              <div class="f-top">
-                <div class="f-num">1</div>
-                <span class="m-tag mp">POST</span>
-                <div class="f-name">Login User</div>
-                <span class="f-status fs-p">PASSED</span>
-              </div>
-              <div class="f-url">/v1/auth/login · 201 · 89ms</div>
-              <div class="f-vars">
-                <span class="v-chip">{{token}} dari data.token</span>
-                <span class="v-chip">{{user_id}} dari data.id</span>
-              </div>
             </div>
 
-            <div class="f-connector"></div>
-
-            <div class="f-card pass">
-              <div class="f-top">
-                <div class="f-num">2</div>
-                <span class="m-tag mg">GET</span>
-                <div class="f-name">Get Cart</div>
-                <span class="f-status fs-p">PASSED</span>
-              </div>
-              <div class="f-url">/v1/cart/{{user_id}} · 200 · 65ms</div>
-              <div class="f-vars">
-                <span class="v-chip">{{cart_id}} dari data.cart_id</span>
-              </div>
+            <!-- STEP 2: Workspace -->
+            <div class="onb-step" id="onb-2">
+                <div class="onb-icon"><i class="bi bi-folder2-open" style="color:var(--green)"></i></div>
+                <h2 class="onb-title">Buat workspace pertamamu</h2>
+                <p class="onb-sub">Workspace adalah tempat semua collection dan request kamu tersimpan dan terorganisir.
+                </p>
+                <div class="onb-form">
+                    <div class="field">
+                        <label>Nama workspace</label>
+                        <input type="text" id="onb-wsname" placeholder="Contoh: Project Alpha, MyApp API, Tim QA...">
+                    </div>
+                    <div class="field">
+                        <label>Tujuan utama workspace ini</label>
+                        <div class="purpose-grid">
+                            <div class="purpose-card" onclick="selectPurpose(this,'personal')">
+                                <i class="bi bi-person-fill"></i>
+                                <span>Personal / belajar</span>
+                            </div>
+                            <div class="purpose-card" onclick="selectPurpose(this,'project')">
+                                <i class="bi bi-kanban-fill"></i>
+                                <span>Project tertentu</span>
+                            </div>
+                            <div class="purpose-card" onclick="selectPurpose(this,'team')">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Dipakai tim</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="onb-tier-info">
+                        <div class="onb-tier-icon"><i class="bi bi-info-circle-fill"></i></div>
+                        <div>
+                            <div class="onb-tier-title">Kamu di tier Gratis</div>
+                            <div class="onb-tier-desc">1 workspace · 5 flow runner · unlimited single request. Upgrade
+                                kapanpun.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="onb-nav">
+                    <button class="onb-back" onclick="onbBack(2)"><i class="bi bi-arrow-left"></i> Kembali</button>
+                    <button class="onb-next" onclick="onbNext(2)">Lanjut <i class="bi bi-arrow-right"></i></button>
+                </div>
             </div>
 
-            <div class="f-connector"></div>
-
-            <div class="f-card run">
-              <div class="f-top">
-                <div class="f-num">3</div>
-                <span class="m-tag mp">POST</span>
-                <div class="f-name">Checkout</div>
-                <span class="f-status fs-r">Running</span>
-              </div>
-              <div class="f-url">/v1/orders/checkout · pakai {{cart_id}}, {{token}}</div>
+            <!-- STEP 3: Mulai dari mana -->
+            <div class="onb-step" id="onb-3">
+                <div class="onb-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i></div>
+                <h2 class="onb-title">Siap! Mau mulai dari mana?</h2>
+                <p class="onb-sub">Pilih cara yang paling nyaman untukmu — bisa diganti kapanpun dari dashboard.</p>
+                <div class="start-grid">
+                    <div class="start-card" onclick="selectStart(this,'tour')">
+                        <div class="start-card-top">
+                            <div class="start-icon sc-green"><i class="bi bi-map-fill"></i></div>
+                            <span class="start-badge">Rekomendasi</span>
+                        </div>
+                        <div class="start-title">Guided tour</div>
+                        <div class="start-desc">Kami siapkan contoh API dan tunjukkan cara kerjanya step by step. Cocok
+                            kalau kamu baru mulai.</div>
+                    </div>
+                    <div class="start-card" onclick="selectStart(this,'import')">
+                        <div class="start-card-top">
+                            <div class="start-icon sc-blue"><i class="bi bi-box-arrow-in-down"></i></div>
+                        </div>
+                        <div class="start-title">Import dari Postman</div>
+                        <div class="start-desc">Punya collection Postman? Import langsung, semua request langsung
+                            tersedia.</div>
+                    </div>
+                    <div class="start-card" onclick="selectStart(this,'blank')">
+                        <div class="start-card-top">
+                            <div class="start-icon sc-gray"><i class="bi bi-plus-circle-fill"></i></div>
+                        </div>
+                        <div class="start-title">Mulai dari kosong</div>
+                        <div class="start-desc">Langsung buat request pertama sendiri. Untuk yang sudah tahu apa yang
+                            mau di-test.</div>
+                    </div>
+                </div>
+                <div class="onb-nav">
+                    <button class="onb-back" onclick="onbBack(3)"><i class="bi bi-arrow-left"></i> Kembali</button>
+                    <button class="onb-next" id="onb-finish" onclick="finishOnboarding()" disabled>
+                        Masuk ke HITSaurce <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
             </div>
-
-            <div class="f-connector"></div>
-
-            <div class="f-card">
-              <div class="f-top">
-                <div class="f-num">4</div>
-                <span class="m-tag mg">GET</span>
-                <div class="f-name">Verify Order</div>
-                <span class="f-status fs-w">Waiting</span>
-              </div>
-              <div class="f-url">/v1/orders/{{order_id}} · menunggu step 3</div>
-            </div>
-
-            <div class="f-connector f-connector-dim"></div>
-            <button class="add-step" onclick="toast('Tambah langkah baru','ok')">
-              <i class="bi bi-plus-circle"></i> Tambah Langkah
-            </button>
-
-          </div>
-        </div>
-      </div><!-- /m-flow -->
-
-      <!-- PERF MODE -->
-      <div id="m-perf" style="display:none;flex:1;overflow:hidden">
-        <div class="perf-wrap">
-          <div class="perf-top">
-            <div class="flow-info">
-              <h2>Performance Test</h2>
-              <p>Powered by K6 · Konfigurasi dan jalankan load test langsung dari browser</p>
-            </div>
-            <button class="btn btn-green btn-sm" onclick="runPerf()">
-              <i class="bi bi-play-fill"></i> Start Test
-            </button>
-          </div>
-
-          <span class="section-micro-label">Preset</span>
-          <div class="presets">
-            <button class="pr-btn" onclick="setPr(this,1,30)">
-              <i class="bi bi-circle"></i> Smoke 1 VU
-            </button>
-            <button class="pr-btn on" onclick="setPr(this,10,60)">
-              <i class="bi bi-lightning"></i> Light 10 VU
-            </button>
-            <button class="pr-btn" onclick="setPr(this,50,120)">
-              <i class="bi bi-lightning-fill"></i> Medium 50 VU
-            </button>
-            <button class="pr-btn" onclick="setPr(this,200,300)">
-              <i class="bi bi-fire"></i> Heavy 200 VU
-            </button>
-            <button class="pr-btn" onclick="setPr(this,0,0)">
-              <i class="bi bi-sliders"></i> Custom
-            </button>
-          </div>
-
-          <div class="perf-grid">
-            <div class="pc">
-              <div class="pc-label">Virtual Users</div>
-              <div class="pc-val" id="pvu">10</div>
-              <div class="pc-sub">concurrent users</div>
-              <input class="range-slider" type="range" min="1" max="500" value="10"
-                oninput="document.getElementById('pvu').textContent=this.value">
-            </div>
-            <div class="pc">
-              <div class="pc-label">Durasi</div>
-              <div class="pc-val" id="pdur">60s</div>
-              <div class="pc-sub">total duration</div>
-              <input class="range-slider" type="range" min="10" max="600" value="60"
-                oninput="document.getElementById('pdur').textContent=this.value+'s'">
-            </div>
-            <div class="pc">
-              <div class="pc-label">Target URL</div>
-              <input class="perf-url-input" value="https://api.myapp.id/v1/products">
-              <div class="pc-sub pc-sub-mt">GET dengan auth header</div>
-            </div>
-          </div>
-
-          <span class="section-micro-label">Hasil Run Terakhir</span>
-          <div class="metric-row">
-            <div class="mc">
-              <div class="mc-label">Req / sec</div>
-              <div class="mc-val ok">847</div>
-              <div class="mc-sub">avg</div>
-            </div>
-            <div class="mc">
-              <div class="mc-label">p95 Latency</div>
-              <div class="mc-val warn">312ms</div>
-              <div class="mc-sub">threshold 500ms</div>
-            </div>
-            <div class="mc">
-              <div class="mc-label">Error Rate</div>
-              <div class="mc-val ok">0.2%</div>
-              <div class="mc-sub">threshold 1%</div>
-            </div>
-            <div class="mc">
-              <div class="mc-label">Total Request</div>
-              <div class="mc-val">50,820</div>
-              <div class="mc-sub">dalam 60 detik</div>
-            </div>
-          </div>
-
-          <div class="chart-card">
-            <div class="chart-title">Latency over time (ms)</div>
-            <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15"/>
-                  <stop offset="100%" stop-color="#1a7a5e" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22 L800,70 L0,70Z" fill="url(#cg)"/>
-              <path d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22" fill="none" stroke="#1a7a5e" stroke-width="1.5"/>
-              <line x1="0" y1="35" x2="800" y2="35" stroke="#e2e1dd" stroke-width="1" stroke-dasharray="4 4"/>
-              <text x="4" y="32" fill="#9a9a9a" font-size="9" font-family="monospace">p95</text>
-            </svg>
-          </div>
 
         </div>
-      </div><!-- /m-perf -->
-
-    </div><!-- /app-main -->
-  </div><!-- /app-body -->
-</div><!-- /app -->
+    </div><!-- /onboarding -->
 
 
-<!-- ════════ AUTH MODAL ════════ -->
-<div class="modal-overlay" id="authModal" onclick="modalOutsideClick(event)">
-  <div class="modal-box" id="modalBox">
+    <!-- ════════ APP ════════ -->
+    <div class="page" id="app">
 
-    <div class="modal-head">
-      <div class="modal-logo">
-        <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce" style="mix-blend-mode:multiply">
-        HIT<span>Saurce</span>
-      </div>
-      <button class="modal-close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+        <div class="app-nav">
+            <div class="app-logo" onclick="goLanding()">
+                <img class="logo-img logo-img-sm" src="public/assets/logo.png" alt="HITSaurce">
+                HIT<span>Saurce</span>
+            </div>
+            <div class="nav-divider"></div>
+            <button class="mode-btn on" id="mb-single" onclick="setMode('single')">
+                <i class="bi bi-rocket-takeoff"></i> Playground
+            </button>
+            <button class="mode-btn" id="mb-flow" onclick="setMode('flow')">
+                <i class="bi bi-puzzle"></i> Runner
+            </button>
+            <button class="mode-btn" id="mb-perf" onclick="setMode('perf')">
+                <i class="bi bi-speedometer"></i> Performance
+            </button>
+            <div class="spacer"></div>
+            <select class="env-sel" id="envSel" onchange="onEnvChange()">
+                <option value="dev">🟡 Dev</option>
+                <option value="staging">🟠 Staging</option>
+                <option value="prod">🟢 Production</option>
+            </select>
+            <div class="nav-divider"></div>
+            <div class="user-pill" id="userPill" onclick="toast('Profil & pengaturan segera hadir','ok')">
+                <div class="user-av" id="userAv">D</div>
+                <span id="userName">Demo</span>
+                <span class="free-tag">FREE</span>
+            </div>
+        </div>
+
+        <div class="app-body">
+
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <div class="sb-head">
+                    <span class="sb-title">Collections</span>
+                    <div class="sb-actions">
+                        <button class="sb-btn" title="Import Collection"
+                            onclick="toast('Import Postman collection segera hadir','ok')">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                        <button class="sb-btn" title="Collection baru" onclick="toast('Collection baru dibuat','ok')">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="sb-search">
+                    <input placeholder="Cari request..." type="text" id="sbSearch" oninput="filterSidebar(this.value)">
+                </div>
+                <div class="sb-body" id="sbBody">
+
+                    <!-- Onboarding banner — hanya tampil untuk user baru -->
+                    <div class="onboard-banner" id="onboardBanner">
+                        <div class="onboard-inner">
+                            <div class="onboard-title"><i class="bi bi-stars"></i> Tips untuk kamu</div>
+                            <div class="onboard-body">Klik request di bawah untuk mulai, atau buat collection baru.
+                            </div>
+                            <div class="onboard-steps">
+                                <div class="onboard-step">
+                                    <div class="onboard-step-num">1</div>
+                                    <div>Pilih request dari daftar</div>
+                                </div>
+                                <div class="onboard-step">
+                                    <div class="onboard-step-num">2</div>
+                                    <div>Tekan tombol <strong>Send</strong></div>
+                                </div>
+                                <div class="onboard-step">
+                                    <div class="onboard-step-num">3</div>
+                                    <div>Lihat response di bawah</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="onboard-dismiss" onclick="dismissOnboardBanner()">
+                            Mengerti, tutup panduan ini
+                        </button>
+                    </div>
+
+                    <div class="coll-head open" onclick="togColl(this)">
+                        <span class="coll-arr">&#9654;</span> Auth API
+                    </div>
+                    <div class="coll-items">
+                        <div class="sb-item"
+                            onclick="loadR('POST','https://api.myapp.id/v1/auth/login','Login User',this)">
+                            <span class="m-tag mp">POST</span>Login
+                        </div>
+                        <div class="sb-item on"
+                            onclick="loadR('POST','https://api.myapp.id/v1/auth/register','Register User',this)">
+                            <span class="m-tag mp">POST</span>Register
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('GET','https://api.myapp.id/v1/auth/profile','Get Profile',this)">
+                            <span class="m-tag mg">GET</span>Profile
+                        </div>
+                    </div>
+
+                    <div class="coll-head open coll-group-mt" onclick="togColl(this)">
+                        <span class="coll-arr">&#9654;</span> Product API
+                    </div>
+                    <div class="coll-items">
+                        <div class="sb-item"
+                            onclick="loadR('GET','https://api.myapp.id/v1/products','List Products',this)">
+                            <span class="m-tag mg">GET</span>List Products
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('POST','https://api.myapp.id/v1/products','Create Product',this)">
+                            <span class="m-tag mp">POST</span>Create
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('PUT','https://api.myapp.id/v1/products/1','Update Product',this)">
+                            <span class="m-tag mu">PUT</span>Update
+                        </div>
+                        <div class="sb-item"
+                            onclick="loadR('DELETE','https://api.myapp.id/v1/products/1','Delete Product',this)">
+                            <span class="m-tag md">DELETE</span>Delete
+                        </div>
+                    </div>
+
+                    <div class="coll-head coll-group-mt" onclick="togColl(this)">
+                        <span class="coll-arr">&#9654;</span> Order API
+                    </div>
+                    <div class="coll-items" style="display:none">
+                        <div class="sb-item"
+                            onclick="loadR('POST','https://api.myapp.id/v1/orders','Create Order',this)">
+                            <span class="m-tag mp">POST</span>Create Order
+                        </div>
+                        <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/orders','List Orders',this)">
+                            <span class="m-tag mg">GET</span>List Orders
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- MAIN -->
+            <div class="app-main">
+
+                <!-- SINGLE MODE -->
+                <div id="m-single" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+
+                    <div class="req-top">
+                        <input class="req-name" id="rname" value="Register User" placeholder="Nama request...">
+                        <div style="display:flex;gap:6px;align-items:center">
+                            <span class="req-method-badge" id="reqMethodBadge">POST</span>
+                            <button class="save-btn" onclick="toast('Tersimpan ke collection','ok')">
+                                <i class="bi bi-check2"></i> Simpan
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="url-row">
+                        <select class="m-sel" id="msel" onchange="updMethod()">
+                            <option>GET</option>
+                            <option selected>POST</option>
+                            <option>PUT</option>
+                            <option>PATCH</option>
+                            <option>DELETE</option>
+                        </select>
+                        <input class="url-in" id="urlin" value="https://api.myapp.id/v1/auth/register"
+                            placeholder="https://api.example.com/endpoint">
+                        <button class="send-b" onclick="doSend()" id="sendb">
+                            <i class="bi bi-send-fill"></i> Send
+                        </button>
+                    </div>
+
+                    <!-- Hint bar: inline tip untuk user baru -->
+                    <div class="hint-bar" id="hintBar">
+                        <i class="bi bi-lightbulb-fill" style="flex-shrink:0;font-size:12px"></i>
+                        <span><strong>Tips:</strong> Params = query string di URL (?key=value). Headers = metadata
+                            request. Body = data yang dikirim.</span>
+                        <button class="hint-dismiss" onclick="document.getElementById('hintBar').style.display='none'"
+                            title="Tutup">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+
+                    <div class="tabs-row">
+                        <div class="tab on" onclick="swTab(this,'tp')">
+                            <i class="bi bi-list-ul"></i> Params
+                        </div>
+                        <div class="tab" onclick="swTab(this,'th')">
+                            Headers <span class="tab-ct">3</span>
+                        </div>
+                        <div class="tab" onclick="swTab(this,'tb')">Body</div>
+                        <div class="tab" onclick="swTab(this,'ta')">
+                            Assertions <span class="tab-ct" id="act">2</span>
+                        </div>
+                    </div>
+
+                    <div class="panels-area">
+
+                        <div class="panel on" id="tp">
+                            <table class="param-tbl">
+                                <thead>
+                                    <tr>
+                                        <th style="width:28px"></th>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                        <th style="width:32px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="param-body">
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Content-Type" placeholder="Key"></td>
+                                        <td><input value="application/json" placeholder="Value"></td>
+                                        <td><span class="row-del" onclick="this.closest('tr').remove()"><i
+                                                    class="bi bi-trash3"></i></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="page" placeholder="Key"></td>
+                                        <td><input value="1" placeholder="Value"></td>
+                                        <td><span class="row-del" onclick="this.closest('tr').remove()"><i
+                                                    class="bi bi-trash3"></i></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="add-row" onclick="addParam()">
+                                <i class="bi bi-plus"></i> Tambah baris
+                            </button>
+                        </div>
+
+                        <div class="panel" id="th">
+                            <table class="param-tbl">
+                                <thead>
+                                    <tr>
+                                        <th style="width:28px"></th>
+                                        <th>Header</th>
+                                        <th>Value</th>
+                                        <th style="width:32px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Content-Type"></td>
+                                        <td><input value="application/json"></td>
+                                        <td><span class="row-del"><i class="bi bi-trash3"></i></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Accept"></td>
+                                        <td><input value="application/json"></td>
+                                        <td><span class="row-del"><i class="bi bi-trash3"></i></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="p-chk" checked></td>
+                                        <td><input value="Authorization"></td>
+                                        <td><input value="Bearer {{token}}"></td>
+                                        <td><span class="row-del"><i class="bi bi-trash3"></i></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="add-row"><i class="bi bi-plus"></i> Tambah header</button>
+                        </div>
+
+                        <div class="panel" id="tb">
+                            <div class="body-bar">
+                                <button class="bt-btn on">JSON</button>
+                                <button class="bt-btn">Form Data</button>
+                                <button class="bt-btn">Raw</button>
+                                <button class="bt-btn">None</button>
+                            </div>
+                            <div class="code-area" contenteditable="true" spellcheck="false">{
+                                "email": "user@example.com",
+                                "password": "password123",
+                                "name": "John Doe"
+                                }</div>
+                        </div>
+
+                        <div class="panel" id="ta">
+                            <!-- Quick-pick assertions -->
+                            <div class="ass-quickpick">
+                                <div class="ass-qp-label">Tambah assertion cepat</div>
+                                <div class="ass-qp-row">
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Status code = 200')">
+                                        <span class="qp-dot"></span> Status 200
+                                    </button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Status code = 201')">
+                                        <span class="qp-dot"></span> Status 201
+                                    </button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 500ms')">
+                                        <span class="qp-dot"></span> Time &lt; 500ms
+                                    </button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 2000ms')">
+                                        <span class="qp-dot"></span> Time &lt; 2s
+                                    </button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Body contains success: true')">
+                                        <span class="qp-dot"></span> success: true
+                                    </button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Body contains data')">
+                                        <span class="qp-dot"></span> data exists
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="ass-head-bar">
+                                <span style="font-size:11px;color:var(--ink3)">Validasi otomatis setiap Send</span>
+                                <button class="save-btn" onclick="addAss()">
+                                    <i class="bi bi-plus"></i> Tambah manual
+                                </button>
+                            </div>
+                            <div id="ass-list">
+                                <div class="ass-row">
+                                    <span class="ass-dot dot-ok"></span>
+                                    <span class="ass-name">Status code = 201</span>
+                                    <span class="ass-val">201 ✓</span>
+                                </div>
+                                <div class="ass-row">
+                                    <span class="ass-dot dot-ok"></span>
+                                    <span class="ass-name">Response time kurang dari 2000ms</span>
+                                    <span class="ass-val">142ms ✓</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- /panels-area -->
+
+                    <div class="split-div">
+                        <div class="split-handle"></div>
+                    </div>
+
+                    <div class="resp-area">
+                        <div class="resp-head">
+                            <span class="resp-label">Response</span>
+                            <div class="status-wrap">
+                                <span class="s-badge s-ok" id="rstat">201 Created</span>
+                                <div class="s-tooltip" id="statTooltip">201 = Data berhasil dibuat di server</div>
+                            </div>
+                            <span class="resp-meta" id="rtime">142ms</span>
+                            <span class="resp-meta" id="rsize">1.2 KB</span>
+                            <button class="copy-btn" onclick="copyResponse()">
+                                <i class="bi bi-clipboard"></i> Copy
+                            </button>
+                        </div>
+                        <div class="resp-tabs">
+                            <div class="tab on" onclick="swRTab(this,'rb')">Body</div>
+                            <div class="tab" onclick="swRTab(this,'rh')">Headers</div>
+                            <div class="tab" onclick="swRTab(this,'ra')">Assertions</div>
+                        </div>
+                        <div class="resp-body" id="rb">{
+                            "success": true,
+                            "message": "User registered successfully",
+                            "data": {
+                            "id": 42,
+                            "email": "user@example.com",
+                            "name": "John Doe",
+                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                            }
+                            }</div>
+                        <div class="resp-body" id="rh" style="display:none">content-type: application/json;
+                            charset=utf-8
+                            x-request-id: req_abc123xyz
+                            x-ratelimit-remaining: 99
+                            x-response-time: 142ms</div>
+                        <div class="resp-body resp-assert-panel" id="ra" style="display:none">
+                            <div class="ass-row">
+                                <span class="ass-dot dot-ok"></span>
+                                <span class="ass-name">Status code = 201</span>
+                                <span class="ass-val">OK · 201</span>
+                            </div>
+                            <div class="ass-row">
+                                <span class="ass-dot dot-ok"></span>
+                                <span class="ass-name">Response time kurang dari 2000ms</span>
+                                <span class="ass-val">OK · 142ms</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /m-single -->
+
+                <!-- FLOW MODE -->
+                <div id="m-flow" style="display:none;flex:1;overflow:hidden">
+                    <div class="flow-wrap">
+                        <div class="flow-top">
+                            <div class="flow-info">
+                                <h2>Checkout E2E Flow</h2>
+                                <p>4 langkah · <span class="c-green">3 passed</span> · <span class="c-amber">1
+                                        running</span></p>
+                            </div>
+                            <div class="flow-btns">
+                                <button class="btn btn-outline btn-sm" onclick="toast('Tambah langkah baru','ok')">
+                                    <i class="bi bi-plus"></i> Langkah
+                                </button>
+                                <button class="btn btn-solid btn-sm" onclick="runFlow()">
+                                    <i class="bi bi-play-fill"></i> Run Flow
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flow-canvas" id="fcanvas">
+
+                            <div class="f-card pass">
+                                <div class="f-top">
+                                    <div class="f-num">1</div>
+                                    <span class="m-tag mp">POST</span>
+                                    <div class="f-name">Login User</div>
+                                    <span class="f-status fs-p">PASSED</span>
+                                </div>
+                                <div class="f-url">/v1/auth/login · 201 · 89ms</div>
+                                <div class="f-vars">
+                                    <span class="v-chip">{{token}} dari data.token</span>
+                                    <span class="v-chip">{{user_id}} dari data.id</span>
+                                </div>
+                            </div>
+
+                            <div class="f-connector"></div>
+
+                            <div class="f-card pass">
+                                <div class="f-top">
+                                    <div class="f-num">2</div>
+                                    <span class="m-tag mg">GET</span>
+                                    <div class="f-name">Get Cart</div>
+                                    <span class="f-status fs-p">PASSED</span>
+                                </div>
+                                <div class="f-url">/v1/cart/{{user_id}} · 200 · 65ms</div>
+                                <div class="f-vars">
+                                    <span class="v-chip">{{cart_id}} dari data.cart_id</span>
+                                </div>
+                            </div>
+
+                            <div class="f-connector"></div>
+
+                            <div class="f-card run">
+                                <div class="f-top">
+                                    <div class="f-num">3</div>
+                                    <span class="m-tag mp">POST</span>
+                                    <div class="f-name">Checkout</div>
+                                    <span class="f-status fs-r">Running</span>
+                                </div>
+                                <div class="f-url">/v1/orders/checkout · pakai {{cart_id}}, {{token}}</div>
+                            </div>
+
+                            <div class="f-connector"></div>
+
+                            <div class="f-card">
+                                <div class="f-top">
+                                    <div class="f-num">4</div>
+                                    <span class="m-tag mg">GET</span>
+                                    <div class="f-name">Verify Order</div>
+                                    <span class="f-status fs-w">Waiting</span>
+                                </div>
+                                <div class="f-url">/v1/orders/{{order_id}} · menunggu step 3</div>
+                            </div>
+
+                            <div class="f-connector f-connector-dim"></div>
+                            <button class="add-step" onclick="toast('Tambah langkah baru','ok')">
+                                <i class="bi bi-plus-circle"></i> Tambah Langkah
+                            </button>
+
+                        </div>
+                    </div>
+                </div><!-- /m-flow -->
+
+                <!-- PERF MODE -->
+                <div id="m-perf" style="display:none;flex:1;overflow:hidden">
+                    <div class="perf-wrap">
+                        <div class="perf-top">
+                            <div class="flow-info">
+                                <h2>Performance Test</h2>
+                                <p>Powered by K6 · Konfigurasi dan jalankan load test langsung dari browser</p>
+                            </div>
+                            <button class="btn btn-green btn-sm" onclick="runPerf()">
+                                <i class="bi bi-play-fill"></i> Start Test
+                            </button>
+                        </div>
+
+                        <span class="section-micro-label">Preset</span>
+                        <div class="presets">
+                            <button class="pr-btn" onclick="setPr(this,1,30)">
+                                <i class="bi bi-circle"></i> Smoke 1 VU
+                            </button>
+                            <button class="pr-btn on" onclick="setPr(this,10,60)">
+                                <i class="bi bi-lightning"></i> Light 10 VU
+                            </button>
+                            <button class="pr-btn" onclick="setPr(this,50,120)">
+                                <i class="bi bi-lightning-fill"></i> Medium 50 VU
+                            </button>
+                            <button class="pr-btn" onclick="setPr(this,200,300)">
+                                <i class="bi bi-fire"></i> Heavy 200 VU
+                            </button>
+                            <button class="pr-btn" onclick="setPr(this,0,0)">
+                                <i class="bi bi-sliders"></i> Custom
+                            </button>
+                        </div>
+
+                        <div class="perf-grid">
+                            <div class="pc">
+                                <div class="pc-label">Virtual Users</div>
+                                <div class="pc-val" id="pvu">10</div>
+                                <div class="pc-sub">concurrent users</div>
+                                <input class="range-slider" type="range" min="1" max="500" value="10"
+                                    oninput="document.getElementById('pvu').textContent=this.value">
+                            </div>
+                            <div class="pc">
+                                <div class="pc-label">Durasi</div>
+                                <div class="pc-val" id="pdur">60s</div>
+                                <div class="pc-sub">total duration</div>
+                                <input class="range-slider" type="range" min="10" max="600" value="60"
+                                    oninput="document.getElementById('pdur').textContent=this.value+'s'">
+                            </div>
+                            <div class="pc">
+                                <div class="pc-label">Target URL</div>
+                                <input class="perf-url-input" value="https://api.myapp.id/v1/products">
+                                <div class="pc-sub pc-sub-mt">GET dengan auth header</div>
+                            </div>
+                        </div>
+
+                        <span class="section-micro-label">Hasil Run Terakhir</span>
+                        <div class="metric-row">
+                            <div class="mc">
+                                <div class="mc-label">Req / sec</div>
+                                <div class="mc-val ok">847</div>
+                                <div class="mc-sub">avg</div>
+                            </div>
+                            <div class="mc">
+                                <div class="mc-label">p95 Latency</div>
+                                <div class="mc-val warn">312ms</div>
+                                <div class="mc-sub">threshold 500ms</div>
+                            </div>
+                            <div class="mc">
+                                <div class="mc-label">Error Rate</div>
+                                <div class="mc-val ok">0.2%</div>
+                                <div class="mc-sub">threshold 1%</div>
+                            </div>
+                            <div class="mc">
+                                <div class="mc-label">Total Request</div>
+                                <div class="mc-val">50,820</div>
+                                <div class="mc-sub">dalam 60 detik</div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-title">Latency over time (ms)</div>
+                            <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15" />
+                                        <stop offset="100%" stop-color="#1a7a5e" stop-opacity="0" />
+                                    </linearGradient>
+                                </defs>
+                                <path
+                                    d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22 L800,70 L0,70Z"
+                                    fill="url(#cg)" />
+                                <path
+                                    d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22"
+                                    fill="none" stroke="#1a7a5e" stroke-width="1.5" />
+                                <line x1="0" y1="35" x2="800" y2="35" stroke="#e2e1dd" stroke-width="1"
+                                    stroke-dasharray="4 4" />
+                                <text x="4" y="32" fill="#9a9a9a" font-size="9" font-family="monospace">p95</text>
+                            </svg>
+                        </div>
+
+                    </div>
+                </div><!-- /m-perf -->
+
+            </div><!-- /app-main -->
+        </div><!-- /app-body -->
+    </div><!-- /app -->
+
+
+    <!-- ════════ AUTH MODAL ════════ -->
+    <div class="modal-overlay" id="authModal" onclick="modalOutsideClick(event)">
+        <div class="modal-box" id="modalBox">
+
+            <div class="modal-head">
+                <div class="modal-logo">
+                    <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce" style="mix-blend-mode:multiply">
+                    HIT<span>Saurce</span>
+                </div>
+                <button class="modal-close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- LOGIN -->
+                <div id="view-login">
+                    <div class="modal-title">Selamat datang 👋</div>
+                    <div class="modal-sub">Masuk untuk mulai testing API kamu.</div>
+                    <button class="btn-google" onclick="loginGoogle()">
+                        <svg width="16" height="16" viewBox="0 0 48 48">
+                            <path fill="#EA4335"
+                                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.11 17.74 9.5 24 9.5z" />
+                            <path fill="#4285F4"
+                                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                            <path fill="#FBBC05"
+                                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                            <path fill="#34A853"
+                                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.61-13.47-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                        </svg>
+                        Lanjutkan dengan Google
+                    </button>
+                    <div class="auth-divider">atau masuk dengan email</div>
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" id="login-email" placeholder="kamu@email.com"
+                            oninput="clearErr('login-email')">
+                        <div class="field-err" id="err-login-email">Masukkan email yang valid.</div>
+                    </div>
+                    <div class="field">
+                        <label>
+                            Password
+                            <span class="forgot-link" onclick="showView('forgot')">Lupa password?</span>
+                        </label>
+                        <div class="pw-wrap">
+                            <input type="password" id="login-pass" placeholder="••••••••"
+                                oninput="clearErr('login-pass')">
+                            <button class="pw-toggle" type="button" onclick="togglePw('login-pass',this)" tabindex="-1">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <div class="field-err" id="err-login-pass">Password wajib diisi.</div>
+                    </div>
+                    <button class="btn-auth" id="btn-login" onclick="doLogin()">Masuk</button>
+                    <div class="auth-switch">
+                        Belum punya akun? <a onclick="showView('register')">Daftar gratis</a>
+                    </div>
+                </div>
+
+                <!-- REGISTER -->
+                <div id="view-register" style="display:none">
+                    <div class="modal-title">Buat akun gratis ✨</div>
+                    <div class="modal-sub">Tidak perlu kartu kredit. Langsung testing.</div>
+                    <button class="btn-google" onclick="loginGoogle()">
+                        <svg width="16" height="16" viewBox="0 0 48 48">
+                            <path fill="#EA4335"
+                                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.11 17.74 9.5 24 9.5z" />
+                            <path fill="#4285F4"
+                                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                            <path fill="#FBBC05"
+                                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                            <path fill="#34A853"
+                                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.61-13.47-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                        </svg>
+                        Daftar dengan Google
+                    </button>
+                    <div class="auth-divider">atau daftar dengan email</div>
+                    <div class="field">
+                        <label>Nama lengkap</label>
+                        <input type="text" id="reg-name" placeholder="John Doe" oninput="clearErr('reg-name')">
+                        <div class="field-err" id="err-reg-name">Nama wajib diisi.</div>
+                    </div>
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" id="reg-email" placeholder="kamu@email.com" oninput="clearErr('reg-email')">
+                        <div class="field-err" id="err-reg-email">Masukkan email yang valid.</div>
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="pw-wrap">
+                            <input type="password" id="reg-pass" placeholder="Min. 8 karakter"
+                                oninput="clearErr('reg-pass')">
+                            <button class="pw-toggle" type="button" onclick="togglePw('reg-pass',this)" tabindex="-1">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <div class="field-err" id="err-reg-pass">Password minimal 8 karakter.</div>
+                    </div>
+                    <button class="btn-auth" id="btn-register" onclick="doRegister()">Buat akun gratis</button>
+                    <div class="auth-terms">
+                        Dengan mendaftar kamu setuju <a>Syarat &amp; Ketentuan</a> dan <a>Kebijakan Privasi</a> kami.
+                    </div>
+                    <div class="auth-switch">
+                        Sudah punya akun? <a onclick="showView('login')">Masuk</a>
+                    </div>
+                </div>
+
+                <!-- FORGOT -->
+                <div id="view-forgot" style="display:none">
+                    <div class="modal-title">Reset password 🔑</div>
+                    <div class="modal-sub">Masukkan email kamu, kami kirimkan link reset.</div>
+                    <div id="forgot-form">
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="email" id="forgot-email" placeholder="kamu@email.com"
+                                oninput="clearErr('forgot-email')">
+                            <div class="field-err" id="err-forgot-email">Masukkan email yang valid.</div>
+                        </div>
+                        <button class="btn-auth" id="btn-forgot" onclick="doForgot()">Kirim link reset</button>
+                    </div>
+                    <div id="forgot-sent" style="display:none">
+                        <div class="auth-success">
+                            <div class="auth-success-icon"><i class="bi bi-envelope-check-fill"></i></div>
+                            <div class="auth-success-title">Email terkirim!</div>
+                            <div class="auth-success-desc">Cek inbox kamu dan klik link reset password. Link berlaku 15
+                                menit.</div>
+                        </div>
+                    </div>
+                    <div class="auth-switch" style="margin-top:12px">
+                        <a onclick="showView('login')"><i class="bi bi-arrow-left" style="font-size:10px"></i> Kembali
+                            ke login</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <div class="modal-body">
 
-      <!-- LOGIN -->
-      <div id="view-login">
-        <div class="modal-title">Selamat datang 👋</div>
-        <div class="modal-sub">Masuk untuk mulai testing API kamu.</div>
-        <button class="btn-google" onclick="loginGoogle()">
-          <svg width="16" height="16" viewBox="0 0 48 48">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.11 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.61-13.47-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-          </svg>
-          Lanjutkan dengan Google
-        </button>
-        <div class="auth-divider">atau masuk dengan email</div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" id="login-email" placeholder="kamu@email.com" oninput="clearErr('login-email')">
-          <div class="field-err" id="err-login-email">Masukkan email yang valid.</div>
-        </div>
-        <div class="field">
-          <label>
-            Password
-            <span class="forgot-link" onclick="showView('forgot')">Lupa password?</span>
-          </label>
-          <div class="pw-wrap">
-            <input type="password" id="login-pass" placeholder="••••••••" oninput="clearErr('login-pass')">
-            <button class="pw-toggle" type="button" onclick="togglePw('login-pass',this)" tabindex="-1">
-              <i class="bi bi-eye"></i>
-            </button>
-          </div>
-          <div class="field-err" id="err-login-pass">Password wajib diisi.</div>
-        </div>
-        <button class="btn-auth" id="btn-login" onclick="doLogin()">Masuk</button>
-        <div class="auth-switch">
-          Belum punya akun? <a onclick="showView('register')">Daftar gratis</a>
-        </div>
-      </div>
-
-      <!-- REGISTER -->
-      <div id="view-register" style="display:none">
-        <div class="modal-title">Buat akun gratis ✨</div>
-        <div class="modal-sub">Tidak perlu kartu kredit. Langsung testing.</div>
-        <button class="btn-google" onclick="loginGoogle()">
-          <svg width="16" height="16" viewBox="0 0 48 48">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.11 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.61-13.47-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-          </svg>
-          Daftar dengan Google
-        </button>
-        <div class="auth-divider">atau daftar dengan email</div>
-        <div class="field">
-          <label>Nama lengkap</label>
-          <input type="text" id="reg-name" placeholder="John Doe" oninput="clearErr('reg-name')">
-          <div class="field-err" id="err-reg-name">Nama wajib diisi.</div>
-        </div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" id="reg-email" placeholder="kamu@email.com" oninput="clearErr('reg-email')">
-          <div class="field-err" id="err-reg-email">Masukkan email yang valid.</div>
-        </div>
-        <div class="field">
-          <label>Password</label>
-          <div class="pw-wrap">
-            <input type="password" id="reg-pass" placeholder="Min. 8 karakter" oninput="clearErr('reg-pass')">
-            <button class="pw-toggle" type="button" onclick="togglePw('reg-pass',this)" tabindex="-1">
-              <i class="bi bi-eye"></i>
-            </button>
-          </div>
-          <div class="field-err" id="err-reg-pass">Password minimal 8 karakter.</div>
-        </div>
-        <button class="btn-auth" id="btn-register" onclick="doRegister()">Buat akun gratis</button>
-        <div class="auth-terms">
-          Dengan mendaftar kamu setuju <a>Syarat &amp; Ketentuan</a> dan <a>Kebijakan Privasi</a> kami.
-        </div>
-        <div class="auth-switch">
-          Sudah punya akun? <a onclick="showView('login')">Masuk</a>
-        </div>
-      </div>
-
-      <!-- FORGOT -->
-      <div id="view-forgot" style="display:none">
-        <div class="modal-title">Reset password 🔑</div>
-        <div class="modal-sub">Masukkan email kamu, kami kirimkan link reset.</div>
-        <div id="forgot-form">
-          <div class="field">
-            <label>Email</label>
-            <input type="email" id="forgot-email" placeholder="kamu@email.com" oninput="clearErr('forgot-email')">
-            <div class="field-err" id="err-forgot-email">Masukkan email yang valid.</div>
-          </div>
-          <button class="btn-auth" id="btn-forgot" onclick="doForgot()">Kirim link reset</button>
-        </div>
-        <div id="forgot-sent" style="display:none">
-          <div class="auth-success">
-            <div class="auth-success-icon"><i class="bi bi-envelope-check-fill"></i></div>
-            <div class="auth-success-title">Email terkirim!</div>
-            <div class="auth-success-desc">Cek inbox kamu dan klik link reset password. Link berlaku 15 menit.</div>
-          </div>
-        </div>
-        <div class="auth-switch" style="margin-top:12px">
-          <a onclick="showView('login')"><i class="bi bi-arrow-left" style="font-size:10px"></i> Kembali ke login</a>
-        </div>
-      </div>
-
+    <!-- ════════ TOAST ════════ -->
+    <div class="toast" id="toastEl">
+        <i id="toast-ico" class="bi bi-check-circle-fill toast-ico-ok"></i>
+        <span id="toast-txt"></span>
     </div>
-  </div>
-</div>
 
 
-<!-- ════════ TOAST ════════ -->
-<div class="toast" id="toastEl">
-  <i id="toast-ico" class="bi bi-check-circle-fill toast-ico-ok"></i>
-  <span id="toast-txt"></span>
-</div>
+    <!-- ════════ JAVASCRIPT ════════ -->
+    <script>
+        (function () {
+            var el = document.getElementById('loader');
+            function hide() { el.style.opacity = '0'; el.style.pointerEvents = 'none'; }
+            setTimeout(hide, 500);
+        })();
 
+        /* ── STATUS CODE DESCRIPTIONS ── */
+        var statusDesc = {
+            '200': '200 = Request berhasil',
+            '201': '201 = Data berhasil dibuat',
+            '204': '204 = Berhasil, tidak ada data kembali',
+            '400': '400 = Request tidak valid / ada error di data',
+            '401': '401 = Belum login atau token expired',
+            '403': '403 = Tidak punya akses ke resource ini',
+            '404': '404 = Data atau endpoint tidak ditemukan',
+            '422': '422 = Validasi gagal di server',
+            '429': '429 = Terlalu banyak request, coba lagi nanti',
+            '500': '500 = Error di server, bukan salah kamu'
+        };
 
-<!-- ════════ JAVASCRIPT ════════ -->
-<script>
-(function(){
-  var el = document.getElementById('loader');
-  function hide(){ el.style.opacity='0'; el.style.pointerEvents='none'; }
-  setTimeout(hide, 500);
-})();
+        /* ── NAVIGATION ── */
+        function goLanding() {
+            ['app', 'onboarding'].forEach(function (id) {
+                document.getElementById(id).classList.remove('active');
+            });
+            document.getElementById('landing').classList.add('active');
+            window.scrollTo(0, 0);
+        }
 
-/* ── STATUS CODE DESCRIPTIONS ── */
-var statusDesc = {
-  '200':'200 = Request berhasil',
-  '201':'201 = Data berhasil dibuat',
-  '204':'204 = Berhasil, tidak ada data kembali',
-  '400':'400 = Request tidak valid / ada error di data',
-  '401':'401 = Belum login atau token expired',
-  '403':'403 = Tidak punya akses ke resource ini',
-  '404':'404 = Data atau endpoint tidak ditemukan',
-  '422':'422 = Validasi gagal di server',
-  '429':'429 = Terlalu banyak request, coba lagi nanti',
-  '500':'500 = Error di server, bukan salah kamu'
-};
+        function goApp() {
+            ['landing', 'onboarding'].forEach(function (id) {
+                document.getElementById(id).classList.remove('active');
+            });
+            document.getElementById('app').classList.add('active');
+            window.scrollTo(0, 0);
+        }
 
-/* ── NAVIGATION ── */
-function goLanding(){
-  ['app','onboarding'].forEach(function(id){
-    document.getElementById(id).classList.remove('active');
-  });
-  document.getElementById('landing').classList.add('active');
-  window.scrollTo(0,0);
-}
+        function goOnboarding() {
+            ['landing', 'app'].forEach(function (id) {
+                document.getElementById(id).classList.remove('active');
+            });
+            document.getElementById('onboarding').classList.add('active');
+            window.scrollTo(0, 0);
+        }
 
-function goApp(){
-  ['landing','onboarding'].forEach(function(id){
-    document.getElementById(id).classList.remove('active');
-  });
-  document.getElementById('app').classList.add('active');
-  window.scrollTo(0,0);
-}
+        function goScroll(id) {
+            var el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
 
-function goOnboarding(){
-  ['landing','app'].forEach(function(id){
-    document.getElementById(id).classList.remove('active');
-  });
-  document.getElementById('onboarding').classList.add('active');
-  window.scrollTo(0,0);
-}
+        /* ── APP MODE ── */
+        function setMode(m) {
+            ['single', 'flow', 'perf'].forEach(function (x) {
+                document.getElementById('m-' + x).style.display = x === m ? 'flex' : 'none';
+                document.getElementById('mb-' + x).classList.toggle('on', x === m);
+            });
+        }
 
-function goScroll(id){
-  var el = document.getElementById(id);
-  if(el) el.scrollIntoView({ behavior:'smooth' });
-}
+        /* ── ENVIRONMENT ── */
+        function onEnvChange() {
+            var v = document.getElementById('envSel').value;
+            var labels = { dev: 'Dev', staging: 'Staging', prod: 'Production' };
+            toast('Environment: ' + labels[v], 'ok');
+        }
 
-/* ── APP MODE ── */
-function setMode(m){
-  ['single','flow','perf'].forEach(function(x){
-    document.getElementById('m-'+x).style.display = x===m ? 'flex' : 'none';
-    document.getElementById('mb-'+x).classList.toggle('on', x===m);
-  });
-}
+        /* ── SIDEBAR ── */
+        function togColl(el) {
+            el.classList.toggle('open');
+            var next = el.nextElementSibling;
+            if (next) next.style.display = next.style.display === 'none' ? '' : 'none';
+        }
 
-/* ── ENVIRONMENT ── */
-function onEnvChange(){
-  var v = document.getElementById('envSel').value;
-  var labels = { dev:'Dev', staging:'Staging', prod:'Production' };
-  toast('Environment: ' + labels[v], 'ok');
-}
+        function filterSidebar(q) {
+            q = q.toLowerCase();
+            document.querySelectorAll('.sb-item').forEach(function (item) {
+                item.style.display = item.textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+        }
 
-/* ── SIDEBAR ── */
-function togColl(el){
-  el.classList.toggle('open');
-  var next = el.nextElementSibling;
-  if(next) next.style.display = next.style.display==='none' ? '' : 'none';
-}
+        function loadR(method, url, name, el) {
+            document.querySelectorAll('.sb-item').forEach(function (i) { i.classList.remove('on'); });
+            el.classList.add('on');
+            document.getElementById('msel').value = method;
+            document.getElementById('urlin').value = url;
+            document.getElementById('rname').value = name;
+            updMethod();
+            setMode('single');
+            toast(name + ' dimuat', 'ok');
+        }
 
-function filterSidebar(q){
-  q = q.toLowerCase();
-  document.querySelectorAll('.sb-item').forEach(function(item){
-    item.style.display = item.textContent.toLowerCase().includes(q) ? '' : 'none';
-  });
-}
+        function dismissOnboardBanner() {
+            var b = document.getElementById('onboardBanner');
+            b.style.opacity = '0';
+            b.style.transition = 'opacity .3s';
+            setTimeout(function () { b.style.display = 'none'; }, 300);
+            localStorage.setItem('hs_banner_dismissed', '1');
+        }
 
-function loadR(method, url, name, el){
-  document.querySelectorAll('.sb-item').forEach(function(i){ i.classList.remove('on'); });
-  el.classList.add('on');
-  document.getElementById('msel').value = method;
-  document.getElementById('urlin').value = url;
-  document.getElementById('rname').value = name;
-  updMethod();
-  setMode('single');
-  toast(name + ' dimuat', 'ok');
-}
+        /* ── REQUEST BUILDER ── */
+        function updMethod() {
+            var s = document.getElementById('msel');
+            var colors = {
+                GET: 'var(--green)', POST: 'var(--blue)',
+                PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)'
+            };
+            s.style.color = colors[s.value] || 'var(--ink)';
+            var badge = document.getElementById('reqMethodBadge');
+            if (badge) badge.textContent = s.value;
+        }
 
-function dismissOnboardBanner(){
-  var b = document.getElementById('onboardBanner');
-  b.style.opacity = '0';
-  b.style.transition = 'opacity .3s';
-  setTimeout(function(){ b.style.display='none'; }, 300);
-  localStorage.setItem('hs_banner_dismissed','1');
-}
+        function swTab(el, id) {
+            el.closest('.tabs-row').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
+            document.querySelectorAll('.panels-area .panel').forEach(function (p) { p.classList.remove('on'); });
+            el.classList.add('on');
+            document.getElementById(id).classList.add('on');
+        }
 
-/* ── REQUEST BUILDER ── */
-function updMethod(){
-  var s = document.getElementById('msel');
-  var colors = {
-    GET:'var(--green)', POST:'var(--blue)',
-    PUT:'var(--amber)', PATCH:'var(--amber)', DELETE:'var(--red)'
-  };
-  s.style.color = colors[s.value] || 'var(--ink)';
-  var badge = document.getElementById('reqMethodBadge');
-  if(badge) badge.textContent = s.value;
-}
+        function swRTab(el, id) {
+            el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
+            ['rb', 'rh', 'ra'].forEach(function (i) {
+                var e = document.getElementById(i);
+                if (e) e.style.display = 'none';
+            });
+            el.classList.add('on');
+            document.getElementById(id).style.display = 'block';
+        }
 
-function swTab(el, id){
-  el.closest('.tabs-row').querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
-  document.querySelectorAll('.panels-area .panel').forEach(function(p){ p.classList.remove('on'); });
-  el.classList.add('on');
-  document.getElementById(id).classList.add('on');
-}
+        /* ── SEND ── */
+        var mockResp = {
+            GET: { st: '200 OK', sc: 's-ok', t: '89ms', sz: '3.1 KB', b: '{\n  "success": true,\n  "data": [\n    { "id": 1, "name": "Product A" },\n    { "id": 2, "name": "Product B" }\n  ],\n  "total": 24\n}' },
+            POST: { st: '201 Created', sc: 's-ok', t: '142ms', sz: '1.2 KB', b: '{\n  "success": true,\n  "message": "Created successfully",\n  "data": { "id": 42, "token": "eyJhbGci..." }\n}' },
+            PUT: { st: '200 OK', sc: 's-ok', t: '108ms', sz: '0.8 KB', b: '{\n  "success": true,\n  "message": "Updated successfully"\n}' },
+            DELETE: { st: '204 No Content', sc: 's-ok', t: '67ms', sz: '0 KB', b: '// 204 No Content — tidak ada response body' },
+            PATCH: { st: '200 OK', sc: 's-ok', t: '95ms', sz: '0.6 KB', b: '{ "success": true, "updated": true }' }
+        };
 
-function swRTab(el, id){
-  el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
-  ['rb','rh','ra'].forEach(function(i){
-    var e = document.getElementById(i);
-    if(e) e.style.display='none';
-  });
-  el.classList.add('on');
-  document.getElementById(id).style.display='block';
-}
+        function doSend() {
+            var btn = document.getElementById('sendb');
+            var m = document.getElementById('msel').value;
+            var url = document.getElementById('urlin').value.trim();
+            if (!url) { toast('Masukkan URL terlebih dahulu', 'err'); return; }
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
+            btn.disabled = true;
+            btn.classList.add('loading');
+            setTimeout(function () {
+                var r = mockResp[m] || mockResp.GET;
+                var stat = document.getElementById('rstat');
+                stat.textContent = r.st;
+                stat.className = 's-badge ' + r.sc;
+                // Update tooltip
+                var code = r.st.split(' ')[0];
+                var tooltip = document.getElementById('statTooltip');
+                if (tooltip) tooltip.textContent = statusDesc[code] || r.st;
+                document.getElementById('rtime').textContent = r.t;
+                document.getElementById('rsize').textContent = r.sz;
+                document.getElementById('rb').textContent = r.b;
+                btn.innerHTML = '<i class="bi bi-send-fill"></i> Send';
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                toast('Response: ' + r.st, 'ok');
+            }, 400 + Math.random() * 600);
+        }
 
-/* ── SEND ── */
-var mockResp = {
-  GET:    { st:'200 OK',         sc:'s-ok',  t:'89ms',  sz:'3.1 KB', b:'{\n  "success": true,\n  "data": [\n    { "id": 1, "name": "Product A" },\n    { "id": 2, "name": "Product B" }\n  ],\n  "total": 24\n}' },
-  POST:   { st:'201 Created',    sc:'s-ok',  t:'142ms', sz:'1.2 KB', b:'{\n  "success": true,\n  "message": "Created successfully",\n  "data": { "id": 42, "token": "eyJhbGci..." }\n}' },
-  PUT:    { st:'200 OK',         sc:'s-ok',  t:'108ms', sz:'0.8 KB', b:'{\n  "success": true,\n  "message": "Updated successfully"\n}' },
-  DELETE: { st:'204 No Content', sc:'s-ok',  t:'67ms',  sz:'0 KB',   b:'// 204 No Content — tidak ada response body' },
-  PATCH:  { st:'200 OK',         sc:'s-ok',  t:'95ms',  sz:'0.6 KB', b:'{ "success": true, "updated": true }' }
-};
+        function copyResponse() {
+            var rb = document.getElementById('rb');
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(rb.textContent).then(function () {
+                    toast('Response disalin ke clipboard', 'ok');
+                });
+            } else {
+                toast('Copy manual: Ctrl+A di panel response', 'ok');
+            }
+        }
 
-function doSend(){
-  var btn = document.getElementById('sendb');
-  var m   = document.getElementById('msel').value;
-  var url = document.getElementById('urlin').value.trim();
-  if(!url){ toast('Masukkan URL terlebih dahulu','err'); return; }
-  btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
-  btn.disabled = true;
-  btn.classList.add('loading');
-  setTimeout(function(){
-    var r = mockResp[m] || mockResp.GET;
-    var stat = document.getElementById('rstat');
-    stat.textContent = r.st;
-    stat.className   = 's-badge ' + r.sc;
-    // Update tooltip
-    var code = r.st.split(' ')[0];
-    var tooltip = document.getElementById('statTooltip');
-    if(tooltip) tooltip.textContent = statusDesc[code] || r.st;
-    document.getElementById('rtime').textContent = r.t;
-    document.getElementById('rsize').textContent = r.sz;
-    document.getElementById('rb').textContent    = r.b;
-    btn.innerHTML = '<i class="bi bi-send-fill"></i> Send';
-    btn.disabled  = false;
-    btn.classList.remove('loading');
-    toast('Response: ' + r.st, 'ok');
-  }, 400 + Math.random()*600);
-}
+        /* ── PARAMS ── */
+        function addParam() {
+            var tb = document.getElementById('param-body');
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td><input type="checkbox" class="p-chk" checked></td>'
+                + '<td><input placeholder="Key"></td>'
+                + '<td><input placeholder="Value"></td>'
+                + '<td><span class="row-del" onclick="this.closest(\'tr\').remove()"><i class="bi bi-trash3"></i></span></td>';
+            tb.appendChild(tr);
+            tr.querySelector('input:nth-child(1)') && tr.querySelectorAll('td input')[1].focus();
+        }
 
-function copyResponse(){
-  var rb = document.getElementById('rb');
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(rb.textContent).then(function(){
-      toast('Response disalin ke clipboard','ok');
-    });
-  } else {
-    toast('Copy manual: Ctrl+A di panel response','ok');
-  }
-}
+        /* ── ASSERTIONS ── */
+        function addAss() {
+            var list = document.getElementById('ass-list');
+            var d = document.createElement('div');
+            d.className = 'ass-row';
+            d.innerHTML = '<span class="ass-dot dot-skip"></span>'
+                + '<input class="ass-inline-input" placeholder="Contoh: status = 200, response time < 500ms">'
+                + '<span class="ass-remove" onclick="this.parentElement.remove();updateAssCount()"><i class="bi bi-x"></i></span>';
+            list.appendChild(d);
+            updateAssCount();
+            d.querySelector('input').focus();
+        }
 
-/* ── PARAMS ── */
-function addParam(){
-  var tb = document.getElementById('param-body');
-  var tr = document.createElement('tr');
-  tr.innerHTML = '<td><input type="checkbox" class="p-chk" checked></td>'
-    + '<td><input placeholder="Key"></td>'
-    + '<td><input placeholder="Value"></td>'
-    + '<td><span class="row-del" onclick="this.closest(\'tr\').remove()"><i class="bi bi-trash3"></i></span></td>';
-  tb.appendChild(tr);
-  tr.querySelector('input:nth-child(1)') && tr.querySelectorAll('td input')[1].focus();
-}
+        function addAssQuick(text) {
+            var list = document.getElementById('ass-list');
+            var d = document.createElement('div');
+            d.className = 'ass-row';
+            var decoded = text.replace(/&lt;/g, '<');
+            d.innerHTML = '<span class="ass-dot dot-skip"></span>'
+                + '<span class="ass-name">' + decoded + '</span>'
+                + '<span class="ass-val">—</span>'
+                + '<span class="ass-remove" style="margin-left:8px" onclick="this.parentElement.remove();updateAssCount()"><i class="bi bi-x"></i></span>';
+            list.appendChild(d);
+            updateAssCount();
+            toast('Assertion ditambahkan', 'ok');
+        }
 
-/* ── ASSERTIONS ── */
-function addAss(){
-  var list = document.getElementById('ass-list');
-  var d = document.createElement('div');
-  d.className = 'ass-row';
-  d.innerHTML = '<span class="ass-dot dot-skip"></span>'
-    + '<input class="ass-inline-input" placeholder="Contoh: status = 200, response time < 500ms">'
-    + '<span class="ass-remove" onclick="this.parentElement.remove();updateAssCount()"><i class="bi bi-x"></i></span>';
-  list.appendChild(d);
-  updateAssCount();
-  d.querySelector('input').focus();
-}
+        function updateAssCount() {
+            var list = document.getElementById('ass-list');
+            var ct = document.getElementById('act');
+            if (ct) ct.textContent = list ? list.children.length : 0;
+        }
 
-function addAssQuick(text){
-  var list = document.getElementById('ass-list');
-  var d = document.createElement('div');
-  d.className = 'ass-row';
-  var decoded = text.replace(/&lt;/g,'<');
-  d.innerHTML = '<span class="ass-dot dot-skip"></span>'
-    + '<span class="ass-name">' + decoded + '</span>'
-    + '<span class="ass-val">—</span>'
-    + '<span class="ass-remove" style="margin-left:8px" onclick="this.parentElement.remove();updateAssCount()"><i class="bi bi-x"></i></span>';
-  list.appendChild(d);
-  updateAssCount();
-  toast('Assertion ditambahkan','ok');
-}
+        /* ── BODY BAR ── */
+        document.querySelectorAll('.bt-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                this.closest('.body-bar').querySelectorAll('.bt-btn').forEach(function (b) { b.classList.remove('on'); });
+                this.classList.add('on');
+            });
+        });
 
-function updateAssCount(){
-  var list = document.getElementById('ass-list');
-  var ct = document.getElementById('act');
-  if(ct) ct.textContent = list ? list.children.length : 0;
-}
+        /* ── FLOW MODE ── */
+        function runFlow() {
+            var cards = document.querySelectorAll('.f-card');
+            var i = 0;
+            cards.forEach(function (c) {
+                c.className = 'f-card';
+                var s = c.querySelector('.f-status');
+                if (s) { s.className = 'f-status fs-w'; s.textContent = 'Waiting'; }
+            });
+            function next() {
+                if (i >= cards.length) { toast('✓ Flow selesai — semua step passed', 'ok'); return; }
+                var c = cards[i];
+                c.className = 'f-card run';
+                var s = c.querySelector('.f-status');
+                if (s) { s.className = 'f-status fs-r'; s.textContent = 'Running'; }
+                setTimeout(function () {
+                    c.className = 'f-card pass';
+                    if (s) { s.className = 'f-status fs-p'; s.textContent = 'PASSED'; }
+                    i++; next();
+                }, 800);
+            }
+            next();
+        }
 
-/* ── BODY BAR ── */
-document.querySelectorAll('.bt-btn').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    this.closest('.body-bar').querySelectorAll('.bt-btn').forEach(function(b){ b.classList.remove('on'); });
-    this.classList.add('on');
-  });
-});
+        /* ── PERFORMANCE MODE ── */
+        function setPr(btn, vu, dur) {
+            document.querySelectorAll('.pr-btn').forEach(function (b) { b.classList.remove('on'); });
+            btn.classList.add('on');
+            if (vu > 0) {
+                document.getElementById('pvu').textContent = vu;
+                document.getElementById('pdur').textContent = dur + 's';
+            }
+        }
 
-/* ── FLOW MODE ── */
-function runFlow(){
-  var cards = document.querySelectorAll('.f-card');
-  var i = 0;
-  cards.forEach(function(c){
-    c.className = 'f-card';
-    var s = c.querySelector('.f-status');
-    if(s){ s.className='f-status fs-w'; s.textContent='Waiting'; }
-  });
-  function next(){
-    if(i >= cards.length){ toast('✓ Flow selesai — semua step passed','ok'); return; }
-    var c = cards[i];
-    c.className = 'f-card run';
-    var s = c.querySelector('.f-status');
-    if(s){ s.className='f-status fs-r'; s.textContent='Running'; }
-    setTimeout(function(){
-      c.className = 'f-card pass';
-      if(s){ s.className='f-status fs-p'; s.textContent='PASSED'; }
-      i++; next();
-    }, 800);
-  }
-  next();
-}
+        function runPerf() {
+            toast('K6 test dimulai...', 'ok');
+            setTimeout(function () { toast('✓ Test selesai — error rate 0.2%', 'ok'); }, 3000);
+        }
 
-/* ── PERFORMANCE MODE ── */
-function setPr(btn, vu, dur){
-  document.querySelectorAll('.pr-btn').forEach(function(b){ b.classList.remove('on'); });
-  btn.classList.add('on');
-  if(vu > 0){
-    document.getElementById('pvu').textContent = vu;
-    document.getElementById('pdur').textContent = dur + 's';
-  }
-}
+        /* ── FAQ ── */
+        function toggleFaq(el) {
+            el.parentElement.classList.toggle('open');
+        }
 
-function runPerf(){
-  toast('K6 test dimulai...','ok');
-  setTimeout(function(){ toast('✓ Test selesai — error rate 0.2%','ok'); }, 3000);
-}
+        /* ── TOAST ── */
+        var tTimer;
+        function toast(msg, type) {
+            var el = document.getElementById('toastEl');
+            var ico = document.getElementById('toast-ico');
+            document.getElementById('toast-txt').textContent = msg;
+            ico.className = type === 'ok'
+                ? 'bi bi-check-circle-fill toast-ico-ok'
+                : 'bi bi-x-circle-fill toast-ico-err';
+            el.classList.add('show');
+            clearTimeout(tTimer);
+            tTimer = setTimeout(function () { el.classList.remove('show'); }, 2800);
+        }
 
-/* ── FAQ ── */
-function toggleFaq(el){
-  el.parentElement.classList.toggle('open');
-}
+        /* ── AUTH MODAL ── */
+        function openModal(view) {
+            view = view || 'login';
+            showView(view);
+            document.getElementById('authModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(function () {
+                var first = document.querySelector('#view-' + view + ' input:not([type="hidden"])');
+                if (first) first.focus();
+            }, 280);
+        }
 
-/* ── TOAST ── */
-var tTimer;
-function toast(msg, type){
-  var el  = document.getElementById('toastEl');
-  var ico = document.getElementById('toast-ico');
-  document.getElementById('toast-txt').textContent = msg;
-  ico.className = type==='ok'
-    ? 'bi bi-check-circle-fill toast-ico-ok'
-    : 'bi bi-x-circle-fill toast-ico-err';
-  el.classList.add('show');
-  clearTimeout(tTimer);
-  tTimer = setTimeout(function(){ el.classList.remove('show'); }, 2800);
-}
+        function closeModal() {
+            document.getElementById('authModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
 
-/* ── AUTH MODAL ── */
-function openModal(view){
-  view = view || 'login';
-  showView(view);
-  document.getElementById('authModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  setTimeout(function(){
-    var first = document.querySelector('#view-'+view+' input:not([type="hidden"])');
-    if(first) first.focus();
-  }, 280);
-}
+        function modalOutsideClick(e) {
+            if (e.target === document.getElementById('authModal')) closeModal();
+        }
 
-function closeModal(){
-  document.getElementById('authModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
 
-function modalOutsideClick(e){
-  if(e.target === document.getElementById('authModal')) closeModal();
-}
+        function showView(v) {
+            ['login', 'register', 'forgot'].forEach(function (name) {
+                document.getElementById('view-' + name).style.display = name === v ? 'block' : 'none';
+            });
+        }
 
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape') closeModal();
-});
+        function togglePw(inputId, btn) {
+            var inp = document.getElementById(inputId);
+            var icon = btn.querySelector('i');
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                icon.className = 'bi bi-eye-slash';
+            } else {
+                inp.type = 'password';
+                icon.className = 'bi bi-eye';
+            }
+        }
 
-function showView(v){
-  ['login','register','forgot'].forEach(function(name){
-    document.getElementById('view-'+name).style.display = name===v ? 'block' : 'none';
-  });
-}
+        function clearErr(inputId) {
+            var inp = document.getElementById(inputId);
+            var err = document.getElementById('err-' + inputId);
+            if (inp) inp.classList.remove('err');
+            if (err) err.classList.remove('show');
+        }
 
-function togglePw(inputId, btn){
-  var inp  = document.getElementById(inputId);
-  var icon = btn.querySelector('i');
-  if(inp.type==='password'){
-    inp.type = 'text';
-    icon.className = 'bi bi-eye-slash';
-  } else {
-    inp.type = 'password';
-    icon.className = 'bi bi-eye';
-  }
-}
+        function showErr(inputId, msg) {
+            var inp = document.getElementById(inputId);
+            var err = document.getElementById('err-' + inputId);
+            if (inp) inp.classList.add('err');
+            if (err) { if (msg) err.textContent = msg; err.classList.add('show'); }
+            if (inp) inp.focus();
+        }
 
-function clearErr(inputId){
-  var inp = document.getElementById(inputId);
-  var err = document.getElementById('err-'+inputId);
-  if(inp) inp.classList.remove('err');
-  if(err) err.classList.remove('show');
-}
+        function doLogin() {
+            var email = document.getElementById('login-email').value.trim();
+            var pass = document.getElementById('login-pass').value;
+            var ok = true;
+            if (!email || !/\S+@\S+\.\S+/.test(email)) { showErr('login-email'); ok = false; }
+            if (!pass) { showErr('login-pass'); ok = false; }
+            if (!ok) return;
+            var btn = document.getElementById('btn-login');
+            btn.classList.add('loading'); btn.textContent = 'Memverifikasi...';
+            setTimeout(function () {
+                btn.classList.remove('loading'); btn.textContent = 'Masuk';
+                closeModal();
+                var isOnboarded = localStorage.getItem('hs_onboarded');
+                if (isOnboarded) { goApp(); toast('Selamat datang kembali! 👋', 'ok'); }
+                else { goOnboarding(); }
+            }, 1400);
+        }
 
-function showErr(inputId, msg){
-  var inp = document.getElementById(inputId);
-  var err = document.getElementById('err-'+inputId);
-  if(inp) inp.classList.add('err');
-  if(err){ if(msg) err.textContent=msg; err.classList.add('show'); }
-  if(inp) inp.focus();
-}
+        function doRegister() {
+            var name = document.getElementById('reg-name').value.trim();
+            var email = document.getElementById('reg-email').value.trim();
+            var pass = document.getElementById('reg-pass').value;
+            var ok = true;
+            if (!name) { showErr('reg-name'); ok = false; }
+            if (!email || !/\S+@\S+\.\S+/.test(email)) { showErr('reg-email'); ok = false; }
+            if (!pass || pass.length < 8) { showErr('reg-pass'); ok = false; }
+            if (!ok) return;
+            var btn = document.getElementById('btn-register');
+            btn.classList.add('loading'); btn.textContent = 'Membuat akun...';
+            setTimeout(function () {
+                btn.classList.remove('loading'); btn.textContent = 'Buat akun gratis';
+                closeModal();
+                goOnboarding();
+            }, 1600);
+        }
 
-function doLogin(){
-  var email = document.getElementById('login-email').value.trim();
-  var pass  = document.getElementById('login-pass').value;
-  var ok = true;
-  if(!email || !/\S+@\S+\.\S+/.test(email)){ showErr('login-email'); ok=false; }
-  if(!pass){ showErr('login-pass'); ok=false; }
-  if(!ok) return;
-  var btn = document.getElementById('btn-login');
-  btn.classList.add('loading'); btn.textContent = 'Memverifikasi...';
-  setTimeout(function(){
-    btn.classList.remove('loading'); btn.textContent = 'Masuk';
-    closeModal();
-    var isOnboarded = localStorage.getItem('hs_onboarded');
-    if(isOnboarded){ goApp(); toast('Selamat datang kembali! 👋','ok'); }
-    else { goOnboarding(); }
-  }, 1400);
-}
+        function doForgot() {
+            var email = document.getElementById('forgot-email').value.trim();
+            if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                showErr('forgot-email', 'Masukkan email yang valid.');
+                return;
+            }
+            var btn = document.getElementById('btn-forgot');
+            btn.classList.add('loading'); btn.textContent = 'Mengirim...';
+            setTimeout(function () {
+                document.getElementById('forgot-form').style.display = 'none';
+                document.getElementById('forgot-sent').style.display = 'block';
+            }, 1400);
+        }
 
-function doRegister(){
-  var name  = document.getElementById('reg-name').value.trim();
-  var email = document.getElementById('reg-email').value.trim();
-  var pass  = document.getElementById('reg-pass').value;
-  var ok = true;
-  if(!name){ showErr('reg-name'); ok=false; }
-  if(!email || !/\S+@\S+\.\S+/.test(email)){ showErr('reg-email'); ok=false; }
-  if(!pass || pass.length < 8){ showErr('reg-pass'); ok=false; }
-  if(!ok) return;
-  var btn = document.getElementById('btn-register');
-  btn.classList.add('loading'); btn.textContent = 'Membuat akun...';
-  setTimeout(function(){
-    btn.classList.remove('loading'); btn.textContent = 'Buat akun gratis';
-    closeModal();
-    goOnboarding();
-  }, 1600);
-}
+        function loginGoogle() {
+            closeModal();
+            toast('Google Sign-In akan aktif saat backend live 🔧', 'ok');
+        }
 
-function doForgot(){
-  var email = document.getElementById('forgot-email').value.trim();
-  if(!email || !/\S+@\S+\.\S+/.test(email)){
-    showErr('forgot-email','Masukkan email yang valid.');
-    return;
-  }
-  var btn = document.getElementById('btn-forgot');
-  btn.classList.add('loading'); btn.textContent = 'Mengirim...';
-  setTimeout(function(){
-    document.getElementById('forgot-form').style.display = 'none';
-    document.getElementById('forgot-sent').style.display = 'block';
-  }, 1400);
-}
+        /* ── ONBOARDING ── */
+        var onbData = { role: null, exp: null, wsName: null, purpose: null, start: null };
 
-function loginGoogle(){
-  closeModal();
-  toast('Google Sign-In akan aktif saat backend live 🔧','ok');
-}
+        function selectRole(el, val) {
+            document.querySelectorAll('.role-card').forEach(function (c) { c.classList.remove('selected'); });
+            el.classList.add('selected');
+            onbData.role = val;
+        }
 
-/* ── ONBOARDING ── */
-var onbData = { role:null, exp:null, wsName:null, purpose:null, start:null };
+        function selectExp(el, val) {
+            document.querySelectorAll('.exp-btn').forEach(function (b) { b.classList.remove('selected'); });
+            el.classList.add('selected');
+            onbData.exp = val;
+        }
 
-function selectRole(el, val){
-  document.querySelectorAll('.role-card').forEach(function(c){ c.classList.remove('selected'); });
-  el.classList.add('selected');
-  onbData.role = val;
-}
+        function selectPurpose(el, val) {
+            document.querySelectorAll('.purpose-card').forEach(function (c) { c.classList.remove('selected'); });
+            el.classList.add('selected');
+            onbData.purpose = val;
+        }
 
-function selectExp(el, val){
-  document.querySelectorAll('.exp-btn').forEach(function(b){ b.classList.remove('selected'); });
-  el.classList.add('selected');
-  onbData.exp = val;
-}
+        function selectStart(el, val) {
+            onbData.start = val;
+            document.querySelectorAll('.start-card').forEach(function (c) { c.classList.remove('selected'); });
+            el.classList.add('selected');
+            document.getElementById('onb-finish').disabled = false;
+        }
 
-function selectPurpose(el, val){
-  document.querySelectorAll('.purpose-card').forEach(function(c){ c.classList.remove('selected'); });
-  el.classList.add('selected');
-  onbData.purpose = val;
-}
+        function onbNext(step) {
+            if (step === 1) {
+                var name = document.getElementById('onb-displayname').value.trim();
+                if (!name) {
+                    var inp = document.getElementById('onb-displayname');
+                    inp.style.borderColor = 'var(--red)';
+                    inp.focus();
+                    setTimeout(function () { inp.style.borderColor = ''; }, 1500);
+                    return;
+                }
+            }
+            if (step === 2) {
+                var ws = document.getElementById('onb-wsname').value.trim();
+                if (!ws) {
+                    var inp2 = document.getElementById('onb-wsname');
+                    inp2.style.borderColor = 'var(--red)';
+                    inp2.focus();
+                    setTimeout(function () { inp2.style.borderColor = ''; }, 1500);
+                    return;
+                }
+                onbData.wsName = ws;
+            }
+            var next = step + 1;
+            document.getElementById('onb-' + step).classList.remove('active');
+            document.getElementById('onb-' + next).classList.add('active');
+            document.getElementById('dot-' + step).classList.remove('active');
+            document.getElementById('dot-' + step).classList.add('done');
+            var line = document.getElementById('line-' + step);
+            if (line) line.classList.add('done');
+            document.getElementById('dot-' + next).classList.add('active');
+        }
 
-function selectStart(el, val){
-  onbData.start = val;
-  document.querySelectorAll('.start-card').forEach(function(c){ c.classList.remove('selected'); });
-  el.classList.add('selected');
-  document.getElementById('onb-finish').disabled = false;
-}
+        function onbBack(step) {
+            var prev = step - 1;
+            document.getElementById('onb-' + step).classList.remove('active');
+            document.getElementById('onb-' + prev).classList.add('active');
+            document.getElementById('dot-' + step).classList.remove('active');
+            document.getElementById('dot-' + prev).classList.remove('done');
+            document.getElementById('dot-' + prev).classList.add('active');
+            var line = document.getElementById('line-' + prev);
+            if (line) line.classList.remove('done');
+        }
 
-function onbNext(step){
-  if(step === 1){
-    var name = document.getElementById('onb-displayname').value.trim();
-    if(!name){
-      var inp = document.getElementById('onb-displayname');
-      inp.style.borderColor = 'var(--red)';
-      inp.focus();
-      setTimeout(function(){ inp.style.borderColor=''; }, 1500);
-      return;
-    }
-  }
-  if(step === 2){
-    var ws = document.getElementById('onb-wsname').value.trim();
-    if(!ws){
-      var inp2 = document.getElementById('onb-wsname');
-      inp2.style.borderColor = 'var(--red)';
-      inp2.focus();
-      setTimeout(function(){ inp2.style.borderColor=''; }, 1500);
-      return;
-    }
-    onbData.wsName = ws;
-  }
-  var next = step + 1;
-  document.getElementById('onb-'+step).classList.remove('active');
-  document.getElementById('onb-'+next).classList.add('active');
-  document.getElementById('dot-'+step).classList.remove('active');
-  document.getElementById('dot-'+step).classList.add('done');
-  var line = document.getElementById('line-'+step);
-  if(line) line.classList.add('done');
-  document.getElementById('dot-'+next).classList.add('active');
-}
+        function finishOnboarding() {
+            var btn = document.getElementById('onb-finish');
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyiapkan workspace...';
+            btn.disabled = true;
+            setTimeout(function () {
+                var name = document.getElementById('onb-displayname').value.trim();
+                var wsName = document.getElementById('onb-wsname').value.trim() || 'My Workspace';
+                localStorage.setItem('hs_onboarded', '1');
+                localStorage.setItem('hs_user', JSON.stringify(onbData));
+                // Update UI dengan nama user
+                var av = document.getElementById('userAv');
+                var unam = document.getElementById('userName');
+                if (av) av.textContent = name.charAt(0).toUpperCase();
+                if (unam) unam.textContent = name;
+                // Cek apakah banner sudah dismissed sebelumnya
+                if (localStorage.getItem('hs_banner_dismissed')) {
+                    var b = document.getElementById('onboardBanner');
+                    if (b) b.style.display = 'none';
+                }
+                goApp();
+                toast('Workspace "' + wsName + '" siap! Selamat datang ' + name + ' 🎉', 'ok');
+            }, 1200);
+        }
 
-function onbBack(step){
-  var prev = step - 1;
-  document.getElementById('onb-'+step).classList.remove('active');
-  document.getElementById('onb-'+prev).classList.add('active');
-  document.getElementById('dot-'+step).classList.remove('active');
-  document.getElementById('dot-'+prev).classList.remove('done');
-  document.getElementById('dot-'+prev).classList.add('active');
-  var line = document.getElementById('line-'+prev);
-  if(line) line.classList.remove('done');
-}
+        /* ── INIT ── */
+        updMethod();
 
-function finishOnboarding(){
-  var btn = document.getElementById('onb-finish');
-  btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyiapkan workspace...';
-  btn.disabled = true;
-  setTimeout(function(){
-    var name   = document.getElementById('onb-displayname').value.trim();
-    var wsName = document.getElementById('onb-wsname').value.trim() || 'My Workspace';
-    localStorage.setItem('hs_onboarded','1');
-    localStorage.setItem('hs_user', JSON.stringify(onbData));
-    // Update UI dengan nama user
-    var av   = document.getElementById('userAv');
-    var unam = document.getElementById('userName');
-    if(av)   av.textContent   = name.charAt(0).toUpperCase();
-    if(unam) unam.textContent = name;
-    // Cek apakah banner sudah dismissed sebelumnya
-    if(localStorage.getItem('hs_banner_dismissed')){
-      var b = document.getElementById('onboardBanner');
-      if(b) b.style.display = 'none';
-    }
-    goApp();
-    toast('Workspace "'+wsName+'" siap! Selamat datang '+name+' 🎉','ok');
-  }, 1200);
-}
-
-/* ── INIT ── */
-updMethod();
-
-// Sembunyikan onboarding banner jika sudah pernah dismiss
-if(localStorage.getItem('hs_banner_dismissed')){
-  var banner = document.getElementById('onboardBanner');
-  if(banner) banner.style.display = 'none';
-}
-// Restore nama user dari localStorage
-var savedUser = localStorage.getItem('hs_user');
-if(savedUser){
-  try {
-    var u = JSON.parse(savedUser);
-  } catch(e){}
-}
-</script>
+        // Sembunyikan onboarding banner jika sudah pernah dismiss
+        if (localStorage.getItem('hs_banner_dismissed')) {
+            var banner = document.getElementById('onboardBanner');
+            if (banner) banner.style.display = 'none';
+        }
+        // Restore nama user dari localStorage
+        var savedUser = localStorage.getItem('hs_user');
+        if (savedUser) {
+            try {
+                var u = JSON.parse(savedUser);
+            } catch (e) { }
+        }
+    </script>
 </body>
+
 </html>
