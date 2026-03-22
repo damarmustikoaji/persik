@@ -92,7 +92,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero-badge b2"><span class="badge-dot-a"></span>Flow: 4/4 passed</div>
+                <div class="hero-badge b2"><span class="badge-dot-a"></span><span id="demoBadge2">Coba Send di atas
+                        ↑</span></div>
             </div>
         </div>
 
@@ -1346,6 +1347,18 @@
 
                         // Syntax highlight sederhana
                         body.innerHTML = syntaxHL(display);
+
+                        // Update badge b1 dengan status dan waktu real
+                        document.getElementById('demoRespHead') &&
+                            (document.querySelector('.hero-badge.b1').innerHTML =
+                                '<span class="badge-dot-g"></span>' + sc + ' ' + statusText(sc) + ' · ' + ms + 'ms');
+
+                        // Update badge b2 dengan counter
+                        var cnt = parseInt(localStorage.getItem('hs_demo_cnt') || '0') + 1;
+                        localStorage.setItem('hs_demo_cnt', cnt);
+                        var b2txt = document.getElementById('demoBadge2');
+                        if (b2txt) b2txt.textContent = cnt + ' request berhasil ✓';
+
                         btn.textContent = 'Send';
                         btn.disabled = false;
                     });
@@ -1357,6 +1370,10 @@
                     stat.style.color = 'var(--red)';
                     stat.style.border = '1px solid var(--red-mid)';
                     meta.textContent = Date.now() - t0 + 'ms';
+
+                    // Tambahkan setelah meta.textContent = ...
+                    document.querySelector('.hero-badge.b1').innerHTML =
+                        '<span class="badge-dot-a"></span>Error · ' + (Date.now() - t0) + 'ms';
 
                     // Cek apakah CORS error
                     var isCors = err.message && err.message.toLowerCase().includes('fetch');
@@ -1380,18 +1397,28 @@
         }
 
         function syntaxHL(str) {
-            // Escape HTML dulu
-            str = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            // Warnai key, string, number, boolean
-            return str
-                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")\s*:/g,
-                    '<span style="color:var(--blue)">$1</span>:')
-                .replace(/:\s*("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g,
-                    ': <span style="color:var(--green)">$2</span>')
-                .replace(/:\s*(\b(true|false)\b)/g,
-                    ': <span style="color:var(--amber)">$1</span>')
-                .replace(/:\s*(\b\d+\.?\d*\b)/g,
-                    ': <span style="color:#8e44ad">$1</span>');
+            // Escape HTML dulu — PENTING: urutan ini tidak boleh dibalik
+            var esc = str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            // Highlight line by line agar tidak saling tabrakan
+            return esc.replace(/^([ \t]*)(".*?")(\s*:\s*)(".*?"|true|false|null|-?\d+\.?\d*)/gm,
+                function (_, indent, key, colon, val) {
+                    var vColored;
+                    if (/^"/.test(val)) {
+                        vColored = '<span style="color:var(--green)">' + val + '</span>';
+                    } else if (val === 'true' || val === 'false' || val === 'null') {
+                        vColored = '<span style="color:var(--amber)">' + val + '</span>';
+                    } else {
+                        vColored = '<span style="color:#8e44ad">' + val + '</span>';
+                    }
+                    return indent
+                        + '<span style="color:var(--blue)">' + key + '</span>'
+                        + colon
+                        + vColored;
+                });
         }
 
         /* ── REQUEST BUILDER ── */
@@ -1804,6 +1831,11 @@
                 var u = JSON.parse(savedUser);
             } catch (e) { }
         }
+        // Restore demo counter badge
+        var demoCnt = parseInt(localStorage.getItem('hs_demo_cnt') || '0');
+        var b2txt = document.getElementById('demoBadge2');
+        if (b2txt && demoCnt > 0) b2txt.textContent = demoCnt + ' request berhasil ✓';
+
     </script>
 </body>
 
