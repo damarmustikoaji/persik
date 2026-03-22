@@ -1294,6 +1294,42 @@
         }
 
         /* ── HERO DEMO SEND ── */
+        /* ── HERO DEMO SEND ── */
+        var DEMO_LIMIT = 10;
+        var DEMO_RESET_HOURS = 24;
+
+        function getDemoState() {
+            var raw = localStorage.getItem('hs_demo_state');
+            if (raw) {
+                try {
+                    var s = JSON.parse(raw);
+                    // Cek apakah sudah lebih dari 24 jam sejak reset
+                    if (Date.now() - s.resetAt > DEMO_RESET_HOURS * 3600 * 1000) {
+                        return { count: 0, resetAt: Date.now() };
+                    }
+                    return s;
+                } catch (e) { }
+            }
+            return { count: 0, resetAt: Date.now() };
+        }
+
+        function saveDemoState(state) {
+            localStorage.setItem('hs_demo_state', JSON.stringify(state));
+        }
+
+        function updateDemoBadge(state) {
+            var b2 = document.getElementById('demoBadge2');
+            if (!b2) return;
+            var remaining = DEMO_LIMIT - state.count;
+            if (state.count === 0) {
+                b2.textContent = 'Coba Send ↑';
+            } else if (remaining > 0) {
+                b2.textContent = state.count + ' request · ' + remaining + ' sisa hari ini';
+            } else {
+                b2.textContent = 'Limit hari ini tercapai';
+            }
+        }
+
         function demoSend() {
             var btn = document.getElementById('demoSendBtn');
             var urlEl = document.getElementById('demoUrl');
@@ -1301,6 +1337,20 @@
             var head = document.getElementById('demoRespHead');
             var stat = document.getElementById('demoStatus');
             var meta = document.getElementById('demoMeta');
+            var b1 = document.querySelector('.hero-badge.b1');
+
+            // Cek limit
+            var demoState = getDemoState();
+            if (demoState.count >= DEMO_LIMIT) {
+                var resetIn = Math.ceil((DEMO_RESET_HOURS * 3600 * 1000 - (Date.now() - demoState.resetAt)) / 3600000);
+                body.innerHTML = '<span style="color:var(--amber);font-size:11px">'
+                    + '⚡ Limit demo harian tercapai (' + DEMO_LIMIT + ' request).\n'
+                    + 'Reset dalam ~' + resetIn + ' jam. Daftar gratis untuk unlimited.'
+                    + '</span>';
+                head.style.display = 'none';
+                if (b1) b1.innerHTML = '<span class="badge-dot-a"></span>Limit · daftar untuk lanjut';
+                return;
+            }
 
             var url = urlEl.textContent.trim();
             if (!url || !url.startsWith('http')) {
@@ -1320,68 +1370,74 @@
                 .then(function (res) {
                     var ms = Date.now() - t0;
                     var sc = res.status;
+                    var stxt = res.statusText || statusText(sc);
 
-                    // Status badge
-                    stat.textContent = sc + ' ' + (res.statusText || statusText(sc));
-                    stat.style.background = sc >= 200 && sc < 300 ? 'var(--green-bg)' :
-                        sc >= 400 ? 'var(--red-bg)' : 'var(--amber-bg)';
-                    stat.style.color = sc >= 200 && sc < 300 ? 'var(--green)' :
-                        sc >= 400 ? 'var(--red)' : 'var(--amber)';
-                    stat.style.border = sc >= 200 && sc < 300 ? '1px solid var(--green-mid)' :
-                        sc >= 400 ? '1px solid var(--red-mid)' : '1px solid var(--amber-mid)';
+                    // Warna status berdasarkan range
+                    var isOk = sc >= 200 && sc < 300;
+                    var isWarn = sc >= 300 && sc < 400;
+                    var isErr = sc >= 400;
 
-                    // Ukuran & waktu
-                    var ct = res.headers.get('content-type') || '';
-                    meta.textContent = ms + 'ms';
+                    stat.textContent = sc + ' ' + stxt;
+                    stat.style.background = isOk ? 'var(--green-bg)' : isErr ? 'var(--red-bg)' : 'var(--amber-bg)';
+                    stat.style.color = isOk ? 'var(--green)' : isErr ? 'var(--red)' : 'var(--amber)';
+                    stat.style.border = isOk ? '1px solid var(--green-mid)' : isErr ? '1px solid var(--red-mid)' : '1px solid var(--amber-mid)';
                     head.style.display = 'flex';
 
                     return res.text().then(function (text) {
-                        // Coba pretty-print JSON
                         var display = text;
+                        var sizeKb = (new Blob([text]).size / 1024).toFixed(1);
                         try {
                             var parsed = JSON.parse(text);
                             display = JSON.stringify(parsed, null, 2);
-                            // Hitung ukuran
-                            meta.textContent = ms + 'ms · ' + (new Blob([text]).size / 1024).toFixed(1) + ' KB';
                         } catch (e) { }
 
-                        // Syntax highlight sederhana
+                        meta.textContent = ms + 'ms · ' + sizeKb + ' KB';
                         body.innerHTML = syntaxHL(display);
 
-                        // Update badge b1 dengan status dan waktu real
-                        document.getElementById('demoRespHead') &&
-                            (document.querySelector('.hero-badge.b1').innerHTML =
-                                '<span class="badge-dot-g"></span>' + sc + ' ' + statusText(sc) + ' · ' + ms + 'ms');
+                        // Update badge b1: status code + waktu real
+                        if (b1) b1.innerHTML = '<span class="badge-dot-g"></span>' + sc + ' ' + stxt + ' · ' + ms + 'ms';
 
-                        // Update badge b2 dengan counter
-                        var cnt = parseInt(localStorage.getItem('hs_demo_cnt') || '0') + 1;
-                        localStorage.setItem('hs_demo_cnt', cnt);
-                        var b2txt = document.getElementById('demoBadge2');
-                        if (b2txt) b2txt.textContent = cnt + ' request berhasil ✓';
+                        // Tambah counter & update badge b2
+                        demoState.count++;
+                        saveDemoState(demoState);
+                        updateDemoBadge(demoState);
+
+                        // Jika sudah dekat limit, tunjukkan CTA
+                        if (demoState.count >= DEMO_LIMIT - 1) {
+                            setTimeout(function () {
+                                body.innerHTML += '<div style="margin-top:10px;padding:8px 10px;background:var(--green-bg);border:1px solid var(--green-mid);border-radius:6px;font-size:11px;color:var(--green)">'
+                                    + '💡 <strong>Suka HITSaurce?</strong> Daftar gratis untuk testing tanpa batas.'
+                                    + '</div>';
+                            }, 300);
+                        }
 
                         btn.textContent = 'Send';
                         btn.disabled = false;
                     });
                 })
                 .catch(function (err) {
+                    var ms = Date.now() - t0;
                     head.style.display = 'flex';
-                    stat.textContent = 'Error';
+                    stat.textContent = 'Network Error';
                     stat.style.background = 'var(--red-bg)';
                     stat.style.color = 'var(--red)';
                     stat.style.border = '1px solid var(--red-mid)';
-                    meta.textContent = Date.now() - t0 + 'ms';
+                    meta.textContent = ms + 'ms';
 
-                    // Tambahkan setelah meta.textContent = ...
-                    document.querySelector('.hero-badge.b1').innerHTML =
-                        '<span class="badge-dot-a"></span>Error · ' + (Date.now() - t0) + 'ms';
+                    if (b1) b1.innerHTML = '<span class="badge-dot-a"></span>Error · ' + ms + 'ms';
 
-                    // Cek apakah CORS error
-                    var isCors = err.message && err.message.toLowerCase().includes('fetch');
+                    var isCors = err.message && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('cors'));
                     body.innerHTML = '<span style="color:var(--red);font-size:11px">'
                         + (isCors
                             ? '⚠ CORS blocked — API ini tidak mengizinkan akses dari browser.\nCoba: https://jsonplaceholder.typicode.com/posts/1'
                             : '⚠ ' + err.message)
                         + '</span>';
+
+                    // Tetap hitung attempt meski error
+                    demoState.count++;
+                    saveDemoState(demoState);
+                    updateDemoBadge(demoState);
+
                     btn.textContent = 'Send';
                     btn.disabled = false;
                 });
@@ -1831,10 +1887,14 @@
                 var u = JSON.parse(savedUser);
             } catch (e) { }
         }
-        // Restore demo counter badge
-        var demoCnt = parseInt(localStorage.getItem('hs_demo_cnt') || '0');
-        var b2txt = document.getElementById('demoBadge2');
-        if (b2txt && demoCnt > 0) b2txt.textContent = demoCnt + ' request berhasil ✓';
+        // Init demo badge
+        var initState = getDemoState();
+        updateDemoBadge(initState);
+        // Jika sudah di-limit, disable tombol Send langsung
+        if (initState.count >= DEMO_LIMIT) {
+            var demoBtn = document.getElementById('demoSendBtn');
+            if (demoBtn) { demoBtn.disabled = true; demoBtn.textContent = 'Limit'; }
+        }
 
     </script>
 </body>
