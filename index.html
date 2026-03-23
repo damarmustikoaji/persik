@@ -566,7 +566,7 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
 .save-btn-dirty{border-color:var(--amber)!important;color:var(--amber)!important}
 
 /* ══ RUNNER ══ */
-.runner-topbar{padding:9px 16px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.runner-topbar{padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-shrink:0}
 .runner-name-input{font-family:var(--font);font-size:14px;font-weight:600;color:var(--ink);background:transparent;border:none;outline:none;flex:1;letter-spacing:-.2px}
 .runner-name-input::placeholder{color:var(--ink3);font-weight:400}
 .runner-btns{display:flex;gap:6px;flex-shrink:0;align-items:center}
@@ -641,6 +641,15 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
 .rad-req-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rad-icon{font-size:13px;flex-shrink:0}
 #runnerAddBtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.perf-src-tab:hover{opacity:.85}
+.perf-step-row{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:6px}
+/* My Requests sidebar section */
+.sb-item-del{display:inline-flex;align-items:center;color:var(--ink4);font-size:11px;border-radius:3px;cursor:pointer;padding:1px 3px;transition:color .12s,opacity .12s;}
+.sb-item-del:hover{color:var(--red)!important;opacity:1!important;}
+.sb-item:hover .sb-item-del{opacity:1!important;}
+/* New request indicator in URL bar */
+.url-new-indicator{font-size:10px;font-weight:600;color:var(--amber);padding:2px 6px;border-radius:3px;background:var(--amber-bg);border:1px solid var(--amber-mid);display:none;margin-right:4px;}
+.url-new-indicator.show{display:inline-flex;}
 
 /* ══ ANIMATIONS ══ */
 @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -1003,13 +1012,12 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
 
   <div class="app-body">
     <!-- SIDEBAR -->
-    <div class="sidebar">
+    <div class="sidebar" id="appSidebar">
       <div class="sb-head">
         <span class="sb-title">Collections</span>
         <div class="sb-actions">
-          <!-- IMPORT: klik → modal auth -->
+          <button class="sb-btn" title="Request baru" onclick="newBlankRequest()"><i class="bi bi-file-earmark-plus"></i></button>
           <button class="sb-btn" title="Import Collection" onclick="openModal('login')"><i class="bi bi-box-arrow-in-down"></i></button>
-          <!-- NEW COLLECTION: klik → modal auth -->
           <button class="sb-btn" title="Collection baru" onclick="openModal('login')"><i class="bi bi-plus-lg"></i></button>
         </div>
       </div>
@@ -1028,6 +1036,12 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
             </div>
           </div>
           <button class="onboard-dismiss" onclick="dismissOnboardBanner()">Mengerti, tutup panduan ini</button>
+        </div>
+
+        <!-- MY REQUESTS: rendered by JS -->
+        <div id="my-requests-section" style="display:none;">
+          <div class="coll-head open coll-group-mt" onclick="togColl(this)" id="myReqHead"><span class="coll-arr">&#9654;</span> My Requests</div>
+          <div class="coll-items" id="my-requests-list"></div>
         </div>
 
         <div class="coll-head open" onclick="togColl(this)"><span class="coll-arr">&#9654;</span> DummyJSON Auth</div>
@@ -1062,23 +1076,24 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
 
         <div class="req-top">
           <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
+            <span class="url-new-indicator" id="newReqIndicator">NEW</span>
             <input class="req-name" id="rname" value="Login User" placeholder="Nama request..." oninput="markDirty()">
             <span class="unsaved-dot" id="unsavedDot" title="Ada perubahan belum disimpan" style="display:none"></span>
-            <span class="unsaved-label" id="unsavedLabel" style="display:none">Unsave</span>
+            <span class="unsaved-label" id="unsavedLabel" style="display:none">Unsaved</span>
           </div>
           <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
-            <span class="req-method-badge" id="reqMethodBadge">POST</span>
-            <button class="save-btn" id="saveBtnMain" onclick="doSaveRequest()">Simpan <i class="bi bi-lock"></i></button>
+            <span id="reqMethodBadge" style="font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-mid)">POST</span>
+            <button class="save-btn" id="saveBtnMain" onclick="doSaveRequest()"><i class="bi bi-floppy"></i> Simpan</button>
           </div>
         </div>
 
         <div class="url-row">
-          <select class="m-sel" id="msel" onchange="updMethod(true)" style="pointer-events:none;opacity:.7;">
+          <select class="m-sel" id="msel" onchange="updMethod(true)">
             <option value="GET">GET</option><option value="POST" selected>POST</option>
             <option value="PUT">PUT</option><option value="PATCH">PATCH</option><option value="DELETE">DELETE</option>
           </select>
           <input class="url-in" id="urlin" value="https://dummyjson.com/auth/login"
-            placeholder="https://api.example.com/endpoint" readonly style="opacity:.8;cursor:default;">
+            placeholder="https://api.example.com/endpoint" oninput="markDirty();onUrlChange(this.value)">
           <!-- cURL button -->
           <button class="save-btn" onclick="showCurlModal()" title="Lihat cURL" style="flex-shrink:0;display:flex;align-items:center;gap:4px;font-family:var(--mono);"><i class="bi bi-terminal"></i> cURL</button>
           <button class="send-b" onclick="doRealSend()" id="sendb">
@@ -1101,6 +1116,7 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
         </div>
 
         <div class="tabs-row" id="reqTabsRow">
+          <div class="tab" onclick="swReqTab(this,'tp')">Params <span class="tab-ct" id="param-count" style="display:none">0</span></div>
           <div class="tab on" onclick="swReqTab(this,'th')">Headers <span class="tab-ct" id="header-count">2</span></div>
           <div class="tab" onclick="swReqTab(this,'tb')">Body <span class="tab-ct" id="body-count" style="display:none">1</span></div>
           <div class="tab" onclick="swReqTab(this,'ta')">Assertions <span class="tab-ct" id="ass-count">2</span></div>
@@ -1109,6 +1125,21 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
         </div>
 
         <div class="panels-area">
+          <!-- PARAMS -->
+          <div class="panel" id="tp" style="display:none;">
+            <div style="overflow-y:auto;flex:1;">
+              <div style="padding:8px 14px;background:var(--paper2);border-bottom:1px solid var(--line);font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:6px;flex-shrink:0;">
+                <i class="bi bi-info-circle" style="font-size:12px"></i>
+                <span>Query params otomatis ditambahkan ke URL saat HIT. Contoh: <code style="background:var(--line);padding:1px 4px;border-radius:3px;font-family:var(--mono);font-size:10px">?key=value&page=1</code></span>
+              </div>
+              <table class="kv-table" id="params-table">
+                <thead><tr><th style="width:28px"></th><th>KEY</th><th>VALUE</th><th style="width:32px"></th></tr></thead>
+                <tbody id="params-body"></tbody>
+              </table>
+              <button class="kv-add-row" onclick="addKvRow('params-body');updateParamCount();updateUrlPreview()"><i class="bi bi-plus"></i> Tambah param</button>
+            </div>
+          </div>
+
           <!-- HEADERS -->
           <div class="panel on" id="th">
             <div style="overflow-y:auto;flex:1;">
@@ -1239,8 +1270,9 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
 
         <div class="runner-topbar">
           <i class="bi bi-puzzle" style="color:var(--blue);font-size:14px;flex-shrink:0;"></i>
-          <input class="runner-name-input" id="runnerName" placeholder="Beri nama runner kamu..." value="E2E Checkout Flow">
+          <input class="runner-name-input" id="runnerName" placeholder="Beri nama runner kamu..." value="E2E Checkout Flow" oninput="saveRunnerToStorage()">
           <div class="runner-btns">
+            <button class="btn btn-outline btn-sm" id="runnerSaveBtn" onclick="saveRunnerManual()" title="Simpan Runner"><i class="bi bi-floppy"></i> Simpan</button>
             <div class="runner-add-dropdown-wrap" id="runnerAddWrap">
               <button class="btn btn-outline btn-sm" id="runnerAddBtn" onclick="toggleAddDropdown()">
                 <i class="bi bi-plus-lg"></i> Add Step
@@ -1278,40 +1310,100 @@ body{font-family:var(--font);background:var(--paper);color:var(--ink);overflow-x
       <!-- ══ PERFORMANCE MODE ══ -->
       <div id="m-perf" style="display:none;flex:1;overflow:hidden;">
         <div class="perf-wrap">
+
+          <!-- TARGET SOURCE selector -->
           <div class="perf-top">
-            <div class="flow-info"><h2>Performance Test</h2><p>Powered by K6 · Konfigurasi dan jalankan load test langsung dari browser</p></div>
-            <button class="btn btn-green btn-sm" onclick="runPerf()"><i class="bi bi-play-fill"></i> Start Test</button>
+            <div class="flow-info">
+              <h2>Performance Test</h2>
+              <p>Powered by K6 · Load test dari Runner atau single URL langsung dari browser</p>
+            </div>
+            <button class="btn btn-green btn-sm" id="perfStartBtn" onclick="runPerf()"><i class="bi bi-play-fill"></i> Start Test</button>
           </div>
-          <span class="section-micro-label">Preset</span>
+
+          <!-- SOURCE TABS -->
+          <div style="display:flex;gap:0;border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;margin-bottom:16px;background:#fff;">
+            <button class="perf-src-tab on" id="perfTabRunner" onclick="setPerfTab('runner')" style="flex:1;padding:10px 14px;border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:500;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;">
+              <i class="bi bi-puzzle"></i> Dari Runner
+            </button>
+            <button class="perf-src-tab" id="perfTabSingle" onclick="setPerfTab('single')" style="flex:1;padding:10px 14px;border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:500;background:#fff;color:var(--ink3);display:flex;align-items:center;justify-content:center;gap:6px;border-left:1px solid var(--line);transition:all .15s;">
+              <i class="bi bi-link-45deg"></i> Single URL
+            </button>
+          </div>
+
+          <!-- RUNNER SOURCE PANEL -->
+          <div id="perfSourceRunner">
+            <div id="perfRunnerEmpty" style="display:none;padding:24px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+              <div style="font-size:28px;opacity:.2;margin-bottom:8px"><i class="bi bi-puzzle"></i></div>
+              <div style="font-size:13px;font-weight:500;color:var(--ink2);margin-bottom:6px">Belum ada Runner tersimpan</div>
+              <div style="font-size:12px;color:var(--ink3);margin-bottom:14px">Buat flow di menu Runner, simpan, lalu kembali ke sini untuk load test.</div>
+              <button class="btn btn-outline btn-sm" onclick="setMode('runner')"><i class="bi bi-puzzle"></i> Ke Runner</button>
+            </div>
+            <div id="perfRunnerSteps" style="margin-bottom:16px;"></div>
+          </div>
+
+          <!-- SINGLE URL SOURCE PANEL -->
+          <div id="perfSourceSingle" style="display:none;margin-bottom:16px;">
+            <div class="pc" style="margin-bottom:0">
+              <div class="pc-label">Target URL</div>
+              <input class="perf-url-input" id="perfSingleUrl" value="https://dummyjson.com/products" placeholder="https://api.example.com/endpoint">
+              <div style="display:flex;gap:8px;margin-top:10px;align-items:center;">
+                <select id="perfSingleMethod" style="font-family:var(--mono);font-size:12px;background:var(--paper2);border:1px solid var(--line);border-radius:4px;padding:5px 8px;outline:none;color:var(--green);font-weight:600;">
+                  <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
+                </select>
+                <span style="font-size:11px;color:var(--ink3)">Method untuk load test</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONFIG -->
+          <span class="section-micro-label">Konfigurasi Load</span>
           <div class="presets">
             <button class="pr-btn" onclick="setPr(this,1,30)"><i class="bi bi-circle"></i> Smoke 1 VU</button>
-            <button class="pr-btn on" onclick="setPr(this,10,60)"><i class="bi bi-lightning"></i> Light 10 VU</button>
+            <button class="pr-btn on" id="prActive" onclick="setPr(this,10,60)"><i class="bi bi-lightning"></i> Light 10 VU</button>
             <button class="pr-btn" onclick="setPr(this,50,120)"><i class="bi bi-lightning-fill"></i> Medium 50 VU</button>
             <button class="pr-btn" onclick="setPr(this,200,300)"><i class="bi bi-fire"></i> Heavy 200 VU</button>
             <button class="pr-btn" onclick="setPr(this,0,0)"><i class="bi bi-sliders"></i> Custom</button>
           </div>
-          <div class="perf-grid">
+          <div class="perf-grid" style="margin-bottom:16px;">
             <div class="pc"><div class="pc-label">Virtual Users</div><div class="pc-val" id="pvu">10</div><div class="pc-sub">concurrent users</div><input class="range-slider" type="range" min="1" max="500" value="10" oninput="document.getElementById('pvu').textContent=this.value"></div>
             <div class="pc"><div class="pc-label">Durasi</div><div class="pc-val" id="pdur">60s</div><div class="pc-sub">total duration</div><input class="range-slider" type="range" min="10" max="600" value="60" oninput="document.getElementById('pdur').textContent=this.value+'s'"></div>
-            <div class="pc"><div class="pc-label">Target URL</div><input class="perf-url-input" value="https://dummyjson.com/products"><div class="pc-sub pc-sub-mt">GET request</div></div>
+            <div class="pc"><div class="pc-label">Ramp-up</div><div class="pc-val" id="prampup">5s</div><div class="pc-sub">waktu naik ke VU max</div><input class="range-slider" type="range" min="0" max="60" value="5" oninput="document.getElementById('prampup').textContent=this.value+'s'"></div>
           </div>
-          <span class="section-micro-label">Hasil Run Terakhir</span>
-          <div class="metric-row">
-            <div class="mc"><div class="mc-label">Req / sec</div><div class="mc-val ok">847</div><div class="mc-sub">avg</div></div>
-            <div class="mc"><div class="mc-label">p95 Latency</div><div class="mc-val warn">312ms</div><div class="mc-sub">threshold 500ms</div></div>
-            <div class="mc"><div class="mc-label">Error Rate</div><div class="mc-val ok">0.2%</div><div class="mc-sub">threshold 1%</div></div>
-            <div class="mc"><div class="mc-label">Total Request</div><div class="mc-val">50,820</div><div class="mc-sub">dalam 60 detik</div></div>
+
+          <!-- LIVE RESULT (hidden until run) -->
+          <div id="perfResultSection" style="display:none;">
+            <span class="section-micro-label" id="perfResultLabel">Hasil Run Terakhir</span>
+            <div id="perfRunningBar" style="display:none;padding:10px 14px;background:var(--amber-bg);border:1px solid var(--amber-mid);border-radius:var(--r2);margin-bottom:12px;font-size:12px;color:var(--amber);display:flex;align-items:center;gap:8px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:var(--amber);animation:blink 1s infinite;flex-shrink:0;"></div>
+              <span id="perfRunningText">Menjalankan test...</span>
+              <span id="perfRunningTimer" style="font-family:var(--mono);font-size:11px;margin-left:auto;"></span>
+            </div>
+            <div class="metric-row" id="perfMetrics">
+              <div class="mc"><div class="mc-label">Req / sec</div><div class="mc-val ok" id="perfReqSec">—</div><div class="mc-sub">avg throughput</div></div>
+              <div class="mc"><div class="mc-label">p95 Latency</div><div class="mc-val" id="perfP95">—</div><div class="mc-sub" id="perfP95Sub">—</div></div>
+              <div class="mc"><div class="mc-label">Error Rate</div><div class="mc-val" id="perfErrRate">—</div><div class="mc-sub" id="perfErrSub">—</div></div>
+              <div class="mc"><div class="mc-label">Total Request</div><div class="mc-val" id="perfTotalReq">—</div><div class="mc-sub" id="perfTotalSub">—</div></div>
+            </div>
+            <div class="chart-card" style="margin-top:0;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                <div class="chart-title" style="margin-bottom:0">Latency over time (ms)</div>
+                <div style="font-size:10px;color:var(--ink3);font-family:var(--mono)" id="perfChartMeta"></div>
+              </div>
+              <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none" id="perfChart">
+                <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15"/><stop offset="100%" stop-color="#1a7a5e" stop-opacity="0"/></linearGradient></defs>
+                <path id="perfChartFill" d="M0,70 L800,70Z" fill="url(#cg)"/>
+                <path id="perfChartLine" d="M0,55" fill="none" stroke="#1a7a5e" stroke-width="1.5"/>
+                <line x1="0" y1="35" x2="800" y2="35" stroke="#e2e1dd" stroke-width="1" stroke-dasharray="4 4"/>
+                <text x="4" y="32" fill="#9a9a9a" font-size="9" font-family="monospace">p95</text>
+              </svg>
+            </div>
+            <!-- Per-step breakdown (only for Runner source) -->
+            <div id="perfStepBreakdown" style="margin-top:12px;display:none;">
+              <div style="font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;">Breakdown per Step</div>
+              <div id="perfStepRows"></div>
+            </div>
           </div>
-          <div class="chart-card">
-            <div class="chart-title">Latency over time (ms)</div>
-            <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
-              <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15"/><stop offset="100%" stop-color="#1a7a5e" stop-opacity="0"/></linearGradient></defs>
-              <path d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22 L800,70 L0,70Z" fill="url(#cg)"/>
-              <path d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22" fill="none" stroke="#1a7a5e" stroke-width="1.5"/>
-              <line x1="0" y1="35" x2="800" y2="35" stroke="#e2e1dd" stroke-width="1" stroke-dasharray="4 4"/>
-              <text x="4" y="32" fill="#9a9a9a" font-size="9" font-family="monospace">p95</text>
-            </svg>
-          </div>
+
         </div>
       </div><!-- /m-perf -->
 
@@ -1458,7 +1550,11 @@ function setMode(m){
   });
   var el=document.getElementById('m-'+m); if(el){ el.style.display='flex'; }
   var mb=document.getElementById('mb-'+m); if(mb) mb.classList.add('on');
-  if(m==='runner') renderRunner();
+  // Hide sidebar on Runner & Perf (already have their own navigation/collection panel)
+  var sb=document.getElementById('appSidebar');
+  if(sb){ sb.style.display=(m==='single')?'':'none'; }
+  if(m==='runner'){ renderRunner(); }
+  if(m==='perf'){ renderPerfFromRunner(); }
 }
 
 /* ── SIDEBAR ── */
@@ -1693,7 +1789,8 @@ function loadDummyRequest(key,el){
   document.getElementById('reqMethodBadge').textContent=msel.value;
   document.getElementById('urlin').value=req.url;
   renderKvTable('headers-body',req.headers);
-  updateHeaderCount();
+  renderKvTable('params-body',req.params||[]);
+  updateHeaderCount(); updateParamCount();
   document.getElementById('req-body').value=req.body||'';
   setBodyTypeActive(req.bodyType||'json');
   updateBodyCount();
@@ -1706,6 +1803,8 @@ function loadDummyRequest(key,el){
   resetResponse();
   clearDirty();
   highlightVarsInBody(document.getElementById('req-body'));
+  // Sync params from URL query string
+  syncParamsFromUrl();
   toast(req.name+' dimuat','ok');
 }
 
@@ -1723,7 +1822,7 @@ function makeKvRow(tbodyId,enabled,key,value){
     '<td style="text-align:center;width:28px"><input type="checkbox" class="kv-chk"'+(enabled?' checked':'')+'></td>'+
     '<td><input type="text" placeholder="Key" value="'+escHtml(key||'')+'" oninput="updateHeaderCount();markDirty();checkVarInRow(this)"></td>'+
     '<td><input type="text" placeholder="Value" value="'+escHtml(value||'')+'" class="'+(hasVar?'has-var':'')+'" oninput="checkVarInRow(this)"></td>'+
-    '<td><span class="kv-del" onclick="this.closest(\'tr\').remove();updateHeaderCount()"><i class="bi bi-trash3"></i></span></td>';
+    '<td><span class="kv-del" onclick="this.closest(\'tr\').remove();updateHeaderCount();if(this.closest(\'table\').id===\'params-table\') updateParamCount()"><i class="bi bi-trash3"></i></span></td>';
   return tr;
 }
 
@@ -1739,6 +1838,8 @@ function addKvRow(tbodyId){
   tb.appendChild(tr);
   tr.querySelectorAll('input[type="text"]')[0].focus();
   updateHeaderCount();
+  // Also update URL if it's the params table
+  if(tbodyId==='params-body') updateParamCount();
 }
 
 function getKvRows(tbodyId){
@@ -1945,9 +2046,19 @@ function doRealSend(){
   if(checkAndShowLimitBanner()) return;
   applyPreReqVars();
   var btn=document.getElementById('sendb');
-  var url=injectEnvVars(document.getElementById('urlin').value.trim());
+  // Build URL: base + params from params table (override query string)
+  var rawUrl=document.getElementById('urlin').value.trim();
+  var urlBase=rawUrl.split('?')[0];
+  var paramRows=getKvRows('params-body').filter(function(r){return r.enabled&&r.key;});
+  var finalUrl;
+  if(paramRows.length){
+    var qs=paramRows.map(function(p){return encodeURIComponent(injectEnvVars(p.key))+'='+encodeURIComponent(injectEnvVars(p.value));}).join('&');
+    finalUrl=injectEnvVars(urlBase)+'?'+qs;
+  } else {
+    finalUrl=injectEnvVars(rawUrl);
+  }
   var method=document.getElementById('msel').value;
-  if(!url||!url.startsWith('http')){ toast('URL tidak valid','err'); return; }
+  if(!finalUrl||!finalUrl.startsWith('http')){ toast('URL tidak valid','err'); return; }
   btn.innerHTML='<i class="bi bi-hourglass-split"></i> Sending...'; btn.disabled=true; btn.classList.add('running');
   var headerRows=getKvRows('headers-body').filter(function(r){return r.enabled&&r.key;});
   var fetchHeaders={};
@@ -1960,7 +2071,7 @@ function doRealSend(){
   var fetchOpts={method:method,headers:fetchHeaders};
   if(bodyStr) fetchOpts.body=bodyStr;
   var t0=Date.now();
-  fetch(url,fetchOpts)
+  fetch(finalUrl,fetchOpts)
     .then(function(res){
       var ms=Date.now()-t0,sc=res.status,stxt=res.statusText||statusText(sc);
       var respHeaders=[];
@@ -2052,6 +2163,8 @@ function swReqTab(el,id){
   document.querySelectorAll('.panels-area .panel').forEach(function(p){p.classList.remove('on');p.style.display='none';});
   el.classList.add('on');
   var panel=document.getElementById(id); panel.classList.add('on'); panel.style.display='flex';
+  // When switching to params tab, sync query string from URL
+  if(id==='tp') syncParamsFromUrl();
 }
 function swRespTab(el,id){
   document.querySelectorAll('.resp-tabs .tab').forEach(function(t){t.classList.remove('on');});
@@ -2064,15 +2177,178 @@ function swRespTab(el,id){
 function updMethod(fromUser){
   var s=document.getElementById('msel');
   var colors={GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'};
+  var bgs={GET:'var(--green-bg)',POST:'var(--blue-bg)',PUT:'var(--amber-bg)',PATCH:'var(--amber-bg)',DELETE:'var(--red-bg)'};
+  var borders={GET:'var(--green-mid)',POST:'var(--blue-mid)',PUT:'var(--amber-mid)',PATCH:'var(--amber-mid)',DELETE:'var(--red-mid)'};
   s.style.color=colors[s.value]||'var(--ink)';
-  document.getElementById('reqMethodBadge').textContent=s.value;
+  var badge=document.getElementById('reqMethodBadge');
+  if(badge){
+    badge.textContent=s.value;
+    badge.style.color=colors[s.value]||'var(--ink)';
+    badge.style.background=bgs[s.value]||'var(--paper2)';
+    badge.style.borderColor=borders[s.value]||'var(--line)';
+  }
   if(fromUser) markDirty();
+}
+
+/* ════════════════════════════════════════
+   PARAMS TAB & URL SYNC
+════════════════════════════════════════ */
+function onUrlChange(val){
+  // If URL contains query string, hint user to switch to Params tab
+  var hasQs=val.indexOf('?')!==-1;
+  // Don't auto-sync on every keystroke (only on tab switch), just update count indicator
+  updateParamCount();
+}
+
+function getUrlBase(){
+  var url=document.getElementById('urlin').value.trim();
+  return url.split('?')[0];
+}
+
+function updateUrlPreview(){
+  // Merge base URL + enabled params → update URL input
+  var base=getUrlBase();
+  var params=getKvRows('params-body').filter(function(r){return r.enabled&&r.key;});
+  if(!params.length){ document.getElementById('urlin').value=base; return; }
+  var qs=params.map(function(p){return encodeURIComponent(p.key)+'='+encodeURIComponent(p.value);}).join('&');
+  document.getElementById('urlin').value=base+'?'+qs;
+  markDirty();
+}
+
+function syncParamsFromUrl(){
+  // Parse URL query string → fill params table
+  var url=document.getElementById('urlin').value.trim();
+  var q=url.split('?')[1];
+  var tb=document.getElementById('params-body'); if(!tb) return;
+  tb.innerHTML='';
+  if(q){
+    q.split('&').forEach(function(pair){
+      var kv=pair.split('=');
+      var k=decodeURIComponent(kv[0]||'');
+      var v=decodeURIComponent(kv[1]||'');
+      if(k){ tb.appendChild(makeKvRow('params-body',true,k,v)); }
+    });
+  }
+  updateParamCount();
+}
+
+function updateParamCount(){
+  var params=getKvRows('params-body').filter(function(r){return r.enabled&&r.key;});
+  var ct=document.getElementById('param-count');
+  if(!ct) return;
+  ct.textContent=params.length; ct.style.display=params.length?'':'none';
+}
+
+/* ════════════════════════════════════════
+   MY REQUESTS (local custom requests)
+════════════════════════════════════════ */
+var myRequests=[]; // [{id, name, method, url, headers, body, bodyType, assertions, postRes}]
+
+function loadMyRequestsFromStorage(){
+  try{
+    var raw=localStorage.getItem('hs_my_requests');
+    if(raw) myRequests=JSON.parse(raw);
+  }catch(e){ myRequests=[]; }
+  renderMyRequests();
+}
+
+function saveMyRequestsToStorage(){
+  localStorage.setItem('hs_my_requests',JSON.stringify(myRequests));
+}
+
+function renderMyRequests(){
+  var section=document.getElementById('my-requests-section');
+  var list=document.getElementById('my-requests-list');
+  if(!section||!list) return;
+  if(myRequests.length===0){ section.style.display='none'; return; }
+  section.style.display='';
+  var methodTagMap={GET:'tag-GET',POST:'tag-POST',PUT:'tag-PUT',PATCH:'tag-PATCH',DELETE:'tag-DEL'};
+  list.innerHTML=myRequests.map(function(req,i){
+    var tag=methodTagMap[req.method]||'tag-GET';
+    return '<div class="sb-item" id="myreq-'+i+'" onclick="loadMyRequest('+i+',this)">'
+      +'<span class="sb-method-tag '+tag+'">'+req.method+'</span>'
+      +escHtml(req.name)
+      +'<span class="sb-item-del" onclick="event.stopPropagation();deleteMyRequest('+i+')" title="Hapus" style="margin-left:auto;color:var(--ink4);font-size:11px;opacity:0;transition:opacity .15s;padding:1px 3px;" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0"><i class="bi bi-x"></i></span>'
+      +'</div>';
+  }).join('');
+}
+
+function newBlankRequest(){
+  // Deselect any sidebar active item
+  document.querySelectorAll('.sb-item').forEach(function(i){ i.classList.remove('active','on'); });
+  // Set blank state
+  document.getElementById('rname').value='New Request';
+  var msel=document.getElementById('msel'); msel.value='GET'; updMethod(false);
+  document.getElementById('urlin').value='';
+  renderKvTable('headers-body',[{enabled:true,key:'Accept',value:'application/json'}]);
+  renderKvTable('params-body',[]);
+  document.getElementById('req-body').value='';
+  setBodyTypeActive('none');
+  assertions=[]; renderAssertions();
+  postResExtractors=[]; renderPostResList();
+  preReqVars=[]; renderPreReqList();
+  updateHeaderCount(); updateParamCount(); updateBodyCount();
+  resetResponse(); clearDirty();
+  // Focus URL input
+  setTimeout(function(){ var u=document.getElementById('urlin'); if(u){ u.focus(); u.select(); } },50);
+  // Show NEW indicator
+  var ind=document.getElementById('newReqIndicator');
+  if(ind) ind.classList.add('show');
+  toast('Request baru siap — masukkan URL kamu','ok');
+}
+
+function loadMyRequest(idx,el){
+  var req=myRequests[idx]; if(!req) return;
+  document.querySelectorAll('.sb-item').forEach(function(i){ i.classList.remove('active','on'); });
+  if(el) el.classList.add('active');
+  document.getElementById('rname').value=req.name;
+  var msel=document.getElementById('msel'); msel.value=req.method; updMethod(false);
+  document.getElementById('reqMethodBadge').textContent=req.method;
+  document.getElementById('urlin').value=req.url;
+  renderKvTable('headers-body',req.headers||[]);
+  renderKvTable('params-body',req.params||[]);
+  document.getElementById('req-body').value=req.body||'';
+  setBodyTypeActive(req.bodyType||'json');
+  assertions=(req.assertions||[]).map(function(a){return Object.assign({result:null},a);});
+  renderAssertions();
+  postResExtractors=(req.postRes||[]).map(function(r){return Object.assign({},r);});
+  renderPostResList();
+  preReqVars=[]; renderPreReqList();
+  updateHeaderCount(); updateParamCount(); updateBodyCount();
+  resetResponse(); clearDirty();
+  highlightVarsInBody(document.getElementById('req-body'));
+  toast(req.name+' dimuat','ok');
+}
+
+function deleteMyRequest(idx){
+  myRequests.splice(idx,1);
+  saveMyRequestsToStorage();
+  renderMyRequests();
+  toast('Request dihapus','ok');
+}
+
+function doSaveRequest(){
+  var name=document.getElementById('rname').value.trim()||'Unnamed Request';
+  var method=document.getElementById('msel').value;
+  var url=document.getElementById('urlin').value.trim();
+  var headers=getKvRows('headers-body');
+  var params=getKvRows('params-body');
+  var body=document.getElementById('req-body').value;
+  var bodyType=(document.querySelector('.body-type-btn.on')||{}).textContent||'json';
+  // Find if already saved (by name match)
+  var existing=myRequests.findIndex(function(r){return r.name===name;});
+  var req={id:'req_'+Date.now(),name:name,method:method,url:url,headers:headers,params:params,body:body,bodyType:bodyType.trim().toLowerCase(),assertions:assertions.map(function(a){return{type:a.type,expected:a.expected,label:a.label};}),postRes:postResExtractors.map(function(r){return{varName:r.varName,path:r.path};})};
+  if(existing>=0){ myRequests[existing]=req; toast('"'+name+'" diperbarui ✓','ok'); }
+  else{ myRequests.push(req); toast('"'+name+'" disimpan ke My Requests ✓','ok'); }
+  saveMyRequestsToStorage();
+  renderMyRequests();
+  clearDirty();
 }
 
 /* ── DIRTY ── */
 var isDirty=false;
 function markDirty(){ if(isDirty) return; isDirty=true; var dot=document.getElementById('unsavedDot'); var lbl=document.getElementById('unsavedLabel'); var btn=document.getElementById('saveBtnMain'); if(dot) dot.style.display='inline-block'; if(lbl) lbl.style.display='inline'; if(btn){ btn.classList.add('save-btn-dirty'); btn.innerHTML='Simpan <i class="bi bi-circle-fill" style="font-size:6px;color:var(--amber)"></i>'; } }
-function clearDirty(){ isDirty=false; var dot=document.getElementById('unsavedDot'); var lbl=document.getElementById('unsavedLabel'); var btn=document.getElementById('saveBtnMain'); if(dot) dot.style.display='none'; if(lbl) lbl.style.display='none'; if(btn){ btn.classList.remove('save-btn-dirty'); btn.innerHTML='Simpan <i class="bi bi-check-lg"></i>'; } }
+function clearDirty(){ isDirty=false; var dot=document.getElementById('unsavedDot'); var lbl=document.getElementById('unsavedLabel'); var btn=document.getElementById('saveBtnMain'); if(dot) dot.style.display='none'; if(lbl) lbl.style.display='none'; if(btn){ btn.classList.remove('save-btn-dirty'); btn.innerHTML='<i class="bi bi-floppy"></i> Simpan'; } var ind=document.getElementById('newReqIndicator'); if(ind) ind.classList.remove('show'); }
 function doSaveRequest(){ toast('Simpan — masuk dulu','ok'); clearDirty(); }
 
 
@@ -2099,9 +2375,22 @@ function makeRunnerStep(reqKey){
   };
 }
 
+/* ── RUNNER STEP LIMIT & SAVE ── */
+var RUNNER_GUEST_LIMIT = 2;
+
 function addStepToRunner(reqKey){
   if(runnerRunning){ toast('Hentikan run terlebih dahulu','err'); return; }
+  // Guest limit: max 2 steps
+  if(runnerSteps.length >= RUNNER_GUEST_LIMIT){
+    closeAddDropdown();
+    setTimeout(function(){
+      openModal('register');
+      toast('Daftar untuk membuat runner lebih dari '+RUNNER_GUEST_LIMIT+' step','err');
+    }, 150);
+    return;
+  }
   var step=makeRunnerStep(reqKey); if(!step) return;
+  // Allow duplicate: generate new id
   runnerSteps.push(step);
   appendRunnerCard(runnerSteps.length-1);
   renderRunnerSummary();
@@ -2109,15 +2398,17 @@ function addStepToRunner(reqKey){
   if(runnerSteps.length===1){ document.getElementById('runnerEmpty').style.display='none'; }
   toast(step.name+' ditambahkan ke Runner','ok');
   closeAddDropdown();
+  // Auto-save after add
+  saveRunnerToStorage();
 }
 
 function removeRunnerStep(idx){
   if(runnerRunning){ toast('Hentikan run terlebih dahulu','err'); return; }
   runnerSteps.splice(idx,1);
-  // full re-render since indices shift
   rebuildRunnerList();
   renderRunnerSummary();
   renderRadBody();
+  saveRunnerToStorage();
 }
 
 function clearRunnerSteps(){
@@ -2126,6 +2417,7 @@ function clearRunnerSteps(){
   rebuildRunnerList();
   renderRunnerSummary();
   renderRadBody();
+  saveRunnerToStorage();
 }
 
 function toggleRunnerStep(idx){
@@ -2168,17 +2460,24 @@ document.addEventListener('click',function(e){
 
 function renderRadBody(){
   var body=document.getElementById('radBody'); if(!body) return;
+  var atLimit=runnerSteps.length>=RUNNER_GUEST_LIMIT;
   var html='';
+  if(atLimit){
+    html+='<div style="padding:10px 12px;background:var(--amber-bg);border-bottom:1px solid var(--amber-mid);font-size:11px;color:var(--amber);display:flex;align-items:center;gap:6px;">';
+    html+='<i class="bi bi-lock-fill"></i><span>Limit '+RUNNER_GUEST_LIMIT+' step — <a onclick="openModal(\'register\')" style="color:var(--amber);font-weight:600;cursor:pointer;text-decoration:underline">Daftar gratis</a> untuk lebih banyak</span></div>';
+  }
   collectionTree.forEach(function(coll){
     html+='<div class="rad-coll-head">'+escHtml(coll.name)+'</div>';
     coll.requests.forEach(function(reqKey){
       var req=dummyRequests[reqKey]; if(!req) return;
-      var inRunner=runnerSteps.some(function(s){return s.reqKey===reqKey;});
+      var inRunnerCount=runnerSteps.filter(function(s){return s.reqKey===reqKey;}).length;
+      var atLimit=runnerSteps.length>=RUNNER_GUEST_LIMIT;
       var methodColor={GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'}[req.method]||'var(--ink)';
-      html+='<div class="rad-req-item'+(inRunner?' in-runner':'')+'" onclick="addStepToRunner(\''+reqKey+'\')" data-name="'+escHtml(req.name.toLowerCase())+'">';
+      var disabledStyle=atLimit?'style="opacity:.45;cursor:not-allowed;pointer-events:none;"':'';
+      html+='<div class="rad-req-item" onclick="addStepToRunner(\''+reqKey+'\')" data-name="'+escHtml(req.name.toLowerCase())+'" '+disabledStyle+'>';
       html+='<span class="rad-method" style="color:'+methodColor+'">'+req.method+'</span>';
-      html+='<span class="rad-req-name">'+escHtml(req.name)+'</span>';
-      html+='<i class="bi bi-'+(inRunner?'check2-circle':'plus-circle')+' rad-icon" style="color:'+(inRunner?'var(--green)':'var(--ink4)')+'"></i>';
+      html+='<span class="rad-req-name">'+escHtml(req.name)+(inRunnerCount>0?' <span style="font-size:9px;color:var(--green);font-family:var(--mono);font-weight:600">×'+"'+inRunnerCount+'"+'</span>':'')+'</span>';
+      html+='<i class="bi bi-'+(atLimit?'lock':'plus-circle')+' rad-icon" style="color:var(--ink4)"></i>';
       html+='</div>';
     });
   });
@@ -2212,7 +2511,7 @@ function buildCardHTML(step, i){
   var meta=step.result?step.result.ms+'ms · '+step.result.sc:'';
 
   var h='<div class="'+cardCls+'" id="rcard-'+i+'" draggable="true"';
-  h+=' ondragstart="rsDragStart(event,'+i+')" ondragover="rsDragOver(event,'+i+')" ondrop="rsDrop(event,'+i+')" ondragleave="rsDragLeave(event,'+i+')">';
+  h+=' ondragstart="rsDragStart(event,'+i+')" ondragend="rsDragEnd(event,'+i+')" ondragover="rsDragOver(event,'+i+')" ondrop="rsDrop(event,'+i+')" ondragleave="rsDragLeave(event,'+i+')">';
   // head
   h+='<div class="runner-step-head" onclick="toggleRunnerStep('+i+')">';
   h+='<span class="rs-drag-handle" onclick="event.stopPropagation()"><i class="bi bi-grip-vertical"></i></span>';
@@ -2354,18 +2653,35 @@ function renderRunner(){
 }
 
 // --- DRAG AND DROP ---
-function rsDragStart(e,i){ dragSrcIdx=i; e.dataTransfer.effectAllowed='move'; var c=document.getElementById('rcard-'+i); if(c) c.classList.add('rs-dragging'); }
-function rsDragOver(e,i){ e.preventDefault(); e.dataTransfer.dropEffect='move'; if(i!==dragSrcIdx){ var el=document.getElementById('rcard-'+i); if(el) el.classList.add('rs-drag-over'); } }
-function rsDragLeave(e,i){ var el=document.getElementById('rcard-'+i); if(el) el.classList.remove('rs-drag-over'); }
+function rsDragStart(e,i){
+  dragSrcIdx=i;
+  e.dataTransfer.effectAllowed='move';
+  var c=document.getElementById('rcard-'+i); if(c) c.classList.add('rs-dragging');
+}
+function rsDragEnd(e,i){
+  // Always clean up ghost styles on drag end, whether dropped or cancelled
+  dragSrcIdx=null;
+  document.querySelectorAll('.runner-step-card').forEach(function(c){
+    c.classList.remove('rs-dragging','rs-drag-over');
+  });
+}
+function rsDragOver(e,i){
+  e.preventDefault(); e.dataTransfer.dropEffect='move';
+  if(i!==dragSrcIdx){ var el=document.getElementById('rcard-'+i); if(el) el.classList.add('rs-drag-over'); }
+}
+function rsDragLeave(e,i){
+  var el=document.getElementById('rcard-'+i); if(el) el.classList.remove('rs-drag-over');
+}
 function rsDrop(e,i){
   e.preventDefault();
-  var el=document.getElementById('rcard-'+i); if(el) el.classList.remove('rs-drag-over');
+  document.querySelectorAll('.runner-step-card').forEach(function(c){ c.classList.remove('rs-drag-over'); });
   if(dragSrcIdx===null||dragSrcIdx===i){ dragSrcIdx=null; return; }
   var moved=runnerSteps.splice(dragSrcIdx,1)[0];
   runnerSteps.splice(i,0,moved);
   dragSrcIdx=null;
   rebuildRunnerList();
   renderRunnerSummary();
+  saveRunnerToStorage();
   toast('Urutan step diperbarui','ok');
 }
 
@@ -2454,14 +2770,184 @@ function finishRunner(){
   var fail=runnerSteps.filter(function(s){return s.status==='fail';}).length;
   var total=runnerSteps.length;
   renderRunnerSummary();
+  saveRunnerToStorage(); // auto-save after run
   if(fail===0){ toast('✓ Runner selesai — '+pass+'/'+total+' passed 🎉','ok'); }
   else{ toast('Runner selesai — '+pass+'/'+total+' pass, '+fail+' fail','err'); }
 }
 
 
+/* ════════════════════════════════════════
+   RUNNER SAVE / LOAD
+════════════════════════════════════════ */
+function saveRunnerToStorage(){
+  var data={name:document.getElementById('runnerName').value||'',steps:runnerSteps.map(function(s){return{reqKey:s.reqKey,name:s.name,method:s.method,url:s.url};})};
+  localStorage.setItem('hs_runner_saved',JSON.stringify(data));
+}
+function loadRunnerFromStorage(){
+  var raw=localStorage.getItem('hs_runner_saved'); if(!raw) return;
+  try{
+    var data=JSON.parse(raw);
+    if(data.name) document.getElementById('runnerName').value=data.name;
+    if(data.steps&&data.steps.length){
+      runnerSteps=[];
+      data.steps.forEach(function(s){
+        var step=makeRunnerStep(s.reqKey);
+        if(step) runnerSteps.push(step);
+      });
+    }
+  }catch(e){}
+}
+
+/* ── PERF SOURCE MODE ── */
+var perfTab='runner'; // 'runner' | 'single'
+function setPerfTab(tab){
+  perfTab=tab;
+  document.getElementById('perfSourceRunner').style.display=tab==='runner'?'':'none';
+  document.getElementById('perfSourceSingle').style.display=tab==='single'?'':'none';
+  var btnR=document.getElementById('perfTabRunner');
+  var btnS=document.getElementById('perfTabSingle');
+  if(btnR){ btnR.style.background=tab==='runner'?'var(--ink)':'#fff'; btnR.style.color=tab==='runner'?'#fff':'var(--ink3)'; }
+  if(btnS){ btnS.style.background=tab==='single'?'var(--ink)':'#fff'; btnS.style.color=tab==='single'?'#fff':'var(--ink3)'; }
+}
+
+function renderPerfFromRunner(){
+  var empty=document.getElementById('perfRunnerEmpty');
+  var stepsDiv=document.getElementById('perfRunnerSteps');
+  if(!empty||!stepsDiv) return;
+  if(runnerSteps.length===0){
+    empty.style.display='block'; stepsDiv.innerHTML=''; return;
+  }
+  empty.style.display='none';
+  var html='';
+  html+='<div style="border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;margin-bottom:16px;">';
+  html+='<div style="padding:8px 14px;background:var(--paper2);border-bottom:1px solid var(--line);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);display:flex;align-items:center;gap:6px;"><i class="bi bi-puzzle"></i> Runner: '+escHtml(document.getElementById('runnerName').value||'E2E Flow')+' <span style="margin-left:auto;font-family:var(--mono);color:var(--green)">'+runnerSteps.length+' step</span></div>';
+  runnerSteps.forEach(function(s,i){
+    var mc={GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'}[s.method]||'var(--ink)';
+    html+='<div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--line);font-size:12px;'+(i===runnerSteps.length-1?'border-bottom:none':'')+'">';
+    html+='<span style="width:18px;height:18px;border-radius:50%;background:var(--paper2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--ink3);flex-shrink:0">'+(i+1)+'</span>';
+    html+='<span style="font-family:var(--mono);font-size:9px;font-weight:700;color:'+mc+';min-width:36px">'+s.method+'</span>';
+    html+='<span style="flex:1;color:var(--ink2)">'+escHtml(s.name)+'</span>';
+    html+='<span style="font-family:var(--mono);font-size:10px;color:var(--ink4);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px">'+escHtml(s.url)+'</span>';
+    html+='</div>';
+  });
+  html+='</div>';
+  html+='<div style="font-size:11px;color:var(--ink3);padding:4px 2px;margin-bottom:4px;"><i class="bi bi-info-circle" style="margin-right:4px"></i>Setiap step akan di-hit secara bersamaan oleh seluruh Virtual User selama durasi test.</div>';
+  stepsDiv.innerHTML=html;
+}
+
 /* ── PERF ── */
+var perfRunning=false;
+var perfTimer=null;
+var perfElapsed=0;
+var perfDataPoints=[];
+
 function setPr(btn,vu,dur){ document.querySelectorAll('.pr-btn').forEach(function(b){b.classList.remove('on');}); btn.classList.add('on'); if(vu>0){ document.getElementById('pvu').textContent=vu; document.getElementById('pdur').textContent=dur+'s'; } }
-function runPerf(){ toast('K6 test dimulai...','ok'); setTimeout(function(){ toast('✓ Test selesai — error rate 0.2%','ok'); },3000); }
+
+function runPerf(){
+  if(perfRunning){ stopPerf(); return; }
+  var vu=parseInt(document.getElementById('pvu').textContent)||10;
+  var dur=parseInt(document.getElementById('pdur').textContent)||60;
+  // Validate source
+  if(perfTab==='runner'&&runnerSteps.length===0){ toast('Tambah request ke Runner dulu','err'); return; }
+  if(perfTab==='single'){
+    var url=document.getElementById('perfSingleUrl').value.trim();
+    if(!url||!url.startsWith('http')){ toast('URL tidak valid','err'); return; }
+  }
+  // Show result section
+  document.getElementById('perfResultSection').style.display='';
+  document.getElementById('perfRunningBar').style.display='flex';
+  var startBtn=document.getElementById('perfStartBtn');
+  startBtn.innerHTML='<i class="bi bi-stop-fill"></i> Stop Test'; startBtn.className='btn btn-outline btn-sm';
+  perfRunning=true; perfElapsed=0; perfDataPoints=[];
+  // Reset metrics
+  ['perfReqSec','perfP95','perfErrRate','perfTotalReq'].forEach(function(id){ var e=document.getElementById(id); if(e){e.textContent='—';e.className='mc-val';} });
+  document.getElementById('perfP95Sub').textContent='—';
+  document.getElementById('perfErrSub').textContent='—';
+  document.getElementById('perfTotalSub').textContent='dalam '+dur+'s';
+  document.getElementById('perfChartMeta').textContent='';
+  document.getElementById('perfChartFill').setAttribute('d','M0,70 L800,70Z');
+  document.getElementById('perfChartLine').setAttribute('d','M0,55');
+  // Show step breakdown if runner mode
+  var bkd=document.getElementById('perfStepBreakdown');
+  if(bkd) bkd.style.display=perfTab==='runner'?'':'none';
+  // Simulate realistic load test
+  perfTimer=setInterval(function(){ perfTick(vu,dur); },500);
+  // Auto-stop at duration
+  setTimeout(function(){ if(perfRunning) stopPerf(); }, dur*1000);
+}
+
+function stopPerf(){
+  perfRunning=false;
+  if(perfTimer){ clearInterval(perfTimer); perfTimer=null; }
+  var startBtn=document.getElementById('perfStartBtn');
+  if(startBtn){ startBtn.innerHTML='<i class="bi bi-play-fill"></i> Start Test'; startBtn.className='btn btn-green btn-sm'; }
+  document.getElementById('perfRunningBar').style.display='none';
+  toast('✓ Performance test selesai','ok');
+}
+
+function perfTick(vu,dur){
+  perfElapsed+=500;
+  var pct=perfElapsed/(dur*1000);
+  // Simulate ramp-up → stable → slight spike
+  var rampFactor=Math.min(1, perfElapsed/5000);
+  var baseLatency=80+Math.random()*40;
+  var spikeLatency=baseLatency*(1+Math.random()*0.4);
+  var p95=Math.round(spikeLatency*(1.5+Math.random()*0.5));
+  var reqSec=Math.round(vu*rampFactor*(8+Math.random()*4));
+  var errorRate=(Math.random()<0.05)?+(Math.random()*1.5).toFixed(1):+(Math.random()*0.3).toFixed(1);
+  var totalReq=Math.round(reqSec*(perfElapsed/1000));
+  perfDataPoints.push({t:perfElapsed/1000,p95:p95,reqSec:reqSec});
+  // Update metrics
+  var p95el=document.getElementById('perfP95');
+  if(p95el){ p95el.textContent=p95+'ms'; p95el.className='mc-val '+(p95<300?'ok':p95<500?'warn':'bad'); }
+  document.getElementById('perfP95Sub').textContent='threshold 500ms';
+  var reqs=document.getElementById('perfReqSec');
+  if(reqs){ reqs.textContent=reqSec; reqs.className='mc-val ok'; }
+  var errel=document.getElementById('perfErrRate');
+  if(errel){ errel.textContent=errorRate+'%'; errel.className='mc-val '+(errorRate<1?'ok':'bad'); }
+  document.getElementById('perfErrSub').textContent='threshold 1%';
+  document.getElementById('perfTotalReq').textContent=totalReq.toLocaleString();
+  document.getElementById('perfRunningText').textContent='Running · '+vu+' VU · '+Math.round(pct*100)+'%';
+  document.getElementById('perfRunningTimer').textContent=(perfElapsed/1000).toFixed(1)+'s / '+dur+'s';
+  document.getElementById('perfChartMeta').textContent=reqSec+' req/s · p95 '+p95+'ms';
+  // Update chart SVG
+  updatePerfChart();
+  // Update step breakdown
+  if(perfTab==='runner') updatePerfStepBreakdown(vu,p95,errorRate);
+}
+
+function updatePerfChart(){
+  var pts=perfDataPoints; if(!pts.length) return;
+  var maxP=Math.max.apply(null,pts.map(function(p){return p.p95;}));
+  var w=800,h=70,pad=8;
+  var coords=pts.map(function(p,i){
+    var x=Math.round((i/(Math.max(pts.length-1,1)))*w);
+    var y=Math.round(pad+(1-(p.p95/Math.max(maxP,1)))*(h-pad*2));
+    return x+','+y;
+  });
+  if(coords.length<2) return;
+  var d='M'+coords.join(' L');
+  var fill=d+' L'+w+','+h+' L0,'+h+'Z';
+  document.getElementById('perfChartLine').setAttribute('d',d);
+  document.getElementById('perfChartFill').setAttribute('d',fill);
+}
+
+function updatePerfStepBreakdown(vu,p95,errorRate){
+  var div=document.getElementById('perfStepRows'); if(!div||!runnerSteps.length) return;
+  var html='';
+  runnerSteps.forEach(function(s){
+    var latency=Math.round(p95*(0.7+Math.random()*0.6));
+    var err=+(errorRate*(0.5+Math.random())).toFixed(1);
+    var mc={GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'}[s.method]||'var(--ink)';
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:6px;">';
+    html+='<span style="font-family:var(--mono);font-size:9px;font-weight:700;color:'+mc+';min-width:36px">'+s.method+'</span>';
+    html+='<span style="flex:1;font-size:12px;color:var(--ink2)">'+escHtml(s.name)+'</span>';
+    html+='<span style="font-family:var(--mono);font-size:11px;color:'+(latency<300?'var(--green)':latency<500?'var(--amber)':'var(--red)')+'">'+latency+'ms</span>';
+    html+='<span style="font-family:var(--mono);font-size:11px;color:'+(err<1?'var(--green)':'var(--red)')+';min-width:40px;text-align:right">'+err+'%</span>';
+    html+='</div>';
+  });
+  div.innerHTML=html;
+}
 
 /* ── FAQ ── */
 function toggleFaq(el){ el.parentElement.classList.toggle('open'); }
@@ -2494,12 +2980,26 @@ function onbNext(step){ if(step===1){ var name=document.getElementById('onb-disp
 function onbBack(step){ var prev=step-1; document.getElementById('onb-'+step).classList.remove('active'); document.getElementById('onb-'+prev).classList.add('active'); document.getElementById('dot-'+step).classList.remove('active'); document.getElementById('dot-'+prev).classList.remove('done'); document.getElementById('dot-'+prev).classList.add('active'); var line=document.getElementById('line-'+prev); if(line) line.classList.remove('done'); }
 function finishOnboarding(){ var btn=document.getElementById('onb-finish'); btn.innerHTML='<i class="bi bi-hourglass-split"></i> Menyiapkan workspace...'; btn.disabled=true; setTimeout(function(){ var name=document.getElementById('onb-displayname').value.trim(); var wsName=document.getElementById('onb-wsname').value.trim()||'My Workspace'; localStorage.setItem('hs_onboarded','1'); localStorage.setItem('hs_user',JSON.stringify(onbData)); var av=document.getElementById('userAv'); var unam=document.getElementById('userName'); if(av) av.textContent=name.charAt(0).toUpperCase(); if(unam) unam.textContent=name; if(localStorage.getItem('hs_banner_dismissed')){ var b=document.getElementById('onboardBanner'); if(b) b.style.display='none'; } goApp(); toast('Workspace "'+wsName+'" siap! Selamat datang '+name+' 🎉','ok'); },1200); }
 
+function saveRunnerManual(){
+  saveRunnerToStorage();
+  // Visual feedback on save button
+  var btn=document.getElementById('runnerSaveBtn');
+  if(btn){
+    btn.innerHTML='<i class="bi bi-check-lg"></i> Tersimpan';
+    btn.style.color='var(--green)'; btn.style.borderColor='var(--green)';
+    setTimeout(function(){ btn.innerHTML='<i class="bi bi-floppy"></i> Simpan'; btn.style.color=''; btn.style.borderColor=''; },2000);
+  }
+  toast('Runner "'+( document.getElementById('runnerName').value||'Runner')+'" disimpan ✓','ok');
+}
+
 /* ── INIT ── */
 function initAppDemo(){
   if(checkAndShowLimitBanner()) return;
   if(localStorage.getItem('hs_banner_dismissed')){ var b=document.getElementById('onboardBanner'); if(b) b.style.display='none'; }
   loadDummyRequest('login',document.getElementById('req-login'));
   updateEnvVarsBar();
+  loadRunnerFromStorage();
+  loadMyRequestsFromStorage();
 }
 
 updMethod();
