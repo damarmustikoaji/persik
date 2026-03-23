@@ -1,4 +1,3 @@
-<!--./index.html-->
 <!DOCTYPE html>
 <html lang="id">
 
@@ -204,7 +203,8 @@
                             <li>Riwayat 7 hari</li>
                             <li class="off">Report link</li>
                             <li class="off">Kolaborasi tim</li>
-                        </ul><button class="p-btn btn-outline" onclick="goApp()">Langsung Mulai</button>
+                        </ul>
+                        <button class="p-btn btn-outline" onclick="goApp()">Langsung Mulai</button>
                     </div>
                     <div class="p-card featured">
                         <div class="p-featured-tag">MOST POPULAR</div>
@@ -220,8 +220,8 @@
                             <li>Riwayat 90 hari</li>
                             <li>Report link</li>
                             <li>2 anggota tim</li>
-                        </ul><button class="p-btn btn-green" onclick="openModal('register')">Mulai &amp;
-                            Support</button>
+                        </ul>
+                        <button class="p-btn btn-green" onclick="openModal('register')">Mulai &amp; Support</button>
                     </div>
                     <div class="p-card">
                         <div class="p-plan">Next Level</div>
@@ -236,7 +236,8 @@
                             <li>SSO / SAML</li>
                             <li>Audit log</li>
                             <li>Priority support</li>
-                        </ul><button class="p-btn btn-outline"
+                        </ul>
+                        <button class="p-btn btn-outline"
                             onclick="toast('Tim kami akan menghubungi kamu segera!','ok')">Hubungi Kami</button>
                     </div>
                 </div>
@@ -272,7 +273,7 @@
                         <div class="faq-q" onclick="toggleFaq(this)">Bisa import collection dari Postman?<i
                                 class="faq-ico">+</i></div>
                         <div class="faq-a">Ya, import collection Postman format JSON tersedia di semua tier termasuk
-                            gratis. Kamu bisa langsung pakai collection yang sudah ada tanpa setup ulang.</div>
+                            gratis.</div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-q" onclick="toggleFaq(this)">Apakah data request saya aman?<i
@@ -322,7 +323,7 @@
             <div class="onb-step active" id="onb-1">
                 <div class="onb-icon"><i class="bi bi-hand-wave" style="color:var(--green)"></i></div>
                 <h2 class="onb-title">Halo! Kenalin diri dulu yuk</h2>
-                <p class="onb-sub">Ini membantu kami menyesuaikan pengalaman dan panduan yang tepat untukmu.</p>
+                <p class="onb-sub">Ini membantu kami menyesuaikan pengalaman yang tepat untukmu.</p>
                 <div class="onb-form">
                     <div class="field"><label>Nama panggilan</label><input type="text" id="onb-displayname"
                             placeholder="Contoh: Budi, Sarah, Tim QA Alpha..."></div>
@@ -363,11 +364,10 @@
             <div class="onb-step" id="onb-2">
                 <div class="onb-icon"><i class="bi bi-folder2-open" style="color:var(--green)"></i></div>
                 <h2 class="onb-title">Buat workspace pertamamu</h2>
-                <p class="onb-sub">Workspace adalah tempat semua collection dan request kamu tersimpan dan terorganisir.
-                </p>
+                <p class="onb-sub">Workspace adalah tempat semua collection dan request kamu tersimpan.</p>
                 <div class="onb-form">
                     <div class="field"><label>Nama workspace</label><input type="text" id="onb-wsname"
-                            placeholder="Contoh: Project Alpha, MyApp API, Tim QA..."></div>
+                            placeholder="Contoh: Project Alpha, MyApp API..."></div>
                     <div class="field"><label>Tujuan utama workspace ini</label>
                         <div class="purpose-grid">
                             <div class="purpose-card" onclick="selectPurpose(this,'personal')"><i
@@ -378,14 +378,6 @@
                                     class="bi bi-people-fill"></i><span>Dipakai tim</span></div>
                         </div>
                     </div>
-                    <div class="onb-tier-info">
-                        <div class="onb-tier-icon"><i class="bi bi-info-circle-fill"></i></div>
-                        <div>
-                            <div class="onb-tier-title">Kamu di tier Gratis</div>
-                            <div class="onb-tier-desc">1 workspace · 5 flow runner · unlimited single request. Upgrade
-                                kapanpun.</div>
-                        </div>
-                    </div>
                 </div>
                 <div class="onb-nav"><button class="onb-back" onclick="onbBack(2)"><i class="bi bi-arrow-left"></i>
                         Kembali</button><button class="onb-next" onclick="onbNext(2)">Lanjut <i
@@ -394,7 +386,7 @@
             <div class="onb-step" id="onb-3">
                 <div class="onb-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i></div>
                 <h2 class="onb-title">Siap! Mau mulai dari mana?</h2>
-                <p class="onb-sub">Pilih cara yang paling nyaman untukmu — bisa diganti kapanpun dari dashboard.</p>
+                <p class="onb-sub">Pilih cara yang paling nyaman untukmu.</p>
                 <div class="start-grid">
                     <div class="start-card" onclick="selectStart(this,'tour')">
                         <div class="start-card-top">
@@ -409,8 +401,7 @@
                             <div class="start-icon sc-blue"><i class="bi bi-box-arrow-in-down"></i></div>
                         </div>
                         <div class="start-title">Import dari Postman</div>
-                        <div class="start-desc">Punya collection Postman? Import langsung, semua request langsung
-                            tersedia.</div>
+                        <div class="start-desc">Punya collection Postman? Import langsung.</div>
                     </div>
                     <div class="start-card" onclick="selectStart(this,'blank')">
                         <div class="start-card-top">
@@ -425,7 +416,7 @@
                         disabled>Masuk ke HITSaurce <i class="bi bi-arrow-right"></i></button></div>
             </div>
         </div>
-    </div><!-- /onboarding -->
+    </div>
 
 
     <!-- ════════ APP ════════ -->
@@ -442,9 +433,14 @@
             <button class="mode-btn" id="mb-perf" onclick="setMode('perf')"><i class="bi bi-speedometer"></i>
                 Performance</button>
             <div class="spacer"></div>
-            <select class="env-sel" id="envSel" onchange="onEnvChange()">
-                <option value="dev">Dev</option>
-            </select>
+
+            <!-- Environment selector — klik buka manager -->
+            <button class="env-sel-btn" id="envSelBtn" onclick="openEnvManager()">
+                <span class="env-dot"></span>
+                <span id="envSelLabel">Dev</span>
+                <i class="bi bi-chevron-down" style="font-size:10px;opacity:.6"></i>
+            </button>
+
             <div class="nav-divider"></div>
             <div class="user-pill" id="userPill" onclick="toast('Profil &amp; pengaturan masuk dulu','ok')">
                 <div class="user-av" id="userAv">D</div>
@@ -461,15 +457,14 @@
                     <div class="sb-actions">
                         <button class="sb-btn" title="Import" onclick="toast('Import masuk dulu','ok')"><i
                                 class="bi bi-box-arrow-in-down"></i></button>
-                        <button class="sb-btn" title="Collection baru" onclick="toast('Collection baru masuk dulu','ok')"><i
-                                class="bi bi-plus-lg"></i></button>
+                        <button class="sb-btn" title="Collection baru"
+                            onclick="toast('Collection baru masuk dulu','ok')"><i class="bi bi-plus-lg"></i></button>
                     </div>
                 </div>
                 <div class="sb-search">
                     <input placeholder="Cari request..." type="text" id="sbSearch" oninput="filterSidebar(this.value)">
                 </div>
                 <div class="sb-body" id="sbBody">
-                    <!-- Onboarding banner -->
                     <div class="onboard-banner" id="onboardBanner">
                         <div class="onboard-inner">
                             <div class="onboard-title"><i class="bi bi-stars"></i> Tips untuk kamu</div>
@@ -493,7 +488,6 @@
                             ini</button>
                     </div>
 
-                    <!-- DummyJSON Collection -->
                     <div class="coll-head open" onclick="togColl(this)"><span class="coll-arr">&#9654;</span> DummyJSON
                         Auth</div>
                     <div class="coll-items" id="coll-dummyjson">
@@ -525,8 +519,8 @@
                 <div class="demo-limit-banner" id="demoLimitBanner" style="display:none;">
                     <div class="demo-limit-icon">⚡</div>
                     <div class="demo-limit-title">Limit Demo Harian Tercapai</div>
-                    <div class="demo-limit-sub">Kamu sudah mencoba HITSaurce! Daftar gratis untuk testing tanpa batas —
-                        tidak perlu kartu kredit.</div>
+                    <div class="demo-limit-sub">Kamu sudah mencoba HITSaurce! Daftar gratis untuk testing tanpa batas.
+                    </div>
                     <button class="btn btn-green"
                         onclick="openModal('register');document.getElementById('demoLimitBanner').style.display='none'">
                         <i class="bi bi-rocket-takeoff"></i> Daftar Gratis Sekarang
@@ -544,9 +538,8 @@
                         <input class="req-name" id="rname" value="Login User" placeholder="Nama request...">
                         <div style="display:flex;gap:6px;align-items:center;">
                             <span class="req-method-badge" id="reqMethodBadge">POST</span>
-                            <button class="save-btn" onclick="toast('Simpan masuk dulu','ok')">
-                                Simpan <i class="bi bi-lock"></i>
-                            </button>
+                            <button class="save-btn" onclick="toast('Simpan masuk dulu','ok')">Simpan <i
+                                    class="bi bi-lock"></i></button>
                         </div>
                     </div>
 
@@ -560,7 +553,8 @@
                             <option value="DELETE">DELETE</option>
                         </select>
                         <input class="url-in" id="urlin" value="https://dummyjson.com/auth/login"
-                            placeholder="https://api.example.com/endpoint" readonly style="opacity:.8;cursor:default;">
+                            placeholder="https://api.example.com/endpoint?key=value" readonly
+                            style="opacity:.8;cursor:default;">
                         <button class="send-b" onclick="doRealSend()" id="sendb">
                             <img src="public/assets/logo_black_white.png" alt="" class="send-logo-icon"> HIT
                         </button>
@@ -569,48 +563,34 @@
                     <!-- Hint bar -->
                     <div class="hint-bar" id="hintBar">
                         <i class="bi bi-lightbulb-fill" style="flex-shrink:0;font-size:12px"></i>
-                        <span><strong>Demo Mode:</strong> — API publik
-                            untuk testing. Edit field di bawah untuk eksplorasi.</span>
+                        <span><strong>Demo Mode:</strong> — API publik untuk testing. Params bisa langsung tulis di URL
+                            seperti <code
+                                style="background:var(--info-mid);padding:1px 4px;border-radius:3px;font-size:10px">?key=value&key2=value2</code></span>
                         <button class="hint-dismiss" onclick="document.getElementById('hintBar').style.display='none'"
                             title="Tutup"><i class="bi bi-x"></i></button>
                     </div>
 
-                    <!-- Request Tabs -->
+                    <!-- Request Tabs: Params dihapus, tambah Post-Response -->
                     <div class="tabs-row" id="reqTabsRow">
-                        <div class="tab on" onclick="swReqTab(this,'tp')">Params</div>
-                        <div class="tab" onclick="swReqTab(this,'th')">Headers <span class="tab-ct"
-                                id="header-count">2</span></div>
-                        <div class="tab" onclick="swReqTab(this,'tb')">Body</div>
-                        <div class="tab" onclick="swReqTab(this,'ta')">Assertions <span class="tab-ct"
-                                id="ass-count">2</span></div>
+                        <div class="tab on" onclick="swReqTab(this,'th')">
+                            Headers <span class="tab-ct" id="header-count">2</span>
+                        </div>
+                        <div class="tab" onclick="swReqTab(this,'tb')">
+                            Body <span class="tab-ct" id="body-count" style="display:none">1</span>
+                        </div>
+                        <div class="tab" onclick="swReqTab(this,'ta')">
+                            Assertions <span class="tab-ct" id="ass-count">2</span>
+                        </div>
+                        <div class="tab" onclick="swReqTab(this,'tpr')">
+                            Post-Response <span class="tab-ct" id="postres-count" style="display:none">0</span>
+                        </div>
                     </div>
 
                     <!-- Panels Area -->
                     <div class="panels-area">
 
-                        <!-- PARAMS -->
-                        <div class="panel on" id="tp">
-                            <div style="overflow-y:auto;flex:1;">
-                                <table class="kv-table" id="params-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:28px"></th>
-                                            <th>KEY</th>
-                                            <th>VALUE</th>
-                                            <th style="width:32px"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="params-body">
-                                        <!-- populated by JS -->
-                                    </tbody>
-                                </table>
-                                <button class="kv-add-row" onclick="addKvRow('params-body')"><i class="bi bi-plus"></i>
-                                    Tambah parameter</button>
-                            </div>
-                        </div>
-
                         <!-- HEADERS -->
-                        <div class="panel" id="th">
+                        <div class="panel on" id="th">
                             <div style="overflow-y:auto;flex:1;">
                                 <table class="kv-table" id="headers-table">
                                     <thead>
@@ -621,9 +601,7 @@
                                             <th style="width:32px"></th>
                                         </tr>
                                     </thead>
-                                    <tbody id="headers-body">
-                                        <!-- populated by JS -->
-                                    </tbody>
+                                    <tbody id="headers-body"></tbody>
                                 </table>
                                 <button class="kv-add-row" onclick="addKvRow('headers-body')"><i class="bi bi-plus"></i>
                                     Tambah header</button>
@@ -631,17 +609,17 @@
                         </div>
 
                         <!-- BODY -->
-                        <div class="panel" id="tb" style="display:flex;flex-direction:column;">
+                        <div class="panel" id="tb" style="display:none;flex-direction:column;">
                             <div class="body-type-bar">
                                 <button class="body-type-btn on" onclick="setBodyType(this,'json')">JSON</button>
                                 <button class="body-type-btn" onclick="setBodyType(this,'none')">None</button>
                             </div>
-                            <textarea class="body-textarea" id="req-body" spellcheck="false"
+                            <textarea class="body-textarea" id="req-body" spellcheck="false" oninput="updateBodyCount()"
                                 placeholder="Request body (JSON)..."></textarea>
                         </div>
 
-                        <!-- ASSERTIONS -->
-                        <div class="panel" id="ta">
+                        <!-- ASSERTIONS — hanya tampil daftar config, tanpa result pass/fail -->
+                        <div class="panel" id="ta" style="display:none;">
                             <div class="ass-panel">
                                 <div class="ass-qp-section">
                                     <div class="ass-qp-label">Quick add assertion</div>
@@ -668,7 +646,8 @@
                                     </div>
                                 </div>
                                 <div class="ass-list-head">
-                                    <span style="font-size:11px;color:var(--ink3)">Dijalankan otomatis setiap HIT</span>
+                                    <span style="font-size:11px;color:var(--ink3)">Dijalankan otomatis setiap HIT —
+                                        hasil ada di tab Response → Assertions</span>
                                     <button class="save-btn" onclick="showAssInput()"><i class="bi bi-plus"></i>
                                         Manual</button>
                                 </div>
@@ -680,8 +659,56 @@
                                         <button class="save-btn" onclick="saveManualAss()">Tambah</button>
                                     </div>
                                 </div>
-                                <div class="ass-list-section" id="ass-list">
-                                    <!-- populated by JS -->
+                                <div class="ass-list-section" id="ass-list"></div>
+                            </div>
+                        </div>
+
+                        <!-- POST-RESPONSE: extract vars ke environment -->
+                        <div class="panel" id="tpr" style="display:none;">
+                            <div class="postres-panel">
+                                <div class="postres-info-bar">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                    <span>
+                                        <strong>Post-Response</strong> — Setelah HIT berhasil, nilai dari response
+                                        otomatis disimpan ke environment aktif sebagai variabel. Gunakan <code
+                                            style="background:rgba(184,118,10,.15);padding:1px 4px;border-radius:3px;font-size:10px">{{namaVariabel}}</code>
+                                        di URL, Header, atau Body request lain.
+                                    </span>
+                                </div>
+                                <!-- Table header -->
+                                <div class="postres-row postres-thead">
+                                    <div class="postres-cell">NAMA VARIABEL</div>
+                                    <div class="postres-cell">PATH DI RESPONSE</div>
+                                    <div class="postres-cell">NILAI TERAKHIR</div>
+                                    <div class="postres-cell-del"></div>
+                                </div>
+                                <!-- Rows -->
+                                <div class="postres-list" id="postres-list"></div>
+                                <button class="postres-add-btn" onclick="addPostResRow()">
+                                    <i class="bi bi-plus"></i> Tambah ekstraksi variabel
+                                </button>
+                                <!-- Help section -->
+                                <div
+                                    style="padding:12px 14px;background:var(--paper2);border-top:1px solid var(--line);flex-shrink:0;">
+                                    <div
+                                        style="font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">
+                                        Contoh path yang umum dipakai</div>
+                                    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                                        <button class="ass-chip"
+                                            onclick="addPostResRowWithVal('token','accessToken')">accessToken →
+                                            {{token}}</button>
+                                        <button class="ass-chip"
+                                            onclick="addPostResRowWithVal('token','data.token')">data.token →
+                                            {{token}}</button>
+                                        <button class="ass-chip" onclick="addPostResRowWithVal('userId','id')">id →
+                                            {{userId}}</button>
+                                        <button class="ass-chip"
+                                            onclick="addPostResRowWithVal('refreshToken','refreshToken')">refreshToken →
+                                            {{refreshToken}}</button>
+                                        <button class="ass-chip"
+                                            onclick="addPostResRowWithVal('cartId','data.cart_id')">data.cart_id →
+                                            {{cartId}}</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -726,13 +753,14 @@
                         <!-- Response Headers -->
                         <div id="resp-headers-panel" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
                             <div class="resp-headers-list" id="resp-headers-list">
-                                <div class="resp-empty-state"><img src="public/assets/logo_black_white2.png" alt="" class="send-logo-icon2">
+                                <div class="resp-empty-state"><img src="public/assets/logo_black_white2.png" alt=""
+                                        class="send-logo-icon2">
                                     <p>Belum ada response</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Response Assertions -->
+                        <!-- Response Assertions — hasil PASS/FAIL ada di sini -->
                         <div id="resp-assert-panel" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
                             <div class="resp-assert-list" id="resp-assert-list">
                                 <div class="resp-empty-state"><i class="bi bi-check2-circle"></i>
@@ -768,7 +796,7 @@
                                     <div class="f-name">Login User</div><span class="f-status fs-p">PASSED</span>
                                 </div>
                                 <div class="f-url">/auth/login · 200 · 89ms</div>
-                                <div class="f-vars"><span class="v-chip">{{token}} dari accessToken</span></div>
+                                <div class="f-vars"><span class="v-chip">{{token}} ← accessToken</span></div>
                             </div>
                             <div class="f-connector"></div>
                             <div class="f-card pass">
@@ -777,7 +805,7 @@
                                     <div class="f-name">Get Profile</div><span class="f-status fs-p">PASSED</span>
                                 </div>
                                 <div class="f-url">/auth/me · 200 · 65ms</div>
-                                <div class="f-vars"><span class="v-chip">{{user_id}} dari id</span></div>
+                                <div class="f-vars"><span class="v-chip">{{userId}} ← id</span></div>
                             </div>
                             <div class="f-connector"></div>
                             <div class="f-card run">
@@ -793,7 +821,7 @@
                                     <div class="f-num">4</div><span class="m-tag mg">GET</span>
                                     <div class="f-name">Product Detail</div><span class="f-status fs-w">Waiting</span>
                                 </div>
-                                <div class="f-url">/products/{{product_id}}</div>
+                                <div class="f-url">/products/{{productId}}</div>
                             </div>
                             <div class="f-connector f-connector-dim"></div>
                             <button class="add-step" onclick="toast('Tambah langkah baru','ok')"><i
@@ -809,8 +837,9 @@
                             <div class="flow-info">
                                 <h2>Performance Test</h2>
                                 <p>Powered by K6 · Konfigurasi dan jalankan load test langsung dari browser</p>
-                            </div><button class="btn btn-green btn-sm" onclick="runPerf()"><i
-                                    class="bi bi-play-fill"></i> Start Test</button>
+                            </div>
+                            <button class="btn btn-green btn-sm" onclick="runPerf()"><i class="bi bi-play-fill"></i>
+                                Start Test</button>
                         </div>
                         <span class="section-micro-label">Preset</span>
                         <div class="presets">
@@ -870,8 +899,8 @@
                             </div>
                         </div>
                         <div class="chart-card">
-                            <div class="chart-title">Latency over time (ms)</div><svg class="chart-svg"
-                                viewBox="0 0 800 70" preserveAspectRatio="none">
+                            <div class="chart-title">Latency over time (ms)</div>
+                            <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
                                 <defs>
                                     <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stop-color="#1a7a5e" stop-opacity=".15" />
@@ -885,8 +914,8 @@
                                     d="M0,55 C60,50 90,44 140,38 S230,26 290,30 S380,20 430,23 S510,25 560,16 S640,12 690,18 S770,24 800,22"
                                     fill="none" stroke="#1a7a5e" stroke-width="1.5" />
                                 <line x1="0" y1="35" x2="800" y2="35" stroke="#e2e1dd" stroke-width="1"
-                                    stroke-dasharray="4 4" /><text x="4" y="32" fill="#9a9a9a" font-size="9"
-                                    font-family="monospace">p95</text>
+                                    stroke-dasharray="4 4" />
+                                <text x="4" y="32" fill="#9a9a9a" font-size="9" font-family="monospace">p95</text>
                             </svg>
                         </div>
                     </div>
@@ -897,13 +926,66 @@
     </div><!-- /app -->
 
 
+    <!-- ════════ ENVIRONMENT MANAGER PANEL ════════ -->
+    <div class="env-manager-overlay" id="envManagerOverlay" onclick="envManagerOutsideClick(event)">
+        <div class="env-manager-panel" id="envManagerPanel">
+            <div class="env-manager-head">
+                <div class="env-manager-title"><i class="bi bi-sliders2"
+                        style="margin-right:6px;color:var(--green)"></i>Environment Manager</div>
+                <button class="env-manager-close" onclick="closeEnvManager()"><i class="bi bi-x-lg"></i></button>
+            </div>
+
+            <!-- Env Tabs -->
+            <div class="env-tabs" id="envTabsRow">
+                <!-- populated by JS -->
+                <button class="env-add-tab" onclick="addEnv()" title="Tambah environment"><i
+                        class="bi bi-plus-lg"></i></button>
+            </div>
+
+            <!-- Env Body -->
+            <div class="env-manager-body">
+                <!-- active env name bar -->
+                <div class="env-header-bar">
+                    <input class="env-name-input" id="envNameInput" value="Dev" oninput="renameActiveEnv(this.value)">
+                    <span class="env-active-badge" id="envActiveBadge">● AKTIF</span>
+                </div>
+
+                <!-- Vars table -->
+                <table class="env-vars-table">
+                    <thead>
+                        <tr>
+                            <th style="width:36%">VARIABEL</th>
+                            <th style="width:44%">VALUE</th>
+                            <th style="width:32px;text-align:center">🔒</th>
+                            <th style="width:32px"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="envVarsBody"></tbody>
+                </table>
+                <button class="env-add-var-btn" onclick="addEnvVar()">
+                    <i class="bi bi-plus"></i> Tambah variabel
+                </button>
+            </div>
+
+            <div class="env-manager-footer">
+                <div class="env-footer-note">
+                    Gunakan <strong>{{namaVariabel}}</strong> di URL, Header, atau Body.<br>
+                    Nilai di-<em>inject</em> otomatis saat kamu klik HIT.
+                </div>
+                <button class="btn btn-green btn-sm" onclick="saveEnvAndClose()"><i class="bi bi-check-lg"></i>
+                    Simpan</button>
+            </div>
+        </div>
+    </div>
+
+
     <!-- ════════ AUTH MODAL ════════ -->
     <div class="modal-overlay" id="authModal" onclick="modalOutsideClick(event)">
         <div class="modal-box" id="modalBox">
             <div class="modal-head">
                 <div class="modal-logo"><img class="logo-img" src="public/assets/logo.png" alt="HITSaurce"
-                        style="mix-blend-mode:multiply">HIT<span>Saurce</span></div><button class="modal-close"
-                    onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+                        style="mix-blend-mode:multiply">HIT<span>Saurce</span></div>
+                <button class="modal-close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
             </div>
             <div class="modal-body">
                 <div id="view-login">
@@ -982,8 +1064,8 @@
                         <div class="auth-success">
                             <div class="auth-success-icon"><i class="bi bi-envelope-check-fill"></i></div>
                             <div class="auth-success-title">Email terkirim!</div>
-                            <div class="auth-success-desc">Cek inbox kamu dan klik link reset password. Link berlaku 15
-                                menit.</div>
+                            <div class="auth-success-desc">Cek inbox kamu dan klik link reset. Link berlaku 15 menit.
+                            </div>
                         </div>
                     </div>
                     <div class="auth-switch" style="margin-top:12px"><a onclick="showView('login')"><i
@@ -1007,17 +1089,10 @@
         })();
 
         /* ════════════════════════════════════════
-           RATE LIMIT — shared dengan landing demo
-           Key: hs_demo_state | 100 req / 24 jam
+           RATE LIMIT
         ════════════════════════════════════════ */
-        var DEMO_LIMIT = 100;
-        var DEMO_RESET_HOURS = 24;
-
-        function getDemoState() {
-            var raw = localStorage.getItem('hs_demo_state');
-            if (raw) { try { var s = JSON.parse(raw); if (Date.now() - s.resetAt > DEMO_RESET_HOURS * 3600 * 1000) return { count: 0, resetAt: Date.now() }; return s; } catch (e) { } }
-            return { count: 0, resetAt: Date.now() };
-        }
+        var DEMO_LIMIT = 100, DEMO_RESET_HOURS = 24;
+        function getDemoState() { var raw = localStorage.getItem('hs_demo_state'); if (raw) { try { var s = JSON.parse(raw); if (Date.now() - s.resetAt > DEMO_RESET_HOURS * 3600 * 1000) return { count: 0, resetAt: Date.now() }; return s; } catch (e) { } } return { count: 0, resetAt: Date.now() }; }
         function saveDemoState(s) { localStorage.setItem('hs_demo_state', JSON.stringify(s)); }
         function makeDot(c) { return '<span style="width:6px;height:6px;border-radius:50%;background:' + c + ';flex-shrink:0;display:inline-block"></span>'; }
         function updateB1Badge(sc, stxt, ms) { var b = document.getElementById('heroBadge1'); if (!b) return; var ok = sc >= 200 && sc < 300; b.innerHTML = makeDot(ok ? 'var(--green)' : 'var(--red)') + sc + ' ' + stxt + ' · ' + ms + 'ms'; }
@@ -1025,14 +1100,8 @@
         function updateB2Limit() { var b = document.getElementById('heroBadge2'); if (!b) return; b.innerHTML = makeDot('var(--amber)') + '<span id="demoBadge2">Limit · Daftar untuk lanjut</span>'; }
         function checkAndShowLimitBanner() { var s = getDemoState(); if (s.count >= DEMO_LIMIT) { document.getElementById('demoLimitBanner').style.display = 'flex'; return true; } return false; }
 
-        /* ── STATUS CODE MAP ── */
-        var statusDesc = {
-            '200': '200 = Request berhasil', '201': '201 = Data berhasil dibuat',
-            '204': '204 = Berhasil, tidak ada data', '400': '400 = Request tidak valid',
-            '401': '401 = Belum login / token expired', '403': '403 = Tidak punya akses',
-            '404': '404 = Tidak ditemukan', '422': '422 = Validasi gagal',
-            '429': '429 = Terlalu banyak request', '500': '500 = Error di server'
-        };
+        /* ── STATUS MAP ── */
+        var statusDesc = { '200': '200 = Request berhasil', '201': '201 = Data berhasil dibuat', '204': '204 = Berhasil, tidak ada data', '400': '400 = Request tidak valid', '401': '401 = Belum login / token expired', '403': '403 = Tidak punya akses', '404': '404 = Tidak ditemukan', '422': '422 = Validasi gagal', '429': '429 = Terlalu banyak request', '500': '500 = Error di server' };
         function statusText(code) { var t = { 200: 'OK', 201: 'Created', 204: 'No Content', 400: 'Bad Request', 401: 'Unauthorized', 403: 'Forbidden', 404: 'Not Found', 422: 'Unprocessable', 429: 'Too Many Requests', 500: 'Server Error' }; return t[code] || ''; }
 
         /* ── NAVIGATION ── */
@@ -1043,7 +1112,6 @@
 
         /* ── APP MODE ── */
         function setMode(m) { ['single', 'flow', 'perf'].forEach(function (x) { document.getElementById('m-' + x).style.display = x === m ? 'flex' : 'none'; document.getElementById('mb-' + x).classList.toggle('on', x === m); }); }
-        function onEnvChange() { var v = document.getElementById('envSel').value; toast('Environment: ' + v, 'ok'); }
 
         /* ── SIDEBAR ── */
         function togColl(el) { el.classList.toggle('open'); var next = el.nextElementSibling; if (next) next.style.display = next.style.display === 'none' ? '' : 'none'; }
@@ -1051,118 +1119,316 @@
         function dismissOnboardBanner() { var b = document.getElementById('onboardBanner'); b.style.opacity = '0'; b.style.transition = 'opacity .3s'; setTimeout(function () { b.style.display = 'none'; }, 300); localStorage.setItem('hs_banner_dismissed', '1'); }
 
         /* ════════════════════════════════════════
+           ENVIRONMENT MANAGER
+        ════════════════════════════════════════ */
+        // Data model: array of {id, name, vars:[{key,value,secret}]}
+        var environments = [
+            {
+                id: 'dev', name: 'Dev', vars: [
+                    { key: 'baseUrl', value: 'https://dummyjson.com', secret: false },
+                    { key: 'token', value: '', secret: true }
+                ]
+            },
+            {
+                id: 'stg', name: 'Staging', vars: [
+                    { key: 'baseUrl', value: 'https://stg.api.myapp.id', secret: false },
+                    { key: 'token', value: '', secret: true }
+                ]
+            },
+            {
+                id: 'prod', name: 'Production', vars: [
+                    { key: 'baseUrl', value: 'https://api.myapp.id', secret: false },
+                    { key: 'token', value: '', secret: true }
+                ]
+            }
+        ];
+        var activeEnvId = 'dev';
+        var activeEnvTabIndex = 0; // which env is shown in manager
+
+        function getActiveEnv() {
+            return environments.find(function (e) { return e.id === activeEnvId; }) || environments[0];
+        }
+
+        function getEnvVar(key) {
+            var env = getActiveEnv();
+            var v = env.vars.find(function (v) { return v.key === key; });
+            return v ? v.value : '';
+        }
+
+        function setEnvVar(key, value) {
+            var env = getActiveEnv();
+            var v = env.vars.find(function (v) { return v.key === key; });
+            if (v) { v.value = value; }
+            else { env.vars.push({ key: key, value: value, secret: false }); }
+        }
+
+        function openEnvManager() {
+            activeEnvTabIndex = environments.findIndex(function (e) { return e.id === activeEnvId; });
+            if (activeEnvTabIndex < 0) activeEnvTabIndex = 0;
+            renderEnvTabs();
+            renderEnvVars();
+            document.getElementById('envManagerOverlay').classList.add('open');
+        }
+
+        function closeEnvManager() {
+            document.getElementById('envManagerOverlay').classList.remove('open');
+        }
+
+        function saveEnvAndClose() {
+            // Collect current vars from DOM
+            collectEnvVarsFromDOM();
+            var env = environments[activeEnvTabIndex];
+            // Update active env
+            activeEnvId = env.id;
+            document.getElementById('envSelLabel').textContent = env.name;
+            toast('Environment "' + env.name + '" disimpan ✓', 'ok');
+            closeEnvManager();
+        }
+
+        function envManagerOutsideClick(e) {
+            if (e.target === document.getElementById('envManagerOverlay')) closeEnvManager();
+        }
+
+        function renderEnvTabs() {
+            var row = document.getElementById('envTabsRow');
+            var addBtn = row.querySelector('.env-add-tab');
+            // Remove old tabs
+            row.querySelectorAll('.env-tab').forEach(function (t) { t.remove(); });
+            environments.forEach(function (env, i) {
+                var btn = document.createElement('button');
+                btn.className = 'env-tab' + (i === activeEnvTabIndex ? ' active' : '');
+                btn.innerHTML = (env.id === activeEnvId ? '<span class="env-tab-dot"></span>' : '') + escHtml(env.name);
+                (function (idx) { btn.onclick = function () { activeEnvTabIndex = idx; collectEnvVarsFromDOM(); renderEnvTabs(); renderEnvVars(); }; })(i);
+                row.insertBefore(btn, addBtn);
+            });
+        }
+
+        function renderEnvVars() {
+            var env = environments[activeEnvTabIndex];
+            document.getElementById('envNameInput').value = env.name;
+            // Active badge
+            var badge = document.getElementById('envActiveBadge');
+            badge.style.display = env.id === activeEnvId ? '' : 'none';
+
+            var tbody = document.getElementById('envVarsBody');
+            tbody.innerHTML = '';
+            env.vars.forEach(function (v, i) {
+                var tr = document.createElement('tr');
+                tr.dataset.idx = i;
+                tr.innerHTML =
+                    '<td style="padding:2px 6px"><input type="text" class="env-key-input" placeholder="namaVariabel" value="' + escHtml(v.key) + '" oninput="syncEnvKey(this,' + i + ')"></td>' +
+                    '<td style="padding:2px 6px"><input type="' + (v.secret ? 'password' : 'text') + '" class="env-val-input" placeholder="nilai..." value="' + escHtml(v.value) + '" oninput="syncEnvVal(this,' + i + ')"></td>' +
+                    '<td style="padding:2px 6px;text-align:center"><button class="env-secret-btn' + (v.secret ? ' active' : '') + '" title="' + (v.secret ? 'Sembunyikan' : 'Tampilkan') + '" onclick="toggleEnvSecret(this,' + i + ')"><i class="bi bi-' + (v.secret ? 'eye-slash' : 'eye') + '"></i></button></td>' +
+                    '<td style="padding:2px 6px;text-align:center"><button class="env-del-btn" onclick="delEnvVar(' + i + ')"><i class="bi bi-trash3"></i></button></td>';
+                tbody.appendChild(tr);
+            });
+        }
+
+        function syncEnvKey(input, i) { environments[activeEnvTabIndex].vars[i].key = input.value.trim(); }
+        function syncEnvVal(input, i) { environments[activeEnvTabIndex].vars[i].value = input.value; }
+
+        function toggleEnvSecret(btn, i) {
+            var env = environments[activeEnvTabIndex];
+            env.vars[i].secret = !env.vars[i].secret;
+            renderEnvVars();
+        }
+
+        function delEnvVar(i) {
+            environments[activeEnvTabIndex].vars.splice(i, 1);
+            renderEnvVars();
+        }
+
+        function addEnvVar() {
+            environments[activeEnvTabIndex].vars.push({ key: '', value: '', secret: false });
+            renderEnvVars();
+            // Focus last key input
+            var inputs = document.querySelectorAll('#envVarsBody .env-key-input');
+            if (inputs.length) inputs[inputs.length - 1].focus();
+        }
+
+        function collectEnvVarsFromDOM() {
+            // Already synced via oninput — just ensure non-empty keys survive
+            environments[activeEnvTabIndex].vars = environments[activeEnvTabIndex].vars.filter(function (v) { return v.key.trim(); });
+        }
+
+        function renameActiveEnv(name) {
+            environments[activeEnvTabIndex].name = name;
+            renderEnvTabs();
+        }
+
+        function addEnv() {
+            var id = 'env_' + Date.now();
+            environments.push({ id: id, name: 'New Env', vars: [{ key: 'baseUrl', value: '', secret: false }] });
+            activeEnvTabIndex = environments.length - 1;
+            renderEnvTabs();
+            renderEnvVars();
+            document.getElementById('envNameInput').focus();
+            document.getElementById('envNameInput').select();
+        }
+
+        /* ════════════════════════════════════════
+           POST-RESPONSE (extract vars)
+        ════════════════════════════════════════ */
+        var postResExtractors = []; // [{varName, path, lastValue}]
+
+        function renderPostResList() {
+            var list = document.getElementById('postres-list');
+            list.innerHTML = '';
+
+            postResExtractors.forEach(function (ex, i) {
+                var row = document.createElement('div');
+                row.className = 'postres-row';
+                row.innerHTML =
+                    '<div class="postres-cell"><input type="text" placeholder="{{namaVariabel}}" value="' + escHtml(ex.varName || '') + '" oninput="postResExtractors[' + i + '].varName=this.value;updatePostResCount()"></div>' +
+                    '<div class="postres-cell"><input type="text" placeholder="Contoh: accessToken atau data.id" value="' + escHtml(ex.path || '') + '" oninput="postResExtractors[' + i + '].path=this.value"></div>' +
+                    '<div class="postres-cell" style="font-family:var(--mono);font-size:11px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' +
+                    (ex.lastValue !== undefined && ex.lastValue !== null
+                        ? '<span style="color:var(--green);font-weight:500">' + escHtml(String(ex.lastValue).substring(0, 30)) + '</span>'
+                        : '<span style="color:var(--ink4)">—</span>')
+                    + '</div>' +
+                    '<div class="postres-cell-del"><button class="postres-del-btn" onclick="removePostResRow(' + i + ')"><i class="bi bi-trash3"></i></button></div>';
+                list.appendChild(row);
+            });
+            updatePostResCount();
+        }
+
+        function addPostResRow() {
+            postResExtractors.push({ varName: '', path: '', lastValue: null });
+            renderPostResList();
+            // Focus first empty varName
+            var inputs = document.querySelectorAll('#postres-list .postres-cell input[type="text"]');
+            if (inputs.length) { inputs[inputs.length - 2].focus(); }
+        }
+
+        function addPostResRowWithVal(varName, path) {
+            // Don't add duplicate
+            var exists = postResExtractors.find(function (e) { return e.varName === varName && e.path === path; });
+            if (exists) { toast('Sudah ada: {{' + varName + '}}', 'ok'); return; }
+            postResExtractors.push({ varName: varName, path: path, lastValue: null });
+            renderPostResList();
+            toast('Ditambahkan: {{' + varName + '}} ← ' + path, 'ok');
+        }
+
+        function removePostResRow(i) {
+            postResExtractors.splice(i, 1);
+            renderPostResList();
+        }
+
+        function updatePostResCount() {
+            var count = postResExtractors.filter(function (e) { return e.varName && e.path; }).length;
+            var ct = document.getElementById('postres-count');
+            ct.textContent = count;
+            ct.style.display = count ? '' : 'none';
+        }
+
+        function resolveJsonPath(obj, path) {
+            // Supports: "token", "data.token", "data.user.id"
+            if (!obj || !path) return undefined;
+            var parts = path.split('.');
+            var cur = obj;
+            for (var i = 0; i < parts.length; i++) {
+                if (cur === null || cur === undefined) return undefined;
+                cur = cur[parts[i]];
+            }
+            return cur;
+        }
+
+        function runPostResponse(parsedBody) {
+            if (!postResExtractors.length) return;
+            var extracted = 0;
+            postResExtractors.forEach(function (ex) {
+                if (!ex.varName || !ex.path) return;
+                var val = resolveJsonPath(parsedBody, ex.path);
+                if (val !== undefined) {
+                    ex.lastValue = val;
+                    setEnvVar(ex.varName, String(val));
+                    extracted++;
+                } else {
+                    ex.lastValue = null;
+                }
+            });
+            renderPostResList();
+            if (extracted > 0) {
+                toast(extracted + ' variabel diekstrak → environment "' + getActiveEnv().name + '"', 'ok');
+            }
+        }
+
+        /* ════════════════════════════════════════
            DUMMY REQUEST DEFINITIONS
         ════════════════════════════════════════ */
         var dummyRequests = {
             'login': {
-                name: 'Login User',
-                method: 'POST',
+                name: 'Login User', method: 'POST',
                 url: 'https://dummyjson.com/auth/login',
-                params: [],
-                headers: [
-                    { enabled: true, key: 'Content-Type', value: 'application/json' },
-                    { enabled: true, key: 'Accept', value: 'application/json' }
-                ],
+                headers: [{ enabled: true, key: 'Content-Type', value: 'application/json' }, { enabled: true, key: 'Accept', value: 'application/json' }],
                 body: JSON.stringify({ username: 'emilys', password: 'emilyspass', expiresInMins: 30 }, null, 2),
                 bodyType: 'json',
                 assertions: [
                     { type: 'status', expected: '200', label: 'Status code = 200' },
                     { type: 'time', expected: '3000', label: 'Response time < 3000ms' },
                     { type: 'body-exists', expected: 'accessToken', label: 'body.accessToken ada' }
-                ]
+                ],
+                postRes: [{ varName: 'token', path: 'accessToken', lastValue: null }]
             },
             'me': {
-                name: 'Get Profile (me)',
-                method: 'GET',
+                name: 'Get Profile (me)', method: 'GET',
                 url: 'https://dummyjson.com/auth/me',
-                params: [],
-                headers: [
-                    { enabled: true, key: 'Authorization', value: 'Bearer {{token}}' },
-                    { enabled: true, key: 'Accept', value: 'application/json' }
-                ],
-                body: '',
-                bodyType: 'none',
+                headers: [{ enabled: true, key: 'Authorization', value: 'Bearer {{token}}' }, { enabled: true, key: 'Accept', value: 'application/json' }],
+                body: '', bodyType: 'none',
                 assertions: [
                     { type: 'status', expected: '200', label: 'Status code = 200' },
                     { type: 'body-exists', expected: 'id', label: 'body.id ada' },
                     { type: 'body-exists', expected: 'email', label: 'body.email ada' }
-                ]
+                ],
+                postRes: [{ varName: 'userId', path: 'id', lastValue: null }]
             },
             'refresh': {
-                name: 'Refresh Token',
-                method: 'POST',
+                name: 'Refresh Token', method: 'POST',
                 url: 'https://dummyjson.com/auth/refresh',
-                params: [],
-                headers: [
-                    { enabled: true, key: 'Content-Type', value: 'application/json' },
-                    { enabled: true, key: 'Accept', value: 'application/json' }
-                ],
+                headers: [{ enabled: true, key: 'Content-Type', value: 'application/json' }, { enabled: true, key: 'Accept', value: 'application/json' }],
                 body: JSON.stringify({ refreshToken: '{{refreshToken}}', expiresInMins: 30 }, null, 2),
                 bodyType: 'json',
                 assertions: [
                     { type: 'status', expected: '200', label: 'Status code = 200' },
                     { type: 'body-exists', expected: 'accessToken', label: 'body.accessToken ada' }
-                ]
+                ],
+                postRes: []
             },
             'products': {
-                name: 'New Request',
-                method: 'GET',
-                url: 'https://dummyjson.com/products',
-                params: [
-                    { enabled: true, key: 'limit', value: '10' },
-                    { enabled: true, key: 'skip', value: '0' }
-                ],
+                name: 'New Request', method: 'GET',
+                url: 'https://dummyjson.com/products?limit=10&skip=0',
                 headers: [{ enabled: true, key: 'Accept', value: 'application/json' }],
-                body: '',
-                bodyType: 'none',
+                body: '', bodyType: 'none',
                 assertions: [
                     { type: 'status', expected: '200', label: 'Status code = 200' },
                     { type: 'body-exists', expected: 'products', label: 'body.products ada' }
-                ]
-            },
+                ],
+                postRes: []
+            }
         };
 
-        var currentRequest = null; // currently loaded request key
-        var assertions = [];       // active assertion list
+        var assertions = [];
 
         function loadDummyRequest(key, el) {
             var req = dummyRequests[key];
             if (!req) return;
-            currentRequest = key;
-
-            // Highlight sidebar
             document.querySelectorAll('.sb-item').forEach(function (i) { i.classList.remove('active'); });
             if (el) el.classList.add('active');
-
-            // Request name
             document.getElementById('rname').value = req.name;
-
-            // Method
             var msel = document.getElementById('msel');
             msel.value = req.method;
             updMethod();
-
-            // URL
             document.getElementById('urlin').value = req.url;
-
-            // Params
-            renderKvTable('params-body', req.params);
-
-            // Headers
             renderKvTable('headers-body', req.headers);
             updateHeaderCount();
-
-            // Body
             document.getElementById('req-body').value = req.body || '';
             setBodyTypeActive(req.bodyType || 'json');
-
-            // Assertions
+            updateBodyCount();
             assertions = req.assertions.map(function (a) { return Object.assign({ result: null }, a); });
             renderAssertions();
-
-            // Reset response
+            postResExtractors = (req.postRes || []).map(function (r) { return Object.assign({}, r); });
+            renderPostResList();
             resetResponse();
-
             toast(req.name + ' dimuat', 'ok');
         }
 
@@ -1170,16 +1436,14 @@
         function renderKvTable(tbodyId, rows) {
             var tb = document.getElementById(tbodyId);
             tb.innerHTML = '';
-            (rows || []).forEach(function (row, i) {
-                tb.appendChild(makeKvRow(tbodyId, row.enabled, row.key, row.value));
-            });
+            (rows || []).forEach(function (row) { tb.appendChild(makeKvRow(tbodyId, row.enabled, row.key, row.value)); });
         }
 
         function makeKvRow(tbodyId, enabled, key, value) {
             var tr = document.createElement('tr');
             tr.innerHTML =
                 '<td style="text-align:center;width:28px"><input type="checkbox" class="kv-chk"' + (enabled ? ' checked' : '') + '></td>' +
-                '<td><input type="text" placeholder="Key" value="' + escHtml(key || '') + '"></td>' +
+                '<td><input type="text" placeholder="Key" value="' + escHtml(key || '') + '" oninput="updateHeaderCount()"></td>' +
                 '<td><input type="text" placeholder="Value" value="' + escHtml(value || '') + '"></td>' +
                 '<td><span class="kv-del" onclick="this.closest(\'tr\').remove();updateHeaderCount()"><i class="bi bi-trash3"></i></span></td>';
             return tr;
@@ -1198,16 +1462,25 @@
             document.querySelectorAll('#' + tbodyId + ' tr').forEach(function (tr) {
                 var inputs = tr.querySelectorAll('input[type="text"]');
                 var chk = tr.querySelector('input[type="checkbox"]');
-                if (inputs.length >= 2) {
-                    rows.push({ enabled: chk ? chk.checked : true, key: inputs[0].value.trim(), value: inputs[1].value.trim() });
-                }
+                if (inputs.length >= 2) rows.push({ enabled: chk ? chk.checked : true, key: inputs[0].value.trim(), value: inputs[1].value.trim() });
             });
             return rows;
         }
 
         function updateHeaderCount() {
             var headers = getKvRows('headers-body').filter(function (r) { return r.enabled && r.key; });
-            document.getElementById('header-count').textContent = headers.length;
+            var ct = document.getElementById('header-count');
+            ct.textContent = headers.length;
+            ct.style.display = headers.length ? '' : 'none';
+        }
+
+        function updateBodyCount() {
+            var body = document.getElementById('req-body').value.trim();
+            var bodyType = (document.querySelector('.body-type-btn.on') || {}).textContent || '';
+            var hasBody = body.length > 0 && bodyType.toLowerCase() !== 'none';
+            var ct = document.getElementById('body-count');
+            ct.style.display = hasBody ? '' : 'none';
+            ct.textContent = hasBody ? '1' : '0';
         }
 
         function escHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -1219,52 +1492,50 @@
             var ta = document.getElementById('req-body');
             if (type === 'none') { ta.disabled = true; ta.style.opacity = '.4'; }
             else { ta.disabled = false; ta.style.opacity = '1'; }
+            updateBodyCount();
         }
         function setBodyTypeActive(type) {
             document.querySelectorAll('.body-type-btn').forEach(function (b) { b.classList.remove('on'); });
             var btns = document.querySelectorAll('.body-type-btn');
-            var map = { json: 0, form: 1, raw: 2, none: 3 };
+            var map = { json: 0, form: 1, raw: 2, none: 1 };
             if (btns[map[type]]) btns[map[type]].classList.add('on');
             var ta = document.getElementById('req-body');
             if (type === 'none') { ta.disabled = true; ta.style.opacity = '.4'; }
             else { ta.disabled = false; ta.style.opacity = '1'; }
+            updateBodyCount();
         }
 
-        /* ── ASSERTIONS ── */
+        /* ── ASSERTIONS (tampil config saja, tanpa result) ── */
         function renderAssertions() {
             var list = document.getElementById('ass-list');
             list.innerHTML = '';
-            document.getElementById('ass-count').textContent = assertions.length;
+            var ct = document.getElementById('ass-count');
+            ct.textContent = assertions.length;
+            ct.style.display = assertions.length ? '' : 'none';
+
             assertions.forEach(function (a, i) {
                 var div = document.createElement('div');
                 div.className = 'ass-item';
-                var dotClass = a.result === null ? 'pending' : (a.result ? 'ok' : 'fail');
-                var resultHtml = a.result === null ? '' : (a.result ? '<span class="resp-assert-val val-pass">✓ PASS</span>' : '<span class="resp-assert-val val-fail">✗ FAIL</span>');
+                // Hanya tampil label + delete. Tidak ada result di sini.
                 div.innerHTML =
-                    '<span class="ass-dot ' + dotClass + '"></span>' +
+                    '<span class="ass-dot pending"></span>' +
                     '<span class="ass-label">' + escHtml(a.label) + '</span>' +
-                    resultHtml +
-                    '<span class="ass-del" onclick="removeAssertion(' + i + ')"><i class="bi bi-x"></i></span>';
+                    '<span class="ass-del" onclick="removeAssertion(' + i + ')" title="Hapus"><i class="bi bi-x"></i></span>';
                 list.appendChild(div);
             });
         }
 
         function addAssertion(type, expected) {
-            var labels = {
-                'status': 'Status code = ' + expected,
-                'time': 'Response time < ' + expected + 'ms',
-                'body-exists': 'body.' + expected + ' ada',
-                'header': 'Header ' + expected + ' ada'
-            };
-            assertions.push({ type: type, expected: expected, label: labels[type] || type + ' = ' + expected, result: null });
+            var labels = { 'status': 'Status code = ' + expected, 'time': 'Response time < ' + expected + 'ms', 'body-exists': 'body.' + expected + ' ada', 'header': 'Header ' + expected + ' ada' };
+            // Cek duplikat
+            var dup = assertions.find(function (a) { return a.type === type && a.expected === expected; });
+            if (dup) { toast('Assertion sudah ada', 'ok'); return; }
+            assertions.push({ type: type, expected: expected, label: labels[type] || type + '=' + expected, result: null });
             renderAssertions();
             toast('Assertion ditambahkan', 'ok');
         }
 
-        function removeAssertion(i) {
-            assertions.splice(i, 1);
-            renderAssertions();
-        }
+        function removeAssertion(i) { assertions.splice(i, 1); renderAssertions(); }
 
         function showAssInput() {
             var area = document.getElementById('ass-input-area');
@@ -1275,13 +1546,10 @@
         function saveManualAss() {
             var val = document.getElementById('ass-manual-input').value.trim();
             if (!val) return;
-            // Parse: "status = 200" | "time < 500" | "body.token exists"
-            var label = val;
-            var type = 'raw'; var expected = val;
-            var m;
+            var label = val, type = 'raw', expected = val, m;
             if ((m = val.match(/status\s*[=:]\s*(\d+)/i))) { type = 'status'; expected = m[1]; label = 'Status code = ' + m[1]; }
             else if ((m = val.match(/time\s*<\s*(\d+)/i))) { type = 'time'; expected = m[1]; label = 'Response time < ' + m[1] + 'ms'; }
-            else if ((m = val.match(/body\.(\w+)\s*(exists|ada)/i))) { type = 'body-exists'; expected = m[1]; label = 'body.' + m[1] + ' ada'; }
+            else if ((m = val.match(/body\.(\w[\w.]*)\s*(exists|ada)/i))) { type = 'body-exists'; expected = m[1]; label = 'body.' + m[1] + ' ada'; }
             assertions.push({ type: type, expected: expected, label: label, result: null });
             renderAssertions();
             document.getElementById('ass-manual-input').value = '';
@@ -1294,25 +1562,15 @@
             try { parsed = JSON.parse(respBody); } catch (e) { }
             assertions.forEach(function (a) {
                 switch (a.type) {
-                    case 'status':
-                        a.result = String(sc) === String(a.expected);
-                        break;
-                    case 'time':
-                        a.result = ms < parseInt(a.expected, 10);
-                        break;
-                    case 'body-exists':
-                        a.result = parsed !== null && a.expected in parsed;
-                        break;
-                    case 'header':
-                        var hkey = a.expected.toLowerCase();
-                        a.result = respHeaders.some(function (h) { return h.key.toLowerCase().includes(hkey); });
-                        break;
-                    default:
-                        a.result = null;
+                    case 'status': a.result = String(sc) === String(a.expected); break;
+                    case 'time': a.result = ms < parseInt(a.expected, 10); break;
+                    case 'body-exists': a.result = parsed !== null && a.expected in parsed; break;
+                    case 'header': var hk = a.expected.toLowerCase(); a.result = respHeaders.some(function (h) { return h.key.toLowerCase().includes(hk); }); break;
+                    default: a.result = null;
                 }
             });
-            renderAssertions();
-            // Render response assertion panel
+
+            // Render di RESPONSE panel saja
             var list = document.getElementById('resp-assert-list');
             list.innerHTML = '';
             var pass = 0;
@@ -1329,10 +1587,14 @@
             });
             document.getElementById('resp-ass-count').textContent = assertions.length;
             document.getElementById('resp-ass-count').style.display = assertions.length ? '' : 'none';
+
+            // Update request panel assertion dots (tetap grey/pending, result ada di response)
+            renderAssertions();
+
             return { pass: pass, total: assertions.length };
         }
 
-        /* ── RESPONSE DISPLAY ── */
+        /* ── RESPONSE ── */
         function resetResponse() {
             document.getElementById('rstat').style.display = 'none';
             document.getElementById('rtime').style.display = 'none';
@@ -1350,34 +1612,25 @@
         }
 
         function showResponse(sc, stxt, ms, body, headers) {
-            // Status badge
             var stat = document.getElementById('rstat');
             stat.style.display = '';
             stat.textContent = sc + ' ' + stxt;
             var cls = sc >= 200 && sc < 300 ? 's-2xx' : sc >= 300 && sc < 400 ? 's-3xx' : sc >= 400 && sc < 500 ? 's-4xx' : 's-5xx';
             stat.className = 's-badge ' + cls;
-
-            // Tooltip
             var tt = document.getElementById('statTooltip');
             tt.textContent = statusDesc[String(sc)] || sc + ' ' + stxt;
-
-            // Time & size
             document.getElementById('rtime').textContent = ms + 'ms';
             document.getElementById('rtime').style.display = '';
             var kb = (new Blob([body]).size / 1024).toFixed(1);
             document.getElementById('rsize').textContent = kb + ' KB';
             document.getElementById('rsize').style.display = '';
             document.getElementById('copyBtn').style.display = '';
-
-            // Body
             document.getElementById('resp-empty').style.display = 'none';
             var codeEl = document.getElementById('resp-body-code');
             codeEl.style.display = 'block';
             var display = body;
             try { display = JSON.stringify(JSON.parse(body), null, 2); } catch (e) { }
             codeEl.innerHTML = syntaxHL(display);
-
-            // Headers
             var hlist = document.getElementById('resp-headers-list');
             hlist.innerHTML = '';
             headers.forEach(function (h) {
@@ -1392,96 +1645,77 @@
 
         function copyRespBody() {
             var code = document.getElementById('resp-body-code').textContent;
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(code).then(function () { toast('Body response disalin ✓', 'ok'); });
-            } else { toast('Ctrl+A lalu copy manual', 'ok'); }
+            if (navigator.clipboard) { navigator.clipboard.writeText(code).then(function () { toast('Body response disalin ✓', 'ok'); }); }
+            else { toast('Ctrl+A lalu copy manual', 'ok'); }
         }
 
-        /* ── SYNTAX HIGHLIGHT ── */
         function syntaxHL(str) {
             var esc = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            return esc.replace(/^([ \t]*)(".*?")(\s*:\s*)(".*?"|true|false|null|-?\d+\.?\d*)/gm,
-                function (_, indent, key, colon, val) {
-                    var vc;
-                    if (/^"/.test(val)) vc = '<span style="color:var(--green)">' + val + '</span>';
-                    else if (/true|false|null/.test(val)) vc = '<span style="color:var(--amber)">' + val + '</span>';
-                    else vc = '<span style="color:#8e44ad">' + val + '</span>';
-                    return indent + '<span style="color:var(--blue)">' + key + '</span>' + colon + vc;
-                });
+            return esc.replace(/^([ \t]*)(".*?")(\s*:\s*)(".*?"|true|false|null|-?\d+\.?\d*)/gm, function (_, indent, key, colon, val) {
+                var vc;
+                if (/^"/.test(val)) vc = '<span style="color:var(--green)">' + val + '</span>';
+                else if (/true|false|null/.test(val)) vc = '<span style="color:var(--amber)">' + val + '</span>';
+                else vc = '<span style="color:#8e44ad">' + val + '</span>';
+                return indent + '<span style="color:var(--blue)">' + key + '</span>' + colon + vc;
+            });
+        }
+
+        /* ── VARIABLE INJECTION ── */
+        function injectEnvVars(str) {
+            var env = getActiveEnv();
+            return str.replace(/\{\{(\w+)\}\}/g, function (_, key) {
+                var v = env.vars.find(function (v) { return v.key === key; });
+                return v && v.value ? v.value : '{{' + key + '}}';
+            });
         }
 
         /* ════════════════════════════════════════
-           REAL FETCH — Playground
+           REAL FETCH
         ════════════════════════════════════════ */
         function doRealSend() {
             if (checkAndShowLimitBanner()) return;
-
             var btn = document.getElementById('sendb');
-            var url = document.getElementById('urlin').value.trim();
+            var url = injectEnvVars(document.getElementById('urlin').value.trim());
             var method = document.getElementById('msel').value;
-
             if (!url || !url.startsWith('http')) { toast('URL tidak valid', 'err'); return; }
-
             btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
-            btn.disabled = true;
-            btn.classList.add('running');
+            btn.disabled = true; btn.classList.add('running');
 
-            // Build headers from table
             var headerRows = getKvRows('headers-body').filter(function (r) { return r.enabled && r.key; });
             var fetchHeaders = {};
-            headerRows.forEach(function (h) { fetchHeaders[h.key] = h.value; });
+            headerRows.forEach(function (h) { fetchHeaders[h.key] = injectEnvVars(h.value); });
 
-            // Build URL with params
-            var paramRows = getKvRows('params-body').filter(function (r) { return r.enabled && r.key; });
-            if (paramRows.length) {
-                var qs = paramRows.map(function (p) { return encodeURIComponent(p.key) + '=' + encodeURIComponent(p.value); }).join('&');
-                url += (url.includes('?') ? '&' : '?') + qs;
-            }
-
-            // Body
             var bodyStr = null;
             var bodyType = (document.querySelector('.body-type-btn.on') || {}).textContent || 'JSON';
             if (bodyType.toLowerCase() !== 'none' && method !== 'GET' && method !== 'DELETE') {
-                bodyStr = document.getElementById('req-body').value;
+                bodyStr = injectEnvVars(document.getElementById('req-body').value);
             }
 
             var fetchOpts = { method: method, headers: fetchHeaders };
             if (bodyStr) fetchOpts.body = bodyStr;
-
             var t0 = Date.now();
 
             fetch(url, fetchOpts)
                 .then(function (res) {
-                    var ms = Date.now() - t0;
-                    var sc = res.status;
-                    var stxt = res.statusText || statusText(sc);
-
-                    // Collect response headers
+                    var ms = Date.now() - t0, sc = res.status, stxt = res.statusText || statusText(sc);
                     var respHeaders = [];
                     res.headers.forEach(function (v, k) { respHeaders.push({ key: k, value: v }); });
-
                     return res.text().then(function (body) {
                         showResponse(sc, stxt, ms, body, respHeaders);
-
-                        // Run assertions
                         var assResult = runAssertions(sc, ms, body, respHeaders);
-
-                        // Update landing badges
                         updateB1Badge(sc, stxt, ms);
                         updateB2Assertion(assResult.pass, assResult.total);
 
-                        // Increment counter
-                        var state = getDemoState();
-                        state.count++;
-                        saveDemoState(state);
-                        if (state.count >= DEMO_LIMIT) {
-                            updateB2Limit();
-                            setTimeout(function () { document.getElementById('demoLimitBanner').style.display = 'flex'; }, 500);
-                        }
+                        // Post-response: extract vars
+                        var parsedBody = null;
+                        try { parsedBody = JSON.parse(body); } catch (e) { }
+                        if (parsedBody) runPostResponse(parsedBody);
+
+                        var state = getDemoState(); state.count++; saveDemoState(state);
+                        if (state.count >= DEMO_LIMIT) { updateB2Limit(); setTimeout(function () { document.getElementById('demoLimitBanner').style.display = 'flex'; }, 500); }
 
                         btn.innerHTML = '<img src="public/assets/logo_black_white.png" alt="" class="send-logo-icon"> HIT';
-                        btn.disabled = false;
-                        btn.classList.remove('running');
+                        btn.disabled = false; btn.classList.remove('running');
                         toast(sc + ' ' + stxt + ' · ' + ms + 'ms', sc >= 200 && sc < 300 ? 'ok' : 'err');
                     });
                 })
@@ -1491,22 +1725,16 @@
                     showResponse(0, 'Network Error', ms, isCors
                         ? '// CORS blocked — API ini tidak izinkan akses dari browser langsung.\n// Untuk testing CORS-restricted API, gunakan HITSaurce backend proxy.'
                         : '// Error: ' + err.message, []);
-
                     var b1 = document.getElementById('heroBadge1');
                     if (b1) b1.innerHTML = makeDot('var(--red)') + 'Network Error · ' + ms + 'ms';
-
-                    var state = getDemoState();
-                    state.count++;
-                    saveDemoState(state);
-
+                    var state = getDemoState(); state.count++; saveDemoState(state);
                     btn.innerHTML = '<img src="public/assets/logo_black_white.png" alt="" class="send-logo-icon"> HIT';
-                    btn.disabled = false;
-                    btn.classList.remove('running');
+                    btn.disabled = false; btn.classList.remove('running');
                     toast('Network Error · ' + ms + 'ms', 'err');
                 });
         }
 
-        /* ── HERO DEMO SEND (landing page) ── */
+        /* ── HERO DEMO SEND ── */
         function demoSend() {
             var btn = document.getElementById('demoSendBtn');
             var urlEl = document.getElementById('demoUrl');
@@ -1515,26 +1743,16 @@
             var stat = document.getElementById('demoStatus');
             var meta = document.getElementById('demoMeta');
             var state = getDemoState();
-
-            if (state.count >= DEMO_LIMIT) {
-                var resetIn = Math.ceil((DEMO_RESET_HOURS * 3600 * 1000 - (Date.now() - state.resetAt)) / 3600000);
-                body.innerHTML = '<span style="color:var(--amber);font-size:11px">⚡ Limit demo harian tercapai.\nReset dalam ~' + resetIn + ' jam. Daftar gratis untuk unlimited.</span>';
-                head.style.display = 'none';
-                updateB2Limit();
-                return;
-            }
-
+            if (state.count >= DEMO_LIMIT) { body.innerHTML = '<span style="color:var(--amber);font-size:11px">⚡ Limit demo harian tercapai. Daftar gratis untuk unlimited.</span>'; head.style.display = 'none'; updateB2Limit(); return; }
             var url = urlEl.textContent.trim();
             if (!url || !url.startsWith('http')) { body.innerHTML = '<span style="color:var(--red);font-size:11px">⚠ URL tidak valid</span>'; return; }
-
             btn.textContent = '...'; btn.disabled = true;
             body.innerHTML = '<span style="color:var(--ink3);font-size:11px">Mengirim request...</span>';
             head.style.display = 'none';
             var t0 = Date.now();
-
             fetch(url, { method: 'GET' })
                 .then(function (res) {
-                    var ms = Date.now() - t0; var sc = res.status; var stxt = res.statusText || statusText(sc);
+                    var ms = Date.now() - t0, sc = res.status, stxt = res.statusText || statusText(sc);
                     var isOk = sc >= 200 && sc < 300;
                     stat.textContent = sc + ' ' + stxt;
                     stat.style.background = isOk ? 'var(--green-bg)' : sc >= 400 ? 'var(--red-bg)' : 'var(--amber-bg)';
@@ -1543,12 +1761,10 @@
                     head.style.display = 'flex';
                     var resRef = res;
                     return res.text().then(function (text) {
-                        var display = text; var sizeKb = (new Blob([text]).size / 1024).toFixed(1);
+                        var display = text, sizeKb = (new Blob([text]).size / 1024).toFixed(1);
                         try { display = JSON.stringify(JSON.parse(text), null, 2); } catch (e) { }
                         meta.textContent = ms + 'ms · ' + sizeKb + ' KB';
                         body.innerHTML = syntaxHL(display);
-
-                        // Assertions
                         var asserts = [
                             { label: 'Status code 2xx', pass: sc >= 200 && sc < 300 },
                             { label: 'Response time < 2000ms', pass: ms < 2000 },
@@ -1560,18 +1776,13 @@
                         var passCount = asserts.filter(function (a) { return a.pass; }).length;
                         var allPass = passCount === asserts.length;
                         var html = '<div style="font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:6px">Assertions</div>';
-                        asserts.forEach(function (a) { html += '<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px;border-bottom:1px solid var(--line)"><span style="width:6px;height:6px;border-radius:50%;background:' + (a.pass ? 'var(--green)' : 'var(--red)') + ';flex-shrink:0;display:inline-block"></span><span style="flex:1;color:var(--ink2)">' + a.label + '</span><span style="font-family:var(--mono);font-size:10px;font-weight:600;color:' + (a.pass ? 'var(--green)' : 'var(--red)') + '">' + (a.pass ? '✓ PASS' : '✗ FAIL') + '</span></div>'; });
+                        asserts.forEach(function (a) { html += '<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px;border-bottom:1px solid var(--line)"><span style="width:6px;height:6px;border-radius:50%;background:' + (a.pass ? 'var(--green)' : 'var(--red)') + ';flex-shrink:0;display:inline-block"></span><span style="flex:1;color:var(--ink2)">' + a.label + '</span><span style="font-family:var(--mono);font-size:10px;font-weight:600;color:' + (a.pass ? 'var(--green)' : 'var(--red)') + '>">' + (a.pass ? '✓ PASS' : '✗ FAIL') + '</span></div>'; });
                         html += '<div style="margin-top:6px;font-size:10px;color:var(--ink3);text-align:right">' + passCount + '/' + asserts.length + ' passed · <span style="color:var(' + (allPass ? '--green' : '--red') + ');font-weight:600">' + (allPass ? 'All OK' : 'Ada yang fail') + '</span></div>';
                         assertEl.innerHTML = html;
-
                         updateB1Badge(sc, stxt, ms);
                         updateB2Assertion(passCount, asserts.length);
-
                         state.count++; saveDemoState(state);
                         if (state.count >= DEMO_LIMIT) updateB2Limit();
-                        if (state.count === DEMO_LIMIT - 1) {
-                            setTimeout(function () { body.innerHTML += '<div style="margin-top:10px;padding:8px 10px;background:var(--green-bg);border:1px solid var(--green-mid);border-radius:6px;font-size:11px;color:var(--green)">💡 <strong>Suka HITSaurce?</strong> Daftar gratis untuk testing tanpa batas.</div>'; }, 300);
-                        }
                         btn.textContent = 'Send'; btn.disabled = false;
                     });
                 })
@@ -1597,11 +1808,12 @@
             panel.classList.add('on');
             panel.style.display = 'flex';
         }
+
         function swRespTab(el, id) {
             document.querySelectorAll('.resp-tabs .tab').forEach(function (t) { t.classList.remove('on'); });
             ['resp-body-panel', 'resp-headers-panel', 'resp-assert-panel'].forEach(function (p) {
-                var el2 = document.getElementById(p);
-                if (el2) el2.style.display = 'none';
+                var e = document.getElementById(p);
+                if (e) e.style.display = 'none';
             });
             el.classList.add('on');
             var target = document.getElementById(id);
@@ -1616,14 +1828,14 @@
             document.getElementById('reqMethodBadge').textContent = s.value;
         }
 
-        /* ── APP INIT (load default request) ── */
+        /* ── INIT ── */
         function initAppDemo() {
             if (checkAndShowLimitBanner()) return;
             if (localStorage.getItem('hs_banner_dismissed')) { var b = document.getElementById('onboardBanner'); if (b) b.style.display = 'none'; }
             loadDummyRequest('login', document.getElementById('req-login'));
         }
 
-        /* ── FLOW MODE (animasi) ── */
+        /* ── FLOW ── */
         function runFlow() {
             var cards = document.querySelectorAll('.f-card'); var i = 0;
             cards.forEach(function (c) { c.className = 'f-card'; var s = c.querySelector('.f-status'); if (s) { s.className = 'f-status fs-w'; s.textContent = 'Waiting'; } });
@@ -1644,7 +1856,7 @@
         function openModal(view) { view = view || 'login'; showView(view); document.getElementById('authModal').classList.add('open'); document.body.style.overflow = 'hidden'; setTimeout(function () { var f = document.querySelector('#view-' + view + ' input:not([type="hidden"])'); if (f) f.focus(); }, 280); }
         function closeModal() { document.getElementById('authModal').classList.remove('open'); document.body.style.overflow = ''; }
         function modalOutsideClick(e) { if (e.target === document.getElementById('authModal')) closeModal(); }
-        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeEnvManager(); } });
         function showView(v) { ['login', 'register', 'forgot'].forEach(function (name) { document.getElementById('view-' + name).style.display = name === v ? 'block' : 'none'; }); }
         function togglePw(id, btn) { var inp = document.getElementById(id); var icon = btn.querySelector('i'); if (inp.type === 'password') { inp.type = 'text'; icon.className = 'bi bi-eye-slash'; } else { inp.type = 'password'; icon.className = 'bi bi-eye'; } }
         function clearErr(id) { var inp = document.getElementById(id); var err = document.getElementById('err-' + id); if (inp) inp.classList.remove('err'); if (err) err.classList.remove('show'); }
@@ -1660,21 +1872,13 @@
         function selectExp(el, val) { document.querySelectorAll('.exp-btn').forEach(function (b) { b.classList.remove('selected'); }); el.classList.add('selected'); onbData.exp = val; }
         function selectPurpose(el, val) { document.querySelectorAll('.purpose-card').forEach(function (c) { c.classList.remove('selected'); }); el.classList.add('selected'); onbData.purpose = val; }
         function selectStart(el, val) { onbData.start = val; document.querySelectorAll('.start-card').forEach(function (c) { c.classList.remove('selected'); }); el.classList.add('selected'); document.getElementById('onb-finish').disabled = false; }
-        function onbNext(step) {
-            if (step === 1) { var name = document.getElementById('onb-displayname').value.trim(); if (!name) { var inp = document.getElementById('onb-displayname'); inp.style.borderColor = 'var(--red)'; inp.focus(); setTimeout(function () { inp.style.borderColor = ''; }, 1500); return; } }
-            if (step === 2) { var ws = document.getElementById('onb-wsname').value.trim(); if (!ws) { var inp2 = document.getElementById('onb-wsname'); inp2.style.borderColor = 'var(--red)'; inp2.focus(); setTimeout(function () { inp2.style.borderColor = ''; }, 1500); return; } onbData.wsName = ws; }
-            var next = step + 1; document.getElementById('onb-' + step).classList.remove('active'); document.getElementById('onb-' + next).classList.add('active'); document.getElementById('dot-' + step).classList.remove('active'); document.getElementById('dot-' + step).classList.add('done'); var line = document.getElementById('line-' + step); if (line) line.classList.add('done'); document.getElementById('dot-' + next).classList.add('active');
-        }
+        function onbNext(step) { if (step === 1) { var name = document.getElementById('onb-displayname').value.trim(); if (!name) { var inp = document.getElementById('onb-displayname'); inp.style.borderColor = 'var(--red)'; inp.focus(); setTimeout(function () { inp.style.borderColor = ''; }, 1500); return; } } if (step === 2) { var ws = document.getElementById('onb-wsname').value.trim(); if (!ws) { var inp2 = document.getElementById('onb-wsname'); inp2.style.borderColor = 'var(--red)'; inp2.focus(); setTimeout(function () { inp2.style.borderColor = ''; }, 1500); return; } onbData.wsName = ws; } var next = step + 1; document.getElementById('onb-' + step).classList.remove('active'); document.getElementById('onb-' + next).classList.add('active'); document.getElementById('dot-' + step).classList.remove('active'); document.getElementById('dot-' + step).classList.add('done'); var line = document.getElementById('line-' + step); if (line) line.classList.add('done'); document.getElementById('dot-' + next).classList.add('active'); }
         function onbBack(step) { var prev = step - 1; document.getElementById('onb-' + step).classList.remove('active'); document.getElementById('onb-' + prev).classList.add('active'); document.getElementById('dot-' + step).classList.remove('active'); document.getElementById('dot-' + prev).classList.remove('done'); document.getElementById('dot-' + prev).classList.add('active'); var line = document.getElementById('line-' + prev); if (line) line.classList.remove('done'); }
-        function finishOnboarding() {
-            var btn = document.getElementById('onb-finish'); btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyiapkan workspace...'; btn.disabled = true;
-            setTimeout(function () { var name = document.getElementById('onb-displayname').value.trim(); var wsName = document.getElementById('onb-wsname').value.trim() || 'My Workspace'; localStorage.setItem('hs_onboarded', '1'); localStorage.setItem('hs_user', JSON.stringify(onbData)); var av = document.getElementById('userAv'); var unam = document.getElementById('userName'); if (av) av.textContent = name.charAt(0).toUpperCase(); if (unam) unam.textContent = name; if (localStorage.getItem('hs_banner_dismissed')) { var b = document.getElementById('onboardBanner'); if (b) b.style.display = 'none'; } goApp(); toast('Workspace "' + wsName + '" siap! Selamat datang ' + name + ' 🎉', 'ok'); }, 1200);
-        }
+        function finishOnboarding() { var btn = document.getElementById('onb-finish'); btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyiapkan workspace...'; btn.disabled = true; setTimeout(function () { var name = document.getElementById('onb-displayname').value.trim(); var wsName = document.getElementById('onb-wsname').value.trim() || 'My Workspace'; localStorage.setItem('hs_onboarded', '1'); localStorage.setItem('hs_user', JSON.stringify(onbData)); var av = document.getElementById('userAv'); var unam = document.getElementById('userName'); if (av) av.textContent = name.charAt(0).toUpperCase(); if (unam) unam.textContent = name; if (localStorage.getItem('hs_banner_dismissed')) { var b = document.getElementById('onboardBanner'); if (b) b.style.display = 'none'; } goApp(); toast('Workspace "' + wsName + '" siap! Selamat datang ' + name + ' 🎉', 'ok'); }, 1200); }
 
-        /* ── INIT ── */
+        /* ── FINAL INIT ── */
         updMethod();
         if (localStorage.getItem('hs_banner_dismissed')) { var banner = document.getElementById('onboardBanner'); if (banner) banner.style.display = 'none'; }
-        try { var u = JSON.parse(localStorage.getItem('hs_user') || 'null'); } catch (e) { }
         var initState = getDemoState();
         if (initState.count >= DEMO_LIMIT) { var demoBtn = document.getElementById('demoSendBtn'); if (demoBtn) { demoBtn.disabled = true; demoBtn.textContent = 'Limit'; } updateB2Limit(); }
     </script>
