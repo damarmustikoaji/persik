@@ -1,3 +1,4 @@
+<!--./index.html-->
 <!DOCTYPE html>
 <html lang="id">
 
@@ -69,7 +70,10 @@
                 </div>
             </div>
             <div class="hero-right">
-                <div class="hero-badge b1"><span class="badge-dot-g"></span>200 OK · 142ms</div>
+                <!-- Badge b1: status code + latency real -->
+                <div class="hero-badge b1" id="heroBadge1">
+                    <span class="badge-dot-g"></span>Coba Send ↓
+                </div>
                 <div class="hero-card">
                     <div class="hc-topbar">
                         <div class="hc-dots"><i class="d-r"></i><i class="d-y"></i><i class="d-g"></i></div>
@@ -92,8 +96,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero-badge b2"><span class="badge-dot-a"></span><span id="demoBadge2">Coba Send di atas
-                        ↑</span></div>
+                <!-- Badge b2: hasil assertion real -->
+                <div class="hero-badge b2" id="heroBadge2">
+                    <span class="badge-dot-g"></span><span id="demoBadge2">HIT Saurce</span>
+                </div>
             </div>
         </div>
 
@@ -199,7 +205,6 @@
                 <p class="section-sub">Tier gratis dirancang agar bisa dipakai sungguhan, bukan sekedar trial 7 hari.
                 </p>
                 <div class="pricing-grid">
-
                     <div class="p-card">
                         <div class="p-plan">Gratis</div>
                         <div class="p-price">Rp0<small> / bulan</small></div>
@@ -216,7 +221,6 @@
                         </ul>
                         <button class="p-btn btn-outline" onclick="goApp()">Langsung Mulai</button>
                     </div>
-
                     <div class="p-card featured">
                         <div class="p-featured-tag">MOST POPULAR</div>
                         <div class="p-plan">Support</div>
@@ -232,9 +236,8 @@
                             <li>Report link</li>
                             <li>2 anggota tim</li>
                         </ul>
-                        <button class="p-btn btn-green" onclick="openModal('register')">Mulai & Support</button>
+                        <button class="p-btn btn-green" onclick="openModal('register')">Mulai &amp; Support</button>
                     </div>
-
                     <div class="p-card">
                         <div class="p-plan">Next Level</div>
                         <div class="p-price">Coming<small> soon</small></div>
@@ -252,7 +255,6 @@
                         <button class="p-btn btn-outline"
                             onclick="toast('Tim kami akan menghubungi kamu segera!','ok')">Hubungi Kami</button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -264,52 +266,40 @@
                 <h2 class="section-title"><strong>Pertanyaan</strong> yang sering ditanya.</h2>
                 <div class="faq">
                     <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">
-                            Apakah tier gratis benar-benar gratis selamanya?
-                            <i class="faq-ico">+</i>
-                        </div>
+                        <div class="faq-q" onclick="toggleFaq(this)">Apakah tier gratis benar-benar gratis selamanya?<i
+                                class="faq-ico">+</i></div>
                         <div class="faq-a">Ya. Tidak ada batas waktu, tidak perlu kartu kredit. Upgrade hanya jika
                             kapasitas kamu bertumbuh dan ingin mendukung pengembangan HITSaurce.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">
-                            Apakah perlu install sesuatu?
-                            <i class="faq-ico">+</i>
-                        </div>
+                        <div class="faq-q" onclick="toggleFaq(this)">Apakah perlu install sesuatu?<i
+                                class="faq-ico">+</i></div>
                         <div class="faq-a">Tidak sama sekali. HITSaurce berjalan sepenuhnya di browser — tidak perlu
                             ekstensi, tidak perlu desktop app, tidak perlu Node.js atau Python.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">
-                            Bagaimana cara kerja load test dengan K6?
-                            <i class="faq-ico">+</i>
-                        </div>
+                        <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara kerja load test dengan K6?<i
+                                class="faq-ico">+</i></div>
                         <div class="faq-a">Kamu mengatur jumlah virtual user dan durasi lewat UI. HITSaurce menjalankan
                             K6 di server kami dan streaming hasilnya secara real-time ke browser — tanpa install K6
                             lokal sama sekali.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">
-                            Bisa import collection dari Postman?
-                            <i class="faq-ico">+</i>
-                        </div>
+                        <div class="faq-q" onclick="toggleFaq(this)">Bisa import collection dari Postman?<i
+                                class="faq-ico">+</i></div>
                         <div class="faq-a">Ya, import collection Postman format JSON tersedia di semua tier termasuk
                             gratis. Kamu bisa langsung pakai collection yang sudah ada tanpa setup ulang.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">
-                            Apakah data request saya aman?
-                            <i class="faq-ico">+</i>
-                        </div>
+                        <div class="faq-q" onclick="toggleFaq(this)">Apakah data request saya aman?<i
+                                class="faq-ico">+</i></div>
                         <div class="faq-a">Semua komunikasi dienkripsi via HTTPS. Data kamu tidak pernah dijual atau
                             dibagikan ke pihak lain. Request yang kamu buat hanya bisa dilihat oleh kamu dan anggota
                             workspace-mu.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-q" onclick="toggleFaq(this)">
-                            Apakah bisa dipakai untuk QA yang belum tahu coding?
-                            <i class="faq-ico">+</i>
-                        </div>
+                        <div class="faq-q" onclick="toggleFaq(this)">Apakah bisa dipakai untuk QA yang belum tahu
+                            coding?<i class="faq-ico">+</i></div>
                         <div class="faq-a">Justru itu target utama kami. HITSaurce dirancang agar QA manual bisa
                             langsung testing API tanpa perlu belajar coding, cURL, atau Postman dulu. Semua visual dan
                             ada panduan inline di setiap langkah.</div>
@@ -341,8 +331,6 @@
     <!-- ════════ ONBOARDING ════════ -->
     <div class="page" id="onboarding">
         <div class="onb-wrap">
-
-            <!-- Progress -->
             <div class="onb-progress">
                 <div class="onb-dot active" id="dot-1"></div>
                 <div class="onb-line" id="line-1"></div>
@@ -350,8 +338,6 @@
                 <div class="onb-line" id="line-2"></div>
                 <div class="onb-dot" id="dot-3"></div>
             </div>
-
-            <!-- STEP 1: Profil -->
             <div class="onb-step active" id="onb-1">
                 <div class="onb-icon"><i class="bi bi-hand-wave" style="color:var(--green)"></i></div>
                 <h2 class="onb-title">Halo! Kenalin diri dulu yuk</h2>
@@ -395,12 +381,8 @@
                         </div>
                     </div>
                 </div>
-                <button class="onb-next" onclick="onbNext(1)">
-                    Lanjut <i class="bi bi-arrow-right"></i>
-                </button>
+                <button class="onb-next" onclick="onbNext(1)">Lanjut <i class="bi bi-arrow-right"></i></button>
             </div>
-
-            <!-- STEP 2: Workspace -->
             <div class="onb-step" id="onb-2">
                 <div class="onb-icon"><i class="bi bi-folder2-open" style="color:var(--green)"></i></div>
                 <h2 class="onb-title">Buat workspace pertamamu</h2>
@@ -414,18 +396,12 @@
                     <div class="field">
                         <label>Tujuan utama workspace ini</label>
                         <div class="purpose-grid">
-                            <div class="purpose-card" onclick="selectPurpose(this,'personal')">
-                                <i class="bi bi-person-fill"></i>
-                                <span>Personal / belajar</span>
-                            </div>
-                            <div class="purpose-card" onclick="selectPurpose(this,'project')">
-                                <i class="bi bi-kanban-fill"></i>
-                                <span>Project tertentu</span>
-                            </div>
-                            <div class="purpose-card" onclick="selectPurpose(this,'team')">
-                                <i class="bi bi-people-fill"></i>
-                                <span>Dipakai tim</span>
-                            </div>
+                            <div class="purpose-card" onclick="selectPurpose(this,'personal')"><i
+                                    class="bi bi-person-fill"></i><span>Personal / belajar</span></div>
+                            <div class="purpose-card" onclick="selectPurpose(this,'project')"><i
+                                    class="bi bi-kanban-fill"></i><span>Project tertentu</span></div>
+                            <div class="purpose-card" onclick="selectPurpose(this,'team')"><i
+                                    class="bi bi-people-fill"></i><span>Dipakai tim</span></div>
                         </div>
                     </div>
                     <div class="onb-tier-info">
@@ -442,8 +418,6 @@
                     <button class="onb-next" onclick="onbNext(2)">Lanjut <i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
-
-            <!-- STEP 3: Mulai dari mana -->
             <div class="onb-step" id="onb-3">
                 <div class="onb-icon"><i class="bi bi-rocket-takeoff-fill" style="color:var(--green)"></i></div>
                 <h2 class="onb-title">Siap! Mau mulai dari mana?</h2>
@@ -451,8 +425,8 @@
                 <div class="start-grid">
                     <div class="start-card" onclick="selectStart(this,'tour')">
                         <div class="start-card-top">
-                            <div class="start-icon sc-green"><i class="bi bi-map-fill"></i></div>
-                            <span class="start-badge">Rekomendasi</span>
+                            <div class="start-icon sc-green"><i class="bi bi-map-fill"></i></div><span
+                                class="start-badge">Rekomendasi</span>
                         </div>
                         <div class="start-title">Guided tour</div>
                         <div class="start-desc">Kami siapkan contoh API dan tunjukkan cara kerjanya step by step. Cocok
@@ -477,70 +451,57 @@
                 </div>
                 <div class="onb-nav">
                     <button class="onb-back" onclick="onbBack(3)"><i class="bi bi-arrow-left"></i> Kembali</button>
-                    <button class="onb-next" id="onb-finish" onclick="finishOnboarding()" disabled>
-                        Masuk ke HITSaurce <i class="bi bi-arrow-right"></i>
-                    </button>
+                    <button class="onb-next" id="onb-finish" onclick="finishOnboarding()" disabled>Masuk ke HITSaurce <i
+                            class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
-
         </div>
     </div><!-- /onboarding -->
 
 
     <!-- ════════ APP ════════ -->
     <div class="page" id="app">
-
         <div class="app-nav">
             <div class="app-logo" onclick="goLanding()">
                 <img class="logo-img logo-img-sm" src="public/assets/logo.png" alt="HITSaurce">
                 HIT<span>Saurce</span>
             </div>
             <div class="nav-divider"></div>
-            <button class="mode-btn on" id="mb-single" onclick="setMode('single')">
-                <i class="bi bi-rocket-takeoff"></i> Playground
-            </button>
-            <button class="mode-btn" id="mb-flow" onclick="setMode('flow')">
-                <i class="bi bi-puzzle"></i> Runner
-            </button>
-            <button class="mode-btn" id="mb-perf" onclick="setMode('perf')">
-                <i class="bi bi-speedometer"></i> Performance
-            </button>
+            <button class="mode-btn on" id="mb-single" onclick="setMode('single')"><i class="bi bi-rocket-takeoff"></i>
+                Playground</button>
+            <button class="mode-btn" id="mb-flow" onclick="setMode('flow')"><i class="bi bi-puzzle"></i> Runner</button>
+            <button class="mode-btn" id="mb-perf" onclick="setMode('perf')"><i class="bi bi-speedometer"></i>
+                Performance</button>
             <div class="spacer"></div>
             <select class="env-sel" id="envSel" onchange="onEnvChange()">
-                <option value="dev">🟡 Dev</option>
-                <option value="staging">🟠 Staging</option>
-                <option value="prod">🟢 Production</option>
+                <option value="dev">Dev</option>
+                <option value="prod">Production</option>
             </select>
             <div class="nav-divider"></div>
-            <div class="user-pill" id="userPill" onclick="toast('Profil & pengaturan segera hadir','ok')">
-                <div class="user-av" id="userAv">D</div>
+            <div class="user-pill" id="userPill" onclick="toast('Profil &amp; pengaturan segera hadir','ok')">
+                <div class="user-av" id="userAv"><i class="bi bi-person-circle"></i></div>
                 <span id="userName">Demo</span>
                 <span class="free-tag">FREE</span>
             </div>
         </div>
 
         <div class="app-body">
-
             <!-- SIDEBAR -->
             <div class="sidebar">
                 <div class="sb-head">
                     <span class="sb-title">Collections</span>
                     <div class="sb-actions">
                         <button class="sb-btn" title="Import Collection"
-                            onclick="toast('Import Postman collection segera hadir','ok')">
-                            <i class="bi bi-upload"></i>
-                        </button>
-                        <button class="sb-btn" title="Collection baru" onclick="toast('Collection baru dibuat','ok')">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
+                            onclick="toast('Import Postman collection segera hadir','ok')"><i
+                                class="bi bi-box-arrow-in-down"></i></button>
+                        <button class="sb-btn" title="Collection baru" onclick="toast('Collection baru dibuat','ok')"><i
+                                class="bi bi-plus-lg"></i></button>
                     </div>
                 </div>
                 <div class="sb-search">
                     <input placeholder="Cari request..." type="text" id="sbSearch" oninput="filterSidebar(this.value)">
                 </div>
                 <div class="sb-body" id="sbBody">
-
-                    <!-- Onboarding banner — hanya tampil untuk user baru -->
                     <div class="onboard-banner" id="onboardBanner">
                         <div class="onboard-inner">
                             <div class="onboard-title"><i class="bi bi-stars"></i> Tips untuk kamu</div>
@@ -561,64 +522,48 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="onboard-dismiss" onclick="dismissOnboardBanner()">
-                            Mengerti, tutup panduan ini
-                        </button>
+                        <button class="onboard-dismiss" onclick="dismissOnboardBanner()">Mengerti, tutup panduan
+                            ini</button>
                     </div>
 
-                    <div class="coll-head open" onclick="togColl(this)">
-                        <span class="coll-arr">&#9654;</span> Auth API
+                    <div class="coll-head open" onclick="togColl(this)"><span class="coll-arr">&#9654;</span> Auth API
                     </div>
                     <div class="coll-items">
                         <div class="sb-item"
-                            onclick="loadR('POST','https://api.myapp.id/v1/auth/login','Login User',this)">
-                            <span class="m-tag mp">POST</span>Login
-                        </div>
+                            onclick="loadR('POST','https://api.myapp.id/v1/auth/login','Login User',this)"><span
+                                class="m-tag mp">POST</span>Login</div>
                         <div class="sb-item on"
-                            onclick="loadR('POST','https://api.myapp.id/v1/auth/register','Register User',this)">
-                            <span class="m-tag mp">POST</span>Register
-                        </div>
+                            onclick="loadR('POST','https://api.myapp.id/v1/auth/register','Register User',this)"><span
+                                class="m-tag mp">POST</span>Register</div>
                         <div class="sb-item"
-                            onclick="loadR('GET','https://api.myapp.id/v1/auth/profile','Get Profile',this)">
-                            <span class="m-tag mg">GET</span>Profile
-                        </div>
+                            onclick="loadR('GET','https://api.myapp.id/v1/auth/profile','Get Profile',this)"><span
+                                class="m-tag mg">GET</span>Profile</div>
                     </div>
-
-                    <div class="coll-head open coll-group-mt" onclick="togColl(this)">
-                        <span class="coll-arr">&#9654;</span> Product API
-                    </div>
+                    <div class="coll-head open coll-group-mt" onclick="togColl(this)"><span
+                            class="coll-arr">&#9654;</span> Product API</div>
                     <div class="coll-items">
                         <div class="sb-item"
-                            onclick="loadR('GET','https://api.myapp.id/v1/products','List Products',this)">
-                            <span class="m-tag mg">GET</span>List Products
-                        </div>
+                            onclick="loadR('GET','https://api.myapp.id/v1/products','List Products',this)"><span
+                                class="m-tag mg">GET</span>List Products</div>
                         <div class="sb-item"
-                            onclick="loadR('POST','https://api.myapp.id/v1/products','Create Product',this)">
-                            <span class="m-tag mp">POST</span>Create
-                        </div>
+                            onclick="loadR('POST','https://api.myapp.id/v1/products','Create Product',this)"><span
+                                class="m-tag mp">POST</span>Create</div>
                         <div class="sb-item"
-                            onclick="loadR('PUT','https://api.myapp.id/v1/products/1','Update Product',this)">
-                            <span class="m-tag mu">PUT</span>Update
-                        </div>
+                            onclick="loadR('PUT','https://api.myapp.id/v1/products/1','Update Product',this)"><span
+                                class="m-tag mu">PUT</span>Update</div>
                         <div class="sb-item"
-                            onclick="loadR('DELETE','https://api.myapp.id/v1/products/1','Delete Product',this)">
-                            <span class="m-tag md">DELETE</span>Delete
-                        </div>
+                            onclick="loadR('DELETE','https://api.myapp.id/v1/products/1','Delete Product',this)"><span
+                                class="m-tag md">DELETE</span>Delete</div>
                     </div>
-
-                    <div class="coll-head coll-group-mt" onclick="togColl(this)">
-                        <span class="coll-arr">&#9654;</span> Order API
-                    </div>
+                    <div class="coll-head coll-group-mt" onclick="togColl(this)"><span class="coll-arr">&#9654;</span>
+                        Order API</div>
                     <div class="coll-items" style="display:none">
                         <div class="sb-item"
-                            onclick="loadR('POST','https://api.myapp.id/v1/orders','Create Order',this)">
-                            <span class="m-tag mp">POST</span>Create Order
-                        </div>
+                            onclick="loadR('POST','https://api.myapp.id/v1/orders','Create Order',this)"><span
+                                class="m-tag mp">POST</span>Create Order</div>
                         <div class="sb-item" onclick="loadR('GET','https://api.myapp.id/v1/orders','List Orders',this)">
-                            <span class="m-tag mg">GET</span>List Orders
-                        </div>
+                            <span class="m-tag mg">GET</span>List Orders</div>
                     </div>
-
                 </div>
             </div>
 
@@ -627,17 +572,14 @@
 
                 <!-- SINGLE MODE -->
                 <div id="m-single" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-
                     <div class="req-top">
                         <input class="req-name" id="rname" value="Register User" placeholder="Nama request...">
                         <div style="display:flex;gap:6px;align-items:center">
                             <span class="req-method-badge" id="reqMethodBadge">POST</span>
-                            <button class="save-btn" onclick="toast('Tersimpan ke collection','ok')">
-                                <i class="bi bi-check2"></i> Simpan
-                            </button>
+                            <button class="save-btn" onclick="toast('Tersimpan ke collection','ok')"><i
+                                    class="bi bi-check2"></i> Simpan</button>
                         </div>
                     </div>
-
                     <div class="url-row">
                         <select class="m-sel" id="msel" onchange="updMethod()">
                             <option>GET</option>
@@ -648,37 +590,24 @@
                         </select>
                         <input class="url-in" id="urlin" value="https://api.myapp.id/v1/auth/register"
                             placeholder="https://api.example.com/endpoint">
-                        <button class="send-b" onclick="doSend()" id="sendb">
-                            <i class="bi bi-send-fill"></i> Send
-                        </button>
+                        <button class="send-b" onclick="doSend()" id="sendb"><i class="bi bi-send-fill"></i>
+                            Send</button>
                     </div>
-
-                    <!-- Hint bar: inline tip untuk user baru -->
                     <div class="hint-bar" id="hintBar">
                         <i class="bi bi-lightbulb-fill" style="flex-shrink:0;font-size:12px"></i>
                         <span><strong>Tips:</strong> Params = query string di URL (?key=value). Headers = metadata
                             request. Body = data yang dikirim.</span>
                         <button class="hint-dismiss" onclick="document.getElementById('hintBar').style.display='none'"
-                            title="Tutup">
-                            <i class="bi bi-x"></i>
-                        </button>
+                            title="Tutup"><i class="bi bi-x"></i></button>
                     </div>
-
                     <div class="tabs-row">
-                        <div class="tab on" onclick="swTab(this,'tp')">
-                            <i class="bi bi-list-ul"></i> Params
-                        </div>
-                        <div class="tab" onclick="swTab(this,'th')">
-                            Headers <span class="tab-ct">3</span>
-                        </div>
+                        <div class="tab on" onclick="swTab(this,'tp')"><i class="bi bi-list-ul"></i> Params</div>
+                        <div class="tab" onclick="swTab(this,'th')">Headers <span class="tab-ct">3</span></div>
                         <div class="tab" onclick="swTab(this,'tb')">Body</div>
-                        <div class="tab" onclick="swTab(this,'ta')">
-                            Assertions <span class="tab-ct" id="act">2</span>
+                        <div class="tab" onclick="swTab(this,'ta')">Assertions <span class="tab-ct" id="act">2</span>
                         </div>
                     </div>
-
                     <div class="panels-area">
-
                         <div class="panel on" id="tp">
                             <table class="param-tbl">
                                 <thead>
@@ -706,11 +635,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <button class="add-row" onclick="addParam()">
-                                <i class="bi bi-plus"></i> Tambah baris
-                            </button>
+                            <button class="add-row" onclick="addParam()"><i class="bi bi-plus"></i> Tambah
+                                baris</button>
                         </div>
-
                         <div class="panel" id="th">
                             <table class="param-tbl">
                                 <thead>
@@ -744,7 +671,6 @@
                             </table>
                             <button class="add-row"><i class="bi bi-plus"></i> Tambah header</button>
                         </div>
-
                         <div class="panel" id="tb">
                             <div class="body-bar">
                                 <button class="bt-btn on">JSON</button>
@@ -758,58 +684,41 @@
                                 "name": "John Doe"
                                 }</div>
                         </div>
-
                         <div class="panel" id="ta">
-                            <!-- Quick-pick assertions -->
                             <div class="ass-quickpick">
                                 <div class="ass-qp-label">Tambah assertion cepat</div>
                                 <div class="ass-qp-row">
-                                    <button class="ass-qp-btn" onclick="addAssQuick('Status code = 200')">
-                                        <span class="qp-dot"></span> Status 200
-                                    </button>
-                                    <button class="ass-qp-btn" onclick="addAssQuick('Status code = 201')">
-                                        <span class="qp-dot"></span> Status 201
-                                    </button>
-                                    <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 500ms')">
-                                        <span class="qp-dot"></span> Time &lt; 500ms
-                                    </button>
-                                    <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 2000ms')">
-                                        <span class="qp-dot"></span> Time &lt; 2s
-                                    </button>
-                                    <button class="ass-qp-btn" onclick="addAssQuick('Body contains success: true')">
-                                        <span class="qp-dot"></span> success: true
-                                    </button>
-                                    <button class="ass-qp-btn" onclick="addAssQuick('Body contains data')">
-                                        <span class="qp-dot"></span> data exists
-                                    </button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Status code = 200')"><span
+                                            class="qp-dot"></span> Status 200</button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Status code = 201')"><span
+                                            class="qp-dot"></span> Status 201</button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 500ms')"><span
+                                            class="qp-dot"></span> Time &lt; 500ms</button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Response time &lt; 2000ms')"><span
+                                            class="qp-dot"></span> Time &lt; 2s</button>
+                                    <button class="ass-qp-btn"
+                                        onclick="addAssQuick('Body contains success: true')"><span
+                                            class="qp-dot"></span> success: true</button>
+                                    <button class="ass-qp-btn" onclick="addAssQuick('Body contains data')"><span
+                                            class="qp-dot"></span> data exists</button>
                                 </div>
                             </div>
                             <div class="ass-head-bar">
                                 <span style="font-size:11px;color:var(--ink3)">Validasi otomatis setiap Send</span>
-                                <button class="save-btn" onclick="addAss()">
-                                    <i class="bi bi-plus"></i> Tambah manual
-                                </button>
+                                <button class="save-btn" onclick="addAss()"><i class="bi bi-plus"></i> Tambah
+                                    manual</button>
                             </div>
                             <div id="ass-list">
-                                <div class="ass-row">
-                                    <span class="ass-dot dot-ok"></span>
-                                    <span class="ass-name">Status code = 201</span>
-                                    <span class="ass-val">201 ✓</span>
-                                </div>
-                                <div class="ass-row">
-                                    <span class="ass-dot dot-ok"></span>
-                                    <span class="ass-name">Response time kurang dari 2000ms</span>
-                                    <span class="ass-val">142ms ✓</span>
-                                </div>
+                                <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Status
+                                        code = 201</span><span class="ass-val">201 ✓</span></div>
+                                <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Response
+                                        time kurang dari 2000ms</span><span class="ass-val">142ms ✓</span></div>
                             </div>
                         </div>
-
-                    </div><!-- /panels-area -->
-
+                    </div>
                     <div class="split-div">
                         <div class="split-handle"></div>
                     </div>
-
                     <div class="resp-area">
                         <div class="resp-head">
                             <span class="resp-label">Response</span>
@@ -819,9 +728,8 @@
                             </div>
                             <span class="resp-meta" id="rtime">142ms</span>
                             <span class="resp-meta" id="rsize">1.2 KB</span>
-                            <button class="copy-btn" onclick="copyResponse()">
-                                <i class="bi bi-clipboard"></i> Copy
-                            </button>
+                            <button class="copy-btn" onclick="copyResponse()"><i class="bi bi-clipboard"></i>
+                                Copy</button>
                         </div>
                         <div class="resp-tabs">
                             <div class="tab on" onclick="swRTab(this,'rb')">Body</div>
@@ -844,19 +752,12 @@
                             x-ratelimit-remaining: 99
                             x-response-time: 142ms</div>
                         <div class="resp-body resp-assert-panel" id="ra" style="display:none">
-                            <div class="ass-row">
-                                <span class="ass-dot dot-ok"></span>
-                                <span class="ass-name">Status code = 201</span>
-                                <span class="ass-val">OK · 201</span>
-                            </div>
-                            <div class="ass-row">
-                                <span class="ass-dot dot-ok"></span>
-                                <span class="ass-name">Response time kurang dari 2000ms</span>
-                                <span class="ass-val">OK · 142ms</span>
-                            </div>
+                            <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Status code
+                                    = 201</span><span class="ass-val">OK · 201</span></div>
+                            <div class="ass-row"><span class="ass-dot dot-ok"></span><span class="ass-name">Response
+                                    time kurang dari 2000ms</span><span class="ass-val">OK · 142ms</span></div>
                         </div>
                     </div>
-
                 </div><!-- /m-single -->
 
                 <!-- FLOW MODE -->
@@ -869,74 +770,50 @@
                                         running</span></p>
                             </div>
                             <div class="flow-btns">
-                                <button class="btn btn-outline btn-sm" onclick="toast('Tambah langkah baru','ok')">
-                                    <i class="bi bi-plus"></i> Langkah
-                                </button>
-                                <button class="btn btn-solid btn-sm" onclick="runFlow()">
-                                    <i class="bi bi-play-fill"></i> Run Flow
-                                </button>
+                                <button class="btn btn-outline btn-sm" onclick="toast('Tambah langkah baru','ok')"><i
+                                        class="bi bi-plus"></i> Langkah</button>
+                                <button class="btn btn-solid btn-sm" onclick="runFlow()"><i class="bi bi-play-fill"></i>
+                                    Run Flow</button>
                             </div>
                         </div>
                         <div class="flow-canvas" id="fcanvas">
-
                             <div class="f-card pass">
                                 <div class="f-top">
-                                    <div class="f-num">1</div>
-                                    <span class="m-tag mp">POST</span>
-                                    <div class="f-name">Login User</div>
-                                    <span class="f-status fs-p">PASSED</span>
+                                    <div class="f-num">1</div><span class="m-tag mp">POST</span>
+                                    <div class="f-name">Login User</div><span class="f-status fs-p">PASSED</span>
                                 </div>
                                 <div class="f-url">/v1/auth/login · 201 · 89ms</div>
-                                <div class="f-vars">
-                                    <span class="v-chip">{{token}} dari data.token</span>
-                                    <span class="v-chip">{{user_id}} dari data.id</span>
-                                </div>
+                                <div class="f-vars"><span class="v-chip">{{token}} dari data.token</span><span
+                                        class="v-chip">{{user_id}} dari data.id</span></div>
                             </div>
-
                             <div class="f-connector"></div>
-
                             <div class="f-card pass">
                                 <div class="f-top">
-                                    <div class="f-num">2</div>
-                                    <span class="m-tag mg">GET</span>
-                                    <div class="f-name">Get Cart</div>
-                                    <span class="f-status fs-p">PASSED</span>
+                                    <div class="f-num">2</div><span class="m-tag mg">GET</span>
+                                    <div class="f-name">Get Cart</div><span class="f-status fs-p">PASSED</span>
                                 </div>
                                 <div class="f-url">/v1/cart/{{user_id}} · 200 · 65ms</div>
-                                <div class="f-vars">
-                                    <span class="v-chip">{{cart_id}} dari data.cart_id</span>
-                                </div>
+                                <div class="f-vars"><span class="v-chip">{{cart_id}} dari data.cart_id</span></div>
                             </div>
-
                             <div class="f-connector"></div>
-
                             <div class="f-card run">
                                 <div class="f-top">
-                                    <div class="f-num">3</div>
-                                    <span class="m-tag mp">POST</span>
-                                    <div class="f-name">Checkout</div>
-                                    <span class="f-status fs-r">Running</span>
+                                    <div class="f-num">3</div><span class="m-tag mp">POST</span>
+                                    <div class="f-name">Checkout</div><span class="f-status fs-r">Running</span>
                                 </div>
                                 <div class="f-url">/v1/orders/checkout · pakai {{cart_id}}, {{token}}</div>
                             </div>
-
                             <div class="f-connector"></div>
-
                             <div class="f-card">
                                 <div class="f-top">
-                                    <div class="f-num">4</div>
-                                    <span class="m-tag mg">GET</span>
-                                    <div class="f-name">Verify Order</div>
-                                    <span class="f-status fs-w">Waiting</span>
+                                    <div class="f-num">4</div><span class="m-tag mg">GET</span>
+                                    <div class="f-name">Verify Order</div><span class="f-status fs-w">Waiting</span>
                                 </div>
                                 <div class="f-url">/v1/orders/{{order_id}} · menunggu step 3</div>
                             </div>
-
                             <div class="f-connector f-connector-dim"></div>
-                            <button class="add-step" onclick="toast('Tambah langkah baru','ok')">
-                                <i class="bi bi-plus-circle"></i> Tambah Langkah
-                            </button>
-
+                            <button class="add-step" onclick="toast('Tambah langkah baru','ok')"><i
+                                    class="bi bi-plus-circle"></i> Tambah Langkah</button>
                         </div>
                     </div>
                 </div><!-- /m-flow -->
@@ -949,30 +826,22 @@
                                 <h2>Performance Test</h2>
                                 <p>Powered by K6 · Konfigurasi dan jalankan load test langsung dari browser</p>
                             </div>
-                            <button class="btn btn-green btn-sm" onclick="runPerf()">
-                                <i class="bi bi-play-fill"></i> Start Test
-                            </button>
+                            <button class="btn btn-green btn-sm" onclick="runPerf()"><i class="bi bi-play-fill"></i>
+                                Start Test</button>
                         </div>
-
                         <span class="section-micro-label">Preset</span>
                         <div class="presets">
-                            <button class="pr-btn" onclick="setPr(this,1,30)">
-                                <i class="bi bi-circle"></i> Smoke 1 VU
-                            </button>
-                            <button class="pr-btn on" onclick="setPr(this,10,60)">
-                                <i class="bi bi-lightning"></i> Light 10 VU
-                            </button>
-                            <button class="pr-btn" onclick="setPr(this,50,120)">
-                                <i class="bi bi-lightning-fill"></i> Medium 50 VU
-                            </button>
-                            <button class="pr-btn" onclick="setPr(this,200,300)">
-                                <i class="bi bi-fire"></i> Heavy 200 VU
-                            </button>
-                            <button class="pr-btn" onclick="setPr(this,0,0)">
-                                <i class="bi bi-sliders"></i> Custom
-                            </button>
+                            <button class="pr-btn" onclick="setPr(this,1,30)"><i class="bi bi-circle"></i> Smoke 1
+                                VU</button>
+                            <button class="pr-btn on" onclick="setPr(this,10,60)"><i class="bi bi-lightning"></i> Light
+                                10 VU</button>
+                            <button class="pr-btn" onclick="setPr(this,50,120)"><i class="bi bi-lightning-fill"></i>
+                                Medium 50 VU</button>
+                            <button class="pr-btn" onclick="setPr(this,200,300)"><i class="bi bi-fire"></i> Heavy 200
+                                VU</button>
+                            <button class="pr-btn" onclick="setPr(this,0,0)"><i class="bi bi-sliders"></i>
+                                Custom</button>
                         </div>
-
                         <div class="perf-grid">
                             <div class="pc">
                                 <div class="pc-label">Virtual Users</div>
@@ -994,7 +863,6 @@
                                 <div class="pc-sub pc-sub-mt">GET dengan auth header</div>
                             </div>
                         </div>
-
                         <span class="section-micro-label">Hasil Run Terakhir</span>
                         <div class="metric-row">
                             <div class="mc">
@@ -1018,7 +886,6 @@
                                 <div class="mc-sub">dalam 60 detik</div>
                             </div>
                         </div>
-
                         <div class="chart-card">
                             <div class="chart-title">Latency over time (ms)</div>
                             <svg class="chart-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
@@ -1039,7 +906,6 @@
                                 <text x="4" y="32" fill="#9a9a9a" font-size="9" font-family="monospace">p95</text>
                             </svg>
                         </div>
-
                     </div>
                 </div><!-- /m-perf -->
 
@@ -1051,17 +917,12 @@
     <!-- ════════ AUTH MODAL ════════ -->
     <div class="modal-overlay" id="authModal" onclick="modalOutsideClick(event)">
         <div class="modal-box" id="modalBox">
-
             <div class="modal-head">
-                <div class="modal-logo">
-                    <img class="logo-img" src="public/assets/logo.png" alt="HITSaurce" style="mix-blend-mode:multiply">
-                    HIT<span>Saurce</span>
-                </div>
+                <div class="modal-logo"><img class="logo-img" src="public/assets/logo.png" alt="HITSaurce"
+                        style="mix-blend-mode:multiply">HIT<span>Saurce</span></div>
                 <button class="modal-close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
             </div>
-
             <div class="modal-body">
-
                 <!-- LOGIN -->
                 <div id="view-login">
                     <div class="modal-title">Selamat datang 👋</div>
@@ -1080,32 +941,22 @@
                         Lanjutkan dengan Google
                     </button>
                     <div class="auth-divider">atau masuk dengan email</div>
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="email" id="login-email" placeholder="kamu@email.com"
-                            oninput="clearErr('login-email')">
+                    <div class="field"><label>Email</label><input type="email" id="login-email"
+                            placeholder="kamu@email.com" oninput="clearErr('login-email')">
                         <div class="field-err" id="err-login-email">Masukkan email yang valid.</div>
                     </div>
                     <div class="field">
-                        <label>
-                            Password
-                            <span class="forgot-link" onclick="showView('forgot')">Lupa password?</span>
-                        </label>
-                        <div class="pw-wrap">
-                            <input type="password" id="login-pass" placeholder="••••••••"
-                                oninput="clearErr('login-pass')">
-                            <button class="pw-toggle" type="button" onclick="togglePw('login-pass',this)" tabindex="-1">
-                                <i class="bi bi-eye"></i>
-                            </button>
+                        <label>Password <span class="forgot-link" onclick="showView('forgot')">Lupa
+                                password?</span></label>
+                        <div class="pw-wrap"><input type="password" id="login-pass" placeholder="••••••••"
+                                oninput="clearErr('login-pass')"><button class="pw-toggle" type="button"
+                                onclick="togglePw('login-pass',this)" tabindex="-1"><i class="bi bi-eye"></i></button>
                         </div>
                         <div class="field-err" id="err-login-pass">Password wajib diisi.</div>
                     </div>
                     <button class="btn-auth" id="btn-login" onclick="doLogin()">Masuk</button>
-                    <div class="auth-switch">
-                        Belum punya akun? <a onclick="showView('register')">Daftar gratis</a>
-                    </div>
+                    <div class="auth-switch">Belum punya akun? <a onclick="showView('register')">Daftar gratis</a></div>
                 </div>
-
                 <!-- REGISTER -->
                 <div id="view-register" style="display:none">
                     <div class="modal-title">Buat akun gratis ✨</div>
@@ -1124,45 +975,33 @@
                         Daftar dengan Google
                     </button>
                     <div class="auth-divider">atau daftar dengan email</div>
-                    <div class="field">
-                        <label>Nama lengkap</label>
-                        <input type="text" id="reg-name" placeholder="John Doe" oninput="clearErr('reg-name')">
+                    <div class="field"><label>Nama lengkap</label><input type="text" id="reg-name"
+                            placeholder="John Doe" oninput="clearErr('reg-name')">
                         <div class="field-err" id="err-reg-name">Nama wajib diisi.</div>
                     </div>
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="email" id="reg-email" placeholder="kamu@email.com" oninput="clearErr('reg-email')">
+                    <div class="field"><label>Email</label><input type="email" id="reg-email"
+                            placeholder="kamu@email.com" oninput="clearErr('reg-email')">
                         <div class="field-err" id="err-reg-email">Masukkan email yang valid.</div>
                     </div>
-                    <div class="field">
-                        <label>Password</label>
-                        <div class="pw-wrap">
-                            <input type="password" id="reg-pass" placeholder="Min. 8 karakter"
-                                oninput="clearErr('reg-pass')">
-                            <button class="pw-toggle" type="button" onclick="togglePw('reg-pass',this)" tabindex="-1">
-                                <i class="bi bi-eye"></i>
-                            </button>
+                    <div class="field"><label>Password</label>
+                        <div class="pw-wrap"><input type="password" id="reg-pass" placeholder="Min. 8 karakter"
+                                oninput="clearErr('reg-pass')"><button class="pw-toggle" type="button"
+                                onclick="togglePw('reg-pass',this)" tabindex="-1"><i class="bi bi-eye"></i></button>
                         </div>
                         <div class="field-err" id="err-reg-pass">Password minimal 8 karakter.</div>
                     </div>
                     <button class="btn-auth" id="btn-register" onclick="doRegister()">Buat akun gratis</button>
-                    <div class="auth-terms">
-                        Dengan mendaftar kamu setuju <a>Syarat &amp; Ketentuan</a> dan <a>Kebijakan Privasi</a> kami.
-                    </div>
-                    <div class="auth-switch">
-                        Sudah punya akun? <a onclick="showView('login')">Masuk</a>
-                    </div>
+                    <div class="auth-terms">Dengan mendaftar kamu setuju <a>Syarat &amp; Ketentuan</a> dan <a>Kebijakan
+                            Privasi</a> kami.</div>
+                    <div class="auth-switch">Sudah punya akun? <a onclick="showView('login')">Masuk</a></div>
                 </div>
-
                 <!-- FORGOT -->
                 <div id="view-forgot" style="display:none">
                     <div class="modal-title">Reset password 🔑</div>
                     <div class="modal-sub">Masukkan email kamu, kami kirimkan link reset.</div>
                     <div id="forgot-form">
-                        <div class="field">
-                            <label>Email</label>
-                            <input type="email" id="forgot-email" placeholder="kamu@email.com"
-                                oninput="clearErr('forgot-email')">
+                        <div class="field"><label>Email</label><input type="email" id="forgot-email"
+                                placeholder="kamu@email.com" oninput="clearErr('forgot-email')">
                             <div class="field-err" id="err-forgot-email">Masukkan email yang valid.</div>
                         </div>
                         <button class="btn-auth" id="btn-forgot" onclick="doForgot()">Kirim link reset</button>
@@ -1175,12 +1014,9 @@
                                 menit.</div>
                         </div>
                     </div>
-                    <div class="auth-switch" style="margin-top:12px">
-                        <a onclick="showView('login')"><i class="bi bi-arrow-left" style="font-size:10px"></i> Kembali
-                            ke login</a>
-                    </div>
+                    <div class="auth-switch" style="margin-top:12px"><a onclick="showView('login')"><i
+                                class="bi bi-arrow-left" style="font-size:10px"></i> Kembali ke login</a></div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -1195,6 +1031,7 @@
 
     <!-- ════════ JAVASCRIPT ════════ -->
     <script>
+        /* ── LOADER ── */
         (function () {
             var el = document.getElementById('loader');
             function hide() { el.style.opacity = '0'; el.style.pointerEvents = 'none'; }
@@ -1217,29 +1054,20 @@
 
         /* ── NAVIGATION ── */
         function goLanding() {
-            ['app', 'onboarding'].forEach(function (id) {
-                document.getElementById(id).classList.remove('active');
-            });
+            ['app', 'onboarding'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
             document.getElementById('landing').classList.add('active');
             window.scrollTo(0, 0);
         }
-
         function goApp() {
-            ['landing', 'onboarding'].forEach(function (id) {
-                document.getElementById(id).classList.remove('active');
-            });
+            ['landing', 'onboarding'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
             document.getElementById('app').classList.add('active');
             window.scrollTo(0, 0);
         }
-
         function goOnboarding() {
-            ['landing', 'app'].forEach(function (id) {
-                document.getElementById(id).classList.remove('active');
-            });
+            ['landing', 'app'].forEach(function (id) { document.getElementById(id).classList.remove('active'); });
             document.getElementById('onboarding').classList.add('active');
             window.scrollTo(0, 0);
         }
-
         function goScroll(id) {
             var el = document.getElementById(id);
             if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -1266,14 +1094,12 @@
             var next = el.nextElementSibling;
             if (next) next.style.display = next.style.display === 'none' ? '' : 'none';
         }
-
         function filterSidebar(q) {
             q = q.toLowerCase();
             document.querySelectorAll('.sb-item').forEach(function (item) {
                 item.style.display = item.textContent.toLowerCase().includes(q) ? '' : 'none';
             });
         }
-
         function loadR(method, url, name, el) {
             document.querySelectorAll('.sb-item').forEach(function (i) { i.classList.remove('on'); });
             el.classList.add('on');
@@ -1284,18 +1110,20 @@
             setMode('single');
             toast(name + ' dimuat', 'ok');
         }
-
         function dismissOnboardBanner() {
             var b = document.getElementById('onboardBanner');
-            b.style.opacity = '0';
-            b.style.transition = 'opacity .3s';
+            b.style.opacity = '0'; b.style.transition = 'opacity .3s';
             setTimeout(function () { b.style.display = 'none'; }, 300);
             localStorage.setItem('hs_banner_dismissed', '1');
         }
 
-        /* ── HERO DEMO SEND ── */
-        /* ── HERO DEMO SEND ── */
-        var DEMO_LIMIT = 10;
+        /* ════════════════════════════════════
+           HERO DEMO SEND — Rate-limited, real fetch
+           Limit: 10 request / 24 jam (localStorage)
+           Badge b1: dot hijau (2xx) / merah (selainnya) + status · ms
+           Badge b2: hasil assertion (dot hijau semua pass / merah ada fail)
+        ════════════════════════════════════ */
+        var DEMO_LIMIT = 100;
         var DEMO_RESET_HOURS = 24;
 
         function getDemoState() {
@@ -1303,7 +1131,6 @@
             if (raw) {
                 try {
                     var s = JSON.parse(raw);
-                    // Cek apakah sudah lebih dari 24 jam sejak reset
                     if (Date.now() - s.resetAt > DEMO_RESET_HOURS * 3600 * 1000) {
                         return { count: 0, resetAt: Date.now() };
                     }
@@ -1312,22 +1139,41 @@
             }
             return { count: 0, resetAt: Date.now() };
         }
-
         function saveDemoState(state) {
             localStorage.setItem('hs_demo_state', JSON.stringify(state));
         }
 
-        function updateDemoBadge(state) {
-            var b2 = document.getElementById('demoBadge2');
+        /* Fungsi helper: render dot warna dinamis */
+        function makeDot(color) {
+            return '<span style="width:6px;height:6px;border-radius:50%;background:' + color + ';flex-shrink:0;display:inline-block"></span>';
+        }
+
+        /* Update badge b1: status + latency real */
+        function updateB1Badge(sc, stxt, ms) {
+            var b1 = document.getElementById('heroBadge1');
+            if (!b1) return;
+            var isOk = sc >= 200 && sc < 300;
+            var dotColor = isOk ? 'var(--green)' : 'var(--red)';
+            b1.innerHTML = makeDot(dotColor) + sc + ' ' + stxt + ' · ' + ms + 'ms';
+        }
+
+        /* Update badge b2: hasil assertion */
+        function updateB2Assertion(passCount, total) {
+            var b2 = document.getElementById('heroBadge2');
             if (!b2) return;
-            var remaining = DEMO_LIMIT - state.count;
-            if (state.count === 0) {
-                b2.textContent = 'Coba Send ↑';
-            } else if (remaining > 0) {
-                b2.textContent = state.count + ' request · ' + remaining + ' sisa hari ini';
-            } else {
-                b2.textContent = 'Limit hari ini tercapai';
-            }
+            var allPass = passCount === total;
+            var dotColor = allPass ? 'var(--green)' : 'var(--red)';
+            var label = allPass
+                ? passCount + '/' + total + ' assertion passed ✓'
+                : passCount + '/' + total + ' assertion · ada yang fail ✗';
+            b2.innerHTML = makeDot(dotColor) + '<span id="demoBadge2">' + label + '</span>';
+        }
+
+        /* Update badge b2 saat limit tercapai */
+        function updateB2Limit() {
+            var b2 = document.getElementById('heroBadge2');
+            if (!b2) return;
+            b2.innerHTML = makeDot('var(--amber)') + '<span id="demoBadge2">Limit tercapai · Daftar untuk lanjut</span>';
         }
 
         function demoSend() {
@@ -1337,18 +1183,17 @@
             var head = document.getElementById('demoRespHead');
             var stat = document.getElementById('demoStatus');
             var meta = document.getElementById('demoMeta');
-            var b1 = document.querySelector('.hero-badge.b1');
 
-            // Cek limit
+            /* ── Cek limit ── */
             var demoState = getDemoState();
             if (demoState.count >= DEMO_LIMIT) {
                 var resetIn = Math.ceil((DEMO_RESET_HOURS * 3600 * 1000 - (Date.now() - demoState.resetAt)) / 3600000);
                 body.innerHTML = '<span style="color:var(--amber);font-size:11px">'
-                    + '⚡ Limit demo harian tercapai (' + DEMO_LIMIT + ' request).\n'
+                    + '⚡ Limit demo harian tercapai.\n'
                     + 'Reset dalam ~' + resetIn + ' jam. Daftar gratis untuk unlimited.'
                     + '</span>';
                 head.style.display = 'none';
-                if (b1) b1.innerHTML = '<span class="badge-dot-a"></span>Limit · daftar untuk lanjut';
+                updateB2Limit();
                 return;
             }
 
@@ -1358,7 +1203,7 @@
                 return;
             }
 
-            // Loading state
+            /* Loading state */
             btn.textContent = '...';
             btn.disabled = true;
             body.innerHTML = '<span style="color:var(--ink3);font-size:11px">Mengirim request...</span>';
@@ -1371,12 +1216,10 @@
                     var ms = Date.now() - t0;
                     var sc = res.status;
                     var stxt = res.statusText || statusText(sc);
-
-                    // Warna status berdasarkan range
                     var isOk = sc >= 200 && sc < 300;
-                    var isWarn = sc >= 300 && sc < 400;
                     var isErr = sc >= 400;
 
+                    /* Status badge di card demo */
                     stat.textContent = sc + ' ' + stxt;
                     stat.style.background = isOk ? 'var(--green-bg)' : isErr ? 'var(--red-bg)' : 'var(--amber-bg)';
                     stat.style.color = isOk ? 'var(--green)' : isErr ? 'var(--red)' : 'var(--amber)';
@@ -1388,15 +1231,20 @@
                     return res.text().then(function (text) {
                         var display = text;
                         var sizeKb = (new Blob([text]).size / 1024).toFixed(1);
-                        try {
-                            var parsed = JSON.parse(text);
-                            display = JSON.stringify(parsed, null, 2);
-                        } catch (e) { }
+                        try { display = JSON.stringify(JSON.parse(text), null, 2); } catch (e) { }
 
                         meta.textContent = ms + 'ms · ' + sizeKb + ' KB';
                         body.innerHTML = syntaxHL(display);
 
-                        // ── ASSERTION: validasi status code real ──
+                        /* ── Assertions ── */
+                        var assertions = [
+                            { label: 'Status code 2xx (sukses)', pass: sc >= 200 && sc < 300 },
+                            { label: 'Response time < 2000ms', pass: ms < 2000 },
+                            { label: 'Body tidak kosong', pass: text.trim().length > 0 },
+                            { label: 'Content-Type: JSON', pass: (resRef.headers.get('content-type') || '').includes('json') }
+                        ];
+
+                        /* Render assertion panel di bawah JSON */
                         var assertEl = document.getElementById('demoAssert');
                         if (!assertEl) {
                             assertEl = document.createElement('div');
@@ -1404,58 +1252,38 @@
                             assertEl.style.cssText = 'margin-top:10px;border-top:1px solid var(--line);padding-top:8px';
                             document.getElementById('demoBody').appendChild(assertEl);
                         }
-
-                        var assertions = [
-                            {
-                                label: 'Status code 2xx (sukses)',
-                                pass: sc >= 200 && sc < 300
-                            },
-                            {
-                                label: 'Response time < 2000ms',
-                                pass: ms < 2000
-                            },
-                            {
-                                label: 'Body tidak kosong',
-                                pass: text.trim().length > 0
-                            },
-                            {
-                                label: 'Content-Type: JSON',
-                                pass: (resRef.headers.get('content-type') || '').includes('json')
-                            }
-                        ];
-
+                        var passCount = assertions.filter(function (a) { return a.pass; }).length;
+                        var allPass = passCount === assertions.length;
                         var assertHTML = '<div style="font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:6px">Assertions</div>';
                         assertions.forEach(function (a) {
-                            var dotColor = a.pass ? 'var(--green)' : 'var(--red)';
-                            var valText = a.pass ? '✓ PASS' : '✗ FAIL';
-                            var valColor = a.pass ? 'var(--green)' : 'var(--red)';
+                            var dc = a.pass ? 'var(--green)' : 'var(--red)';
+                            var vt = a.pass ? '✓ PASS' : '✗ FAIL';
+                            var vc = a.pass ? 'var(--green)' : 'var(--red)';
                             assertHTML += '<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px;border-bottom:1px solid var(--line)">'
-                                + '<span style="width:6px;height:6px;border-radius:50%;background:' + dotColor + ';flex-shrink:0;display:inline-block"></span>'
+                                + '<span style="width:6px;height:6px;border-radius:50%;background:' + dc + ';flex-shrink:0;display:inline-block"></span>'
                                 + '<span style="flex:1;color:var(--ink2)">' + a.label + '</span>'
-                                + '<span style="font-family:var(--mono);font-size:10px;font-weight:600;color:' + valColor + '">' + valText + '</span>'
+                                + '<span style="font-family:var(--mono);font-size:10px;font-weight:600;color:' + vc + '">' + vt + '</span>'
                                 + '</div>';
                         });
-
-                        // Summary
-                        var allPass = assertions.every(function (a) { return a.pass; });
-                        var passCount = assertions.filter(function (a) { return a.pass; }).length;
                         assertHTML += '<div style="margin-top:6px;font-size:10px;color:var(--ink3);text-align:right">'
                             + passCount + '/' + assertions.length + ' passed'
-                            + (allPass ? ' · <span style="color:var(--green);font-weight:600">All OK</span>' : ' · <span style="color:var(--red);font-weight:600">Ada yang fail</span>')
+                            + (allPass
+                                ? ' · <span style="color:var(--green);font-weight:600">All OK</span>'
+                                : ' · <span style="color:var(--red);font-weight:600">Ada yang fail</span>')
                             + '</div>';
-
                         assertEl.innerHTML = assertHTML;
 
-                        // Update badge b1: status code + waktu real
-                        if (b1) b1.innerHTML = '<span class="badge-dot-g"></span>' + sc + ' ' + stxt + ' · ' + ms + 'ms';
+                        /* ── Update badge b1 & b2 ── */
+                        updateB1Badge(sc, stxt, ms);
+                        updateB2Assertion(passCount, assertions.length);
 
-                        // Tambah counter & update badge b2
+                        /* ── Counter (tersembunyi dari user, hanya tampil saat limit) ── */
                         demoState.count++;
                         saveDemoState(demoState);
-                        updateDemoBadge(demoState);
+                        if (demoState.count >= DEMO_LIMIT) { updateB2Limit(); }
 
-                        // Jika sudah dekat limit, tunjukkan CTA
-                        if (demoState.count >= DEMO_LIMIT - 1) {
+                        /* CTA saat hampir limit (request ke-9) */
+                        if (demoState.count === DEMO_LIMIT - 1) {
                             setTimeout(function () {
                                 body.innerHTML += '<div style="margin-top:10px;padding:8px 10px;background:var(--green-bg);border:1px solid var(--green-mid);border-radius:6px;font-size:11px;color:var(--green)">'
                                     + '💡 <strong>Suka HITSaurce?</strong> Daftar gratis untuk testing tanpa batas.'
@@ -1476,7 +1304,9 @@
                     stat.style.border = '1px solid var(--red-mid)';
                     meta.textContent = ms + 'ms';
 
-                    if (b1) b1.innerHTML = '<span class="badge-dot-a"></span>Error · ' + ms + 'ms';
+                    /* Badge b1 merah saat error */
+                    var b1 = document.getElementById('heroBadge1');
+                    if (b1) b1.innerHTML = makeDot('var(--red)') + 'Network Error · ' + ms + 'ms';
 
                     var isCors = err.message && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('cors'));
                     body.innerHTML = '<span style="color:var(--red);font-size:11px">'
@@ -1485,10 +1315,10 @@
                             : '⚠ ' + err.message)
                         + '</span>';
 
-                    // Tetap hitung attempt meski error
+                    /* Hitung attempt meski error */
                     demoState.count++;
                     saveDemoState(demoState);
-                    updateDemoBadge(demoState);
+                    if (demoState.count >= DEMO_LIMIT) { updateB2Limit(); }
 
                     btn.textContent = 'Send';
                     btn.disabled = false;
@@ -1496,69 +1326,44 @@
         }
 
         function statusText(code) {
-            var t = {
-                200: 'OK', 201: 'Created', 204: 'No Content', 400: 'Bad Request',
-                401: 'Unauthorized', 403: 'Forbidden', 404: 'Not Found',
-                422: 'Unprocessable', 429: 'Too Many Requests', 500: 'Server Error'
-            };
+            var t = { 200: 'OK', 201: 'Created', 204: 'No Content', 400: 'Bad Request', 401: 'Unauthorized', 403: 'Forbidden', 404: 'Not Found', 422: 'Unprocessable', 429: 'Too Many Requests', 500: 'Server Error' };
             return t[code] || '';
         }
 
         function syntaxHL(str) {
-            // Escape HTML dulu — PENTING: urutan ini tidak boleh dibalik
-            var esc = str
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
-
-            // Highlight line by line agar tidak saling tabrakan
+            var esc = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             return esc.replace(/^([ \t]*)(".*?")(\s*:\s*)(".*?"|true|false|null|-?\d+\.?\d*)/gm,
                 function (_, indent, key, colon, val) {
                     var vColored;
-                    if (/^"/.test(val)) {
-                        vColored = '<span style="color:var(--green)">' + val + '</span>';
-                    } else if (val === 'true' || val === 'false' || val === 'null') {
-                        vColored = '<span style="color:var(--amber)">' + val + '</span>';
-                    } else {
-                        vColored = '<span style="color:#8e44ad">' + val + '</span>';
-                    }
-                    return indent
-                        + '<span style="color:var(--blue)">' + key + '</span>'
-                        + colon
-                        + vColored;
+                    if (/^"/.test(val)) vColored = '<span style="color:var(--green)">' + val + '</span>';
+                    else if (val === 'true' || val === 'false' || val === 'null') vColored = '<span style="color:var(--amber)">' + val + '</span>';
+                    else vColored = '<span style="color:#8e44ad">' + val + '</span>';
+                    return indent + '<span style="color:var(--blue)">' + key + '</span>' + colon + vColored;
                 });
         }
 
         /* ── REQUEST BUILDER ── */
         function updMethod() {
             var s = document.getElementById('msel');
-            var colors = {
-                GET: 'var(--green)', POST: 'var(--blue)',
-                PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)'
-            };
+            var colors = { GET: 'var(--green)', POST: 'var(--blue)', PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)' };
             s.style.color = colors[s.value] || 'var(--ink)';
             var badge = document.getElementById('reqMethodBadge');
             if (badge) badge.textContent = s.value;
         }
-
         function swTab(el, id) {
             el.closest('.tabs-row').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
             document.querySelectorAll('.panels-area .panel').forEach(function (p) { p.classList.remove('on'); });
             el.classList.add('on');
             document.getElementById(id).classList.add('on');
         }
-
         function swRTab(el, id) {
             el.closest('.resp-tabs').querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
-            ['rb', 'rh', 'ra'].forEach(function (i) {
-                var e = document.getElementById(i);
-                if (e) e.style.display = 'none';
-            });
+            ['rb', 'rh', 'ra'].forEach(function (i) { var e = document.getElementById(i); if (e) e.style.display = 'none'; });
             el.classList.add('on');
             document.getElementById(id).style.display = 'block';
         }
 
-        /* ── SEND ── */
+        /* ── MOCK SEND (app playground) ── */
         var mockResp = {
             GET: { st: '200 OK', sc: 's-ok', t: '89ms', sz: '3.1 KB', b: '{\n  "success": true,\n  "data": [\n    { "id": 1, "name": "Product A" },\n    { "id": 2, "name": "Product B" }\n  ],\n  "total": 24\n}' },
             POST: { st: '201 Created', sc: 's-ok', t: '142ms', sz: '1.2 KB', b: '{\n  "success": true,\n  "message": "Created successfully",\n  "data": { "id": 42, "token": "eyJhbGci..." }\n}' },
@@ -1566,7 +1371,6 @@
             DELETE: { st: '204 No Content', sc: 's-ok', t: '67ms', sz: '0 KB', b: '// 204 No Content — tidak ada response body' },
             PATCH: { st: '200 OK', sc: 's-ok', t: '95ms', sz: '0.6 KB', b: '{ "success": true, "updated": true }' }
         };
-
         function doSend() {
             var btn = document.getElementById('sendb');
             var m = document.getElementById('msel').value;
@@ -1580,7 +1384,6 @@
                 var stat = document.getElementById('rstat');
                 stat.textContent = r.st;
                 stat.className = 's-badge ' + r.sc;
-                // Update tooltip
                 var code = r.st.split(' ')[0];
                 var tooltip = document.getElementById('statTooltip');
                 if (tooltip) tooltip.textContent = statusDesc[code] || r.st;
@@ -1593,19 +1396,14 @@
                 toast('Response: ' + r.st, 'ok');
             }, 400 + Math.random() * 600);
         }
-
         function copyResponse() {
             var rb = document.getElementById('rb');
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(rb.textContent).then(function () {
-                    toast('Response disalin ke clipboard', 'ok');
-                });
-            } else {
-                toast('Copy manual: Ctrl+A di panel response', 'ok');
-            }
+                navigator.clipboard.writeText(rb.textContent).then(function () { toast('Response disalin ke clipboard', 'ok'); });
+            } else { toast('Copy manual: Ctrl+A di panel response', 'ok'); }
         }
 
-        /* ── PARAMS ── */
+        /* ── PARAMS & ASSERTIONS ── */
         function addParam() {
             var tb = document.getElementById('param-body');
             var tr = document.createElement('tr');
@@ -1614,10 +1412,8 @@
                 + '<td><input placeholder="Value"></td>'
                 + '<td><span class="row-del" onclick="this.closest(\'tr\').remove()"><i class="bi bi-trash3"></i></span></td>';
             tb.appendChild(tr);
-            tr.querySelector('input:nth-child(1)') && tr.querySelectorAll('td input')[1].focus();
+            tr.querySelectorAll('td input')[1].focus();
         }
-
-        /* ── ASSERTIONS ── */
         function addAss() {
             var list = document.getElementById('ass-list');
             var d = document.createElement('div');
@@ -1629,7 +1425,6 @@
             updateAssCount();
             d.querySelector('input').focus();
         }
-
         function addAssQuick(text) {
             var list = document.getElementById('ass-list');
             var d = document.createElement('div');
@@ -1643,7 +1438,6 @@
             updateAssCount();
             toast('Assertion ditambahkan', 'ok');
         }
-
         function updateAssCount() {
             var list = document.getElementById('ass-list');
             var ct = document.getElementById('act');
@@ -1686,21 +1480,15 @@
         function setPr(btn, vu, dur) {
             document.querySelectorAll('.pr-btn').forEach(function (b) { b.classList.remove('on'); });
             btn.classList.add('on');
-            if (vu > 0) {
-                document.getElementById('pvu').textContent = vu;
-                document.getElementById('pdur').textContent = dur + 's';
-            }
+            if (vu > 0) { document.getElementById('pvu').textContent = vu; document.getElementById('pdur').textContent = dur + 's'; }
         }
-
         function runPerf() {
             toast('K6 test dimulai...', 'ok');
             setTimeout(function () { toast('✓ Test selesai — error rate 0.2%', 'ok'); }, 3000);
         }
 
         /* ── FAQ ── */
-        function toggleFaq(el) {
-            el.parentElement.classList.toggle('open');
-        }
+        function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
 
         /* ── TOAST ── */
         var tTimer;
@@ -1708,9 +1496,7 @@
             var el = document.getElementById('toastEl');
             var ico = document.getElementById('toast-ico');
             document.getElementById('toast-txt').textContent = msg;
-            ico.className = type === 'ok'
-                ? 'bi bi-check-circle-fill toast-ico-ok'
-                : 'bi bi-x-circle-fill toast-ico-err';
+            ico.className = type === 'ok' ? 'bi bi-check-circle-fill toast-ico-ok' : 'bi bi-x-circle-fill toast-ico-err';
             el.classList.add('show');
             clearTimeout(tTimer);
             tTimer = setTimeout(function () { el.classList.remove('show'); }, 2800);
@@ -1722,50 +1508,28 @@
             showView(view);
             document.getElementById('authModal').classList.add('open');
             document.body.style.overflow = 'hidden';
-            setTimeout(function () {
-                var first = document.querySelector('#view-' + view + ' input:not([type="hidden"])');
-                if (first) first.focus();
-            }, 280);
+            setTimeout(function () { var f = document.querySelector('#view-' + view + ' input:not([type="hidden"])'); if (f) f.focus(); }, 280);
         }
-
-        function closeModal() {
-            document.getElementById('authModal').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        function modalOutsideClick(e) {
-            if (e.target === document.getElementById('authModal')) closeModal();
-        }
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeModal();
-        });
-
+        function closeModal() { document.getElementById('authModal').classList.remove('open'); document.body.style.overflow = ''; }
+        function modalOutsideClick(e) { if (e.target === document.getElementById('authModal')) closeModal(); }
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
         function showView(v) {
             ['login', 'register', 'forgot'].forEach(function (name) {
                 document.getElementById('view-' + name).style.display = name === v ? 'block' : 'none';
             });
         }
-
         function togglePw(inputId, btn) {
             var inp = document.getElementById(inputId);
             var icon = btn.querySelector('i');
-            if (inp.type === 'password') {
-                inp.type = 'text';
-                icon.className = 'bi bi-eye-slash';
-            } else {
-                inp.type = 'password';
-                icon.className = 'bi bi-eye';
-            }
+            if (inp.type === 'password') { inp.type = 'text'; icon.className = 'bi bi-eye-slash'; }
+            else { inp.type = 'password'; icon.className = 'bi bi-eye'; }
         }
-
         function clearErr(inputId) {
             var inp = document.getElementById(inputId);
             var err = document.getElementById('err-' + inputId);
             if (inp) inp.classList.remove('err');
             if (err) err.classList.remove('show');
         }
-
         function showErr(inputId, msg) {
             var inp = document.getElementById(inputId);
             var err = document.getElementById('err-' + inputId);
@@ -1773,7 +1537,6 @@
             if (err) { if (msg) err.textContent = msg; err.classList.add('show'); }
             if (inp) inp.focus();
         }
-
         function doLogin() {
             var email = document.getElementById('login-email').value.trim();
             var pass = document.getElementById('login-pass').value;
@@ -1786,12 +1549,10 @@
             setTimeout(function () {
                 btn.classList.remove('loading'); btn.textContent = 'Masuk';
                 closeModal();
-                var isOnboarded = localStorage.getItem('hs_onboarded');
-                if (isOnboarded) { goApp(); toast('Selamat datang kembali! 👋', 'ok'); }
+                if (localStorage.getItem('hs_onboarded')) { goApp(); toast('Selamat datang kembali! 👋', 'ok'); }
                 else { goOnboarding(); }
             }, 1400);
         }
-
         function doRegister() {
             var name = document.getElementById('reg-name').value.trim();
             var email = document.getElementById('reg-email').value.trim();
@@ -1805,17 +1566,12 @@
             btn.classList.add('loading'); btn.textContent = 'Membuat akun...';
             setTimeout(function () {
                 btn.classList.remove('loading'); btn.textContent = 'Buat akun gratis';
-                closeModal();
-                goOnboarding();
+                closeModal(); goOnboarding();
             }, 1600);
         }
-
         function doForgot() {
             var email = document.getElementById('forgot-email').value.trim();
-            if (!email || !/\S+@\S+\.\S+/.test(email)) {
-                showErr('forgot-email', 'Masukkan email yang valid.');
-                return;
-            }
+            if (!email || !/\S+@\S+\.\S+/.test(email)) { showErr('forgot-email', 'Masukkan email yang valid.'); return; }
             var btn = document.getElementById('btn-forgot');
             btn.classList.add('loading'); btn.textContent = 'Mengirim...';
             setTimeout(function () {
@@ -1823,60 +1579,27 @@
                 document.getElementById('forgot-sent').style.display = 'block';
             }, 1400);
         }
-
-        function loginGoogle() {
-            closeModal();
-            toast('Google Sign-In akan aktif saat backend live 🔧', 'ok');
-        }
+        function loginGoogle() { closeModal(); toast('Google Sign-In akan aktif saat backend live 🔧', 'ok'); }
 
         /* ── ONBOARDING ── */
         var onbData = { role: null, exp: null, wsName: null, purpose: null, start: null };
-
-        function selectRole(el, val) {
-            document.querySelectorAll('.role-card').forEach(function (c) { c.classList.remove('selected'); });
-            el.classList.add('selected');
-            onbData.role = val;
-        }
-
-        function selectExp(el, val) {
-            document.querySelectorAll('.exp-btn').forEach(function (b) { b.classList.remove('selected'); });
-            el.classList.add('selected');
-            onbData.exp = val;
-        }
-
-        function selectPurpose(el, val) {
-            document.querySelectorAll('.purpose-card').forEach(function (c) { c.classList.remove('selected'); });
-            el.classList.add('selected');
-            onbData.purpose = val;
-        }
-
+        function selectRole(el, val) { document.querySelectorAll('.role-card').forEach(function (c) { c.classList.remove('selected'); }); el.classList.add('selected'); onbData.role = val; }
+        function selectExp(el, val) { document.querySelectorAll('.exp-btn').forEach(function (b) { b.classList.remove('selected'); }); el.classList.add('selected'); onbData.exp = val; }
+        function selectPurpose(el, val) { document.querySelectorAll('.purpose-card').forEach(function (c) { c.classList.remove('selected'); }); el.classList.add('selected'); onbData.purpose = val; }
         function selectStart(el, val) {
             onbData.start = val;
             document.querySelectorAll('.start-card').forEach(function (c) { c.classList.remove('selected'); });
             el.classList.add('selected');
             document.getElementById('onb-finish').disabled = false;
         }
-
         function onbNext(step) {
             if (step === 1) {
                 var name = document.getElementById('onb-displayname').value.trim();
-                if (!name) {
-                    var inp = document.getElementById('onb-displayname');
-                    inp.style.borderColor = 'var(--red)';
-                    inp.focus();
-                    setTimeout(function () { inp.style.borderColor = ''; }, 1500);
-                    return;
-                }
+                if (!name) { var inp = document.getElementById('onb-displayname'); inp.style.borderColor = 'var(--red)'; inp.focus(); setTimeout(function () { inp.style.borderColor = ''; }, 1500); return; }
             }
             if (step === 2) {
                 var ws = document.getElementById('onb-wsname').value.trim();
-                if (!ws) {
-                    var inp2 = document.getElementById('onb-wsname');
-                    inp2.style.borderColor = 'var(--red)';
-                    inp2.focus();
-                    setTimeout(function () { inp2.style.borderColor = ''; }, 1500);
-                    return;
-                }
+                if (!ws) { var inp2 = document.getElementById('onb-wsname'); inp2.style.borderColor = 'var(--red)'; inp2.focus(); setTimeout(function () { inp2.style.borderColor = ''; }, 1500); return; }
                 onbData.wsName = ws;
             }
             var next = step + 1;
@@ -1888,7 +1611,6 @@
             if (line) line.classList.add('done');
             document.getElementById('dot-' + next).classList.add('active');
         }
-
         function onbBack(step) {
             var prev = step - 1;
             document.getElementById('onb-' + step).classList.remove('active');
@@ -1899,7 +1621,6 @@
             var line = document.getElementById('line-' + prev);
             if (line) line.classList.remove('done');
         }
-
         function finishOnboarding() {
             var btn = document.getElementById('onb-finish');
             btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Menyiapkan workspace...';
@@ -1909,16 +1630,11 @@
                 var wsName = document.getElementById('onb-wsname').value.trim() || 'My Workspace';
                 localStorage.setItem('hs_onboarded', '1');
                 localStorage.setItem('hs_user', JSON.stringify(onbData));
-                // Update UI dengan nama user
                 var av = document.getElementById('userAv');
                 var unam = document.getElementById('userName');
                 if (av) av.textContent = name.charAt(0).toUpperCase();
                 if (unam) unam.textContent = name;
-                // Cek apakah banner sudah dismissed sebelumnya
-                if (localStorage.getItem('hs_banner_dismissed')) {
-                    var b = document.getElementById('onboardBanner');
-                    if (b) b.style.display = 'none';
-                }
+                if (localStorage.getItem('hs_banner_dismissed')) { var b = document.getElementById('onboardBanner'); if (b) b.style.display = 'none'; }
                 goApp();
                 toast('Workspace "' + wsName + '" siap! Selamat datang ' + name + ' 🎉', 'ok');
             }, 1200);
@@ -1927,25 +1643,21 @@
         /* ── INIT ── */
         updMethod();
 
-        // Sembunyikan onboarding banner jika sudah pernah dismiss
+        /* Sembunyikan onboarding banner jika sudah pernah dismiss */
         if (localStorage.getItem('hs_banner_dismissed')) {
             var banner = document.getElementById('onboardBanner');
             if (banner) banner.style.display = 'none';
         }
-        // Restore nama user dari localStorage
-        var savedUser = localStorage.getItem('hs_user');
-        if (savedUser) {
-            try {
-                var u = JSON.parse(savedUser);
-            } catch (e) { }
-        }
-        // Init demo badge
+
+        /* Restore nama user dari localStorage */
+        try { var u = JSON.parse(localStorage.getItem('hs_user') || 'null'); } catch (e) { }
+
+        /* Init demo: cek limit, disable tombol jika sudah limit */
         var initState = getDemoState();
-        updateDemoBadge(initState);
-        // Jika sudah di-limit, disable tombol Send langsung
         if (initState.count >= DEMO_LIMIT) {
             var demoBtn = document.getElementById('demoSendBtn');
             if (demoBtn) { demoBtn.disabled = true; demoBtn.textContent = 'Limit'; }
+            updateB2Limit();
         }
 
     </script>
