@@ -547,56 +547,44 @@
       </div><!-- /m-single -->
 
       <!-- ══ RUNNER MODE ══ -->
-      <div id="m-runner" style="display:none;flex:1;overflow:hidden;flex-direction:row;">
-        <div class="runner-wrap">
+      <div id="m-runner" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
 
-          <!-- LEFT: step list -->
-          <div class="runner-left">
-            <div class="runner-topbar">
-              <i class="bi bi-puzzle" style="color:var(--blue);font-size:14px;flex-shrink:0;"></i>
-              <input class="runner-name-input" id="runnerName" placeholder="Beri nama runner kamu..." value="E2E Auth Token">
-              <div class="runner-btns">
-                <button class="btn btn-outline btn-sm" onclick="clearRunnerSteps()" title="Reset semua step"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
-                <button class="btn btn-green btn-sm" id="runnerRunBtn" onclick="runAllSteps()"><i class="bi bi-play-fill"></i> Run All</button>
-              </div>
-            </div>
-
-            <div class="runner-summary" id="runnerSummary">
-              <span style="color:var(--ink4);font-size:11px">Tambah request dari panel kanan, lalu klik Run All</span>
-            </div>
-
-            <div class="runner-steps-list" id="runnerStepsList">
-              <!-- steps rendered by JS -->
-              <div class="runner-empty" id="runnerEmpty">
-                <div class="runner-empty-icon"><i class="bi bi-puzzle"></i></div>
-                <div class="runner-empty-title">Runner masih kosong</div>
-                <div class="runner-empty-desc">Tambahkan request dari panel collection di sebelah kanan untuk membangun skenario E2E.</div>
-                <div class="runner-empty-arrow"><i class="bi bi-arrow-right"></i></div>
-              </div>
-            </div>
-
-            <div class="runner-add-area">
-              <button class="runner-add-btn" onclick="toast('Klik request di kanan untuk menambahkan','ok')">
-                <i class="bi bi-plus-circle"></i> Atau klik request di panel kanan untuk menambah
+        <div class="runner-topbar">
+          <i class="bi bi-puzzle" style="color:var(--blue);font-size:14px;flex-shrink:0;"></i>
+          <input class="runner-name-input" id="runnerName" placeholder="Beri nama runner kamu..." value="E2E Checkout Flow">
+          <div class="runner-btns">
+            <div class="runner-add-dropdown-wrap" id="runnerAddWrap">
+              <button class="btn btn-outline btn-sm" id="runnerAddBtn" onclick="toggleAddDropdown()">
+                <i class="bi bi-plus-lg"></i> Add Step
               </button>
+              <div class="runner-add-dropdown" id="runnerAddDropdown">
+                <div class="rad-head">
+                  <div class="rad-title">Tambah dari Collection</div>
+                  <input class="rad-search" type="text" placeholder="Cari request..." id="radSearch" oninput="filterRadSearch(this.value)" autocomplete="off">
+                </div>
+                <div class="rad-body" id="radBody"></div>
+              </div>
             </div>
+            <button class="btn btn-outline btn-sm" onclick="clearRunnerSteps()" title="Reset semua step"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+            <button class="btn btn-green btn-sm" id="runnerRunBtn" onclick="runAllSteps()"><i class="bi bi-play-fill"></i> Run All</button>
           </div>
-
-          <!-- RIGHT: collection picker -->
-          <div class="runner-picker">
-            <div class="runner-picker-head">
-              <div class="runner-picker-title">Pilih dari Collection</div>
-              <div class="runner-picker-hint">Klik request untuk menambahkan ke Runner</div>
-            </div>
-            <div class="runner-picker-search">
-              <input placeholder="Cari request..." type="text" id="pickerSearch" oninput="filterPicker(this.value)">
-            </div>
-            <div class="runner-picker-body" id="runnerPickerBody">
-              <!-- rendered by JS -->
-            </div>
-          </div>
-
         </div>
+
+        <div class="runner-summary" id="runnerSummary">
+          <span style="color:var(--ink4);font-size:11px">Klik <strong style="color:var(--ink2)">+ Add Step</strong> untuk menambahkan request, lalu klik <strong style="color:var(--ink2)">Run All</strong></span>
+        </div>
+
+        <div class="runner-steps-list" id="runnerStepsList">
+          <div class="runner-empty" id="runnerEmpty">
+            <div class="runner-empty-icon"><i class="bi bi-puzzle"></i></div>
+            <div class="runner-empty-title">Runner masih kosong</div>
+            <div class="runner-empty-desc">Klik tombol <strong>+ Add Step</strong> di atas untuk mulai menambahkan request ke skenario E2E kamu.</div>
+            <div style="margin-top:16px">
+              <button class="btn btn-outline btn-sm" onclick="toggleAddDropdown()"><i class="bi bi-plus-lg"></i> Mulai tambah</button>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /m-runner -->
 
       <!-- ══ PERFORMANCE MODE ══ -->
@@ -1427,120 +1415,220 @@ function addStepToRunner(reqKey){
   if(runnerRunning){ toast('Hentikan run terlebih dahulu','err'); return; }
   var step=makeRunnerStep(reqKey); if(!step) return;
   runnerSteps.push(step);
-  renderRunner();
+  appendRunnerCard(runnerSteps.length-1);
+  renderRunnerSummary();
+  renderRadBody();
+  if(runnerSteps.length===1){ document.getElementById('runnerEmpty').style.display='none'; }
   toast(step.name+' ditambahkan ke Runner','ok');
+  closeAddDropdown();
 }
 
 function removeRunnerStep(idx){
   if(runnerRunning){ toast('Hentikan run terlebih dahulu','err'); return; }
   runnerSteps.splice(idx,1);
-  renderRunner();
+  // full re-render since indices shift
+  rebuildRunnerList();
+  renderRunnerSummary();
+  renderRadBody();
 }
 
 function clearRunnerSteps(){
   if(runnerRunning){ toast('Hentikan run terlebih dahulu','err'); return; }
-  runnerSteps=[]; renderRunner();
+  runnerSteps=[];
+  rebuildRunnerList();
+  renderRunnerSummary();
+  renderRadBody();
 }
 
 function toggleRunnerStep(idx){
+  if(runnerSteps[idx]===undefined) return;
   runnerSteps[idx].expanded=!runnerSteps[idx].expanded;
-  renderRunner();
+  var body=document.getElementById('rsb-'+idx);
+  var btn=document.getElementById('rse-'+idx);
+  if(body) body.classList.toggle('open', runnerSteps[idx].expanded);
+  if(btn) btn.classList.toggle('open', runnerSteps[idx].expanded);
 }
 
-// Render the runner left panel
-function renderRunner(){
-  var list=document.getElementById('runnerStepsList');
-  var empty=document.getElementById('runnerEmpty');
+/* ── ADD STEP DROPDOWN ── */
+var addDropdownOpen=false;
+function toggleAddDropdown(){
+  addDropdownOpen=!addDropdownOpen;
+  var dd=document.getElementById('runnerAddDropdown');
+  var btn=document.getElementById('runnerAddBtn');
+  if(!dd) return;
+  if(addDropdownOpen){
+    renderRadBody();
+    dd.classList.add('open');
+    btn.classList.add('active');
+    var inp=document.getElementById('radSearch');
+    if(inp){ inp.value=''; inp.focus(); }
+  } else {
+    closeAddDropdown();
+  }
+}
+function closeAddDropdown(){
+  addDropdownOpen=false;
+  var dd=document.getElementById('runnerAddDropdown');
+  var btn=document.getElementById('runnerAddBtn');
+  if(dd) dd.classList.remove('open');
+  if(btn) btn.classList.remove('active');
+}
+document.addEventListener('click',function(e){
+  var wrap=document.getElementById('runnerAddWrap');
+  if(wrap&&!wrap.contains(e.target)&&addDropdownOpen) closeAddDropdown();
+});
 
+function renderRadBody(){
+  var body=document.getElementById('radBody'); if(!body) return;
+  var html='';
+  collectionTree.forEach(function(coll){
+    html+='<div class="rad-coll-head">'+escHtml(coll.name)+'</div>';
+    coll.requests.forEach(function(reqKey){
+      var req=dummyRequests[reqKey]; if(!req) return;
+      var inRunner=runnerSteps.some(function(s){return s.reqKey===reqKey;});
+      var methodColor={GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'}[req.method]||'var(--ink)';
+      html+='<div class="rad-req-item'+(inRunner?' in-runner':'')+'" onclick="addStepToRunner(\''+reqKey+'\')" data-name="'+escHtml(req.name.toLowerCase())+'">';
+      html+='<span class="rad-method" style="color:'+methodColor+'">'+req.method+'</span>';
+      html+='<span class="rad-req-name">'+escHtml(req.name)+'</span>';
+      html+='<i class="bi bi-'+(inRunner?'check2-circle':'plus-circle')+' rad-icon" style="color:'+(inRunner?'var(--green)':'var(--ink4)')+'"></i>';
+      html+='</div>';
+    });
+  });
+  body.innerHTML=html;
+}
+
+function filterRadSearch(q){
+  q=q.toLowerCase().trim();
+  document.querySelectorAll('#radBody .rad-req-item').forEach(function(item){
+    item.style.display=(!q||item.dataset.name.includes(q))?'':'none';
+  });
+  // show/hide coll heads
+  document.querySelectorAll('#radBody .rad-coll-head').forEach(function(head){
+    var next=head.nextElementSibling;
+    var anyVisible=false;
+    while(next&&next.classList.contains('rad-req-item')){ if(next.style.display!=='none') anyVisible=true; next=next.nextElementSibling; }
+    head.style.display=anyVisible?'':'none';
+  });
+}
+
+/* ── RENDER HELPERS ── */
+function methodColor(m){ return {GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'}[m]||'var(--ink)'; }
+function methodBg(m){ return {GET:'var(--green-bg)',POST:'var(--blue-bg)',PUT:'var(--amber-bg)',PATCH:'var(--amber-bg)',DELETE:'var(--red-bg)'}[m]||'var(--paper2)'; }
+function methodBorder(m){ return {GET:'var(--green-mid)',POST:'var(--blue-mid)',PUT:'var(--amber-mid)',PATCH:'var(--amber-mid)',DELETE:'var(--red-mid)'}[m]||'var(--line)'; }
+
+function buildCardHTML(step, i){
+  var mc=methodColor(step.method), mb=methodBg(step.method), mbd=methodBorder(step.method);
+  var statusMap={idle:{cls:'rs-status-idle',txt:'Idle'},running:{cls:'rs-status-running rs-status-running-pulse',txt:'Running...'},pass:{cls:'rs-status-pass',txt:'✓ PASSED'},fail:{cls:'rs-status-fail',txt:'✗ FAILED'}};
+  var sm=statusMap[step.status]||statusMap.idle;
+  var cardCls='runner-step-card'+(step.status!=='idle'?' rs-'+step.status:'');
+  var meta=step.result?step.result.ms+'ms · '+step.result.sc:'';
+
+  var h='<div class="'+cardCls+'" id="rcard-'+i+'" draggable="true"';
+  h+=' ondragstart="rsDragStart(event,'+i+')" ondragover="rsDragOver(event,'+i+')" ondrop="rsDrop(event,'+i+')" ondragleave="rsDragLeave(event,'+i+')">';
+  // head
+  h+='<div class="runner-step-head" onclick="toggleRunnerStep('+i+')">';
+  h+='<span class="rs-drag-handle" onclick="event.stopPropagation()"><i class="bi bi-grip-vertical"></i></span>';
+  h+='<span class="rs-step-num">'+(i+1)+'</span>';
+  h+='<span class="rs-method-badge" style="background:'+mb+';color:'+mc+';border:1px solid '+mbd+'">'+step.method+'</span>';
+  h+='<span class="rs-name">'+escHtml(step.name)+'</span>';
+  if(meta) h+='<span class="rs-meta">'+escHtml(meta)+'</span>';
+  h+='<span class="'+sm.cls+' rs-status-badge">'+sm.txt+'</span>';
+  h+='<button class="rs-expand-btn'+(step.expanded?' open':'')+'" id="rse-'+i+'" onclick="event.stopPropagation();toggleRunnerStep('+i+')" title="Detail"><i class="bi bi-chevron-down"></i></button>';
+  h+='<button class="rs-delete-btn" onclick="event.stopPropagation();removeRunnerStep('+i+')" title="Hapus"><i class="bi bi-x"></i></button>';
+  h+='</div>'; // /head
+
+  // body
+  h+='<div class="runner-step-body'+(step.expanded?' open':'')+'" id="rsb-'+i+'">';
+  h+='<div style="padding:7px 12px;font-family:var(--mono);font-size:11px;color:var(--ink3);border-bottom:1px solid var(--line);background:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">';
+  h+='<span style="color:'+mc+';font-weight:600;margin-right:6px">'+step.method+'</span>'+escHtml(injectEnvVars(step.url))+'</div>';
+  // tabs
+  h+='<div class="rs-tabs">';
+  h+='<div class="rs-tab on" onclick="rsSwTab(this,'+i+',\'req\')">Request</div>';
+  h+='<div class="rs-tab" onclick="rsSwTab(this,'+i+',\'resp\')">Response';
+  if(step.result) h+=' <span style="font-size:9px;font-weight:700;color:'+(step.status==='pass'?'var(--green)':'var(--red)')+'">'+step.result.sc+'</span>';
+  h+='</div>';
+  h+='<div class="rs-tab" onclick="rsSwTab(this,'+i+',\'ass\')">Assertions';
+  if(step.result) h+=' <span style="font-size:9px;font-weight:700;color:'+(step.result.assPass===step.result.assTotal?'var(--green)':'var(--red)')+'">'+step.result.assPass+'/'+step.result.assTotal+'</span>';
+  h+='</div></div>';
+  // req panel
+  h+='<div class="rs-panel on" id="rs-panel-'+i+'-req">';
+  var hdrs=step.headers.filter(function(hx){return hx.enabled&&hx.key;});
+  h+='<div style="margin-bottom:5px"><strong style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px">Headers</strong></div>';
+  if(hdrs.length){ hdrs.forEach(function(hx){ h+='<div style="display:flex;gap:8px;margin-bottom:2px;font-size:11px"><span style="color:var(--blue);min-width:110px;flex-shrink:0">'+escHtml(hx.key)+'</span><span style="color:var(--ink2)">'+escHtml(injectEnvVars(hx.value))+'</span></div>'; }); }
+  else h+='<span style="color:var(--ink4)">Tidak ada header</span>';
+  if(step.body&&step.bodyType!=='none'){
+    h+='<div style="margin-top:7px;margin-bottom:3px"><strong style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px">Body</strong></div>';
+    h+='<pre style="background:var(--paper2);border:1px solid var(--line);border-radius:4px;padding:6px;font-size:10px;overflow-x:auto;max-height:70px;white-space:pre-wrap;word-break:break-all;">'+escHtml(injectEnvVars(step.body))+'</pre>';
+  }
+  if(step.postRes&&step.postRes.length){
+    h+='<div style="margin-top:7px;margin-bottom:3px"><strong style="font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:.5px">Extract vars</strong></div>';
+    step.postRes.forEach(function(r){ h+='<div style="font-size:10px;color:var(--amber)">{{'+escHtml(r.varName)+'}} ← '+escHtml(r.path)+(r.lastValue!==null&&r.lastValue!==undefined?' = <strong style="color:var(--green)">'+escHtml(String(r.lastValue).substring(0,30))+'</strong>':'')+'</div>'; });
+  }
+  h+='</div>';
+  // resp panel
+  h+='<div class="rs-panel" id="rs-panel-'+i+'-resp">';
+  h+=step.result?'<pre style="white-space:pre-wrap;word-break:break-all;font-size:11px;max-height:130px;overflow-y:auto;">'+syntaxHL(step.result.body||'')+'</pre>':'<span style="color:var(--ink4);font-size:11px">Belum ada response — klik Run All</span>';
+  h+='</div>';
+  // ass panel
+  h+='<div class="rs-panel" id="rs-panel-'+i+'-ass">';
+  if(!step.assertions.length) h+='<span style="color:var(--ink4);font-size:11px">Tidak ada assertion dikonfigurasi</span>';
+  else step.assertions.forEach(function(a){
+    var dc=a.result===null?'var(--ink4)':a.result?'var(--green)':'var(--red)';
+    var tc=a.result===null?'var(--ink3)':a.result?'var(--green)':'var(--red)';
+    var txt=a.result===null?'—':a.result?'✓ PASS':'✗ FAIL';
+    h+='<div class="rs-assert-row"><span style="width:6px;height:6px;border-radius:50%;background:'+dc+';flex-shrink:0;display:inline-block"></span><span style="flex:1;color:var(--ink2);font-size:11px">'+escHtml(a.label)+'</span><span style="font-family:var(--mono);font-size:10px;font-weight:700;color:'+tc+'">'+txt+'</span></div>';
+  });
+  h+='</div>';
+  h+='</div>';// /step-body
+  h+='</div>';// /card
+  return h;
+}
+
+// Append a single new card (used by addStep)
+function appendRunnerCard(i){
+  var list=document.getElementById('runnerStepsList'); if(!list) return;
+  // Add connector before if not first
+  if(i>0){
+    var conn=document.createElement('div');
+    conn.className='runner-connector'; conn.id='rconn-'+(i-1);
+    list.appendChild(conn);
+  }
+  var tmp=document.createElement('div');
+  tmp.innerHTML=buildCardHTML(runnerSteps[i],i);
+  list.appendChild(tmp.firstChild);
+}
+
+// Full rebuild of steps list (used after remove/clear)
+function rebuildRunnerList(){
+  var list=document.getElementById('runnerStepsList'); if(!list) return;
+  var empty=document.getElementById('runnerEmpty');
+  // Remove all cards and connectors but keep empty state node
+  var toRemove=[];
+  list.childNodes.forEach(function(n){ if(n!==empty) toRemove.push(n); });
+  toRemove.forEach(function(n){ list.removeChild(n); });
   if(runnerSteps.length===0){
-    list.innerHTML=''; list.appendChild(empty); empty.style.display='flex';
-    renderRunnerSummary(); renderRunnerPicker(); return;
+    empty.style.display='flex'; return;
   }
   empty.style.display='none';
-
-  // Build HTML
-  var html='';
   runnerSteps.forEach(function(step,i){
-    var methodColor={GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'}[step.method]||'var(--ink)';
-    var methodBg={GET:'var(--green-bg)',POST:'var(--blue-bg)',PUT:'var(--amber-bg)',PATCH:'var(--amber-bg)',DELETE:'var(--red-bg)'}[step.method]||'var(--paper2)';
-    var methodBorder={GET:'var(--green-mid)',POST:'var(--blue-mid)',PUT:'var(--amber-mid)',PATCH:'var(--amber-mid)',DELETE:'var(--red-mid)'}[step.method]||'var(--line)';
-
-    var statusMap={idle:{cls:'rs-status-idle',txt:'Idle'},running:{cls:'rs-status-running rs-status-running-pulse',txt:'Running...'},pass:{cls:'rs-status-pass',txt:'✓ PASSED'},fail:{cls:'rs-status-fail',txt:'✗ FAILED'}};
-    var sm=statusMap[step.status]||statusMap.idle;
-    var cardClass='runner-step-card'+(step.status!=='idle'?' rs-'+step.status:'');
-    var meta=step.result?step.result.ms+'ms · '+step.result.sc:'';
-    var expandClass=step.expanded?' open':'';
-
-    html+='<div class="'+cardClass+'" id="rcard-'+i+'" draggable="true" ondragstart="rsDragStart(event,'+i+')" ondragover="rsDragOver(event,'+i+')" ondrop="rsDrop(event,'+i+')" ondragleave="rsDragLeave(event,'+i+')">';
-    html+='<div class="runner-step-head" onclick="toggleRunnerStep('+i+')">';
-    html+='<span class="rs-drag-handle" title="Geser untuk reorder" onclick="event.stopPropagation()"><i class="bi bi-grip-vertical"></i></span>';
-    html+='<span class="rs-step-num">'+( i+1)+'</span>';
-    html+='<span class="rs-method-badge" style="background:'+methodBg+';color:'+methodColor+';border:1px solid '+methodBorder+'">'+step.method+'</span>';
-    html+='<span class="rs-name">'+escHtml(step.name)+'</span>';
-    if(meta) html+='<span class="rs-meta">'+escHtml(meta)+'</span>';
-    html+='<span class="'+sm.cls+' rs-status-badge">'+sm.txt+'</span>';
-    html+='<button class="rs-expand-btn'+expandClass+'" onclick="event.stopPropagation();toggleRunnerStep('+i+')" title="Lihat detail"><i class="bi bi-chevron-down"></i></button>';
-    html+='<button class="rs-delete-btn" onclick="event.stopPropagation();removeRunnerStep('+i+')" title="Hapus"><i class="bi bi-x"></i></button>';
-    html+='</div>';// /head
-
-    // Expanded body
-    html+='<div class="runner-step-body'+(step.expanded?' open':'')+'">';
-    // URL row info
-    html+='<div style="padding:8px 12px;font-family:var(--mono);font-size:11px;color:var(--ink3);border-bottom:1px solid var(--line);background:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><span style="color:'+methodColor+';font-weight:600;margin-right:6px">'+step.method+'</span>'+escHtml(injectEnvVars(step.url))+'</div>';
-    html+='<div class="rs-tabs">';
-    html+='<div class="rs-tab on" onclick="rsSwTab(this,'+i+',\'req\')">Request</div>';
-    html+='<div class="rs-tab" onclick="rsSwTab(this,'+i+',\'resp\')">Response'+(step.result?' <span style="font-size:9px;font-weight:700;color:'+(step.status==='pass'?'var(--green)':'var(--red)')+'">'+step.result.sc+'</span>':'')+'</div>';
-    html+='<div class="rs-tab" onclick="rsSwTab(this,'+i+',\'ass\')">Assertions'+(step.result?' <span style="font-size:9px;font-weight:700;color:'+(step.result.assPass===step.result.assTotal?'var(--green)':'var(--red)')+'">'+step.result.assPass+'/'+step.result.assTotal+'</span>':'')+'</div>';
-    html+='</div>';
-
-    // Req panel
-    html+='<div class="rs-panel on" id="rs-panel-'+i+'-req">';
-    html+='<div style="margin-bottom:6px"><strong style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px">Headers</strong></div>';
-    var headers=step.headers.filter(function(h){return h.enabled&&h.key;});
-    if(headers.length){ headers.forEach(function(h){ html+='<div style="display:flex;gap:8px;margin-bottom:3px;font-size:11px"><span style="color:var(--blue);min-width:120px">'+escHtml(h.key)+'</span><span style="color:var(--ink2)">'+escHtml(injectEnvVars(h.value))+'</span></div>'; }); }
-    else{ html+='<span style="color:var(--ink4)">Tidak ada header</span>'; }
-    if(step.body&&step.bodyType!=='none'){
-      html+='<div style="margin-top:8px;margin-bottom:4px"><strong style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px">Body</strong></div>';
-      html+='<pre style="background:var(--paper2);border:1px solid var(--line);border-radius:5px;padding:8px;font-size:10px;overflow-x:auto;max-height:80px;white-space:pre-wrap;word-break:break-all;">'+escHtml(injectEnvVars(step.body))+'</pre>';
+    if(i>0){
+      var conn=document.createElement('div');
+      conn.className='runner-connector'; conn.id='rconn-'+(i-1);
+      list.appendChild(conn);
     }
-    if(step.postRes&&step.postRes.length){
-      html+='<div style="margin-top:8px;margin-bottom:4px"><strong style="font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:.5px">Extract vars</strong></div>';
-      step.postRes.forEach(function(r){ html+='<div style="font-size:10px;color:var(--amber)">{{'+escHtml(r.varName)+'}} ← '+escHtml(r.path)+(r.lastValue!==null&&r.lastValue!==undefined?' = <strong style="color:var(--green)">'+escHtml(String(r.lastValue).substring(0,30))+'</strong>':'')+'</div>'; });
-    }
-    html+='</div>';
-
-    // Resp panel
-    html+='<div class="rs-panel" id="rs-panel-'+i+'-resp">';
-    if(step.result){
-      html+='<pre style="white-space:pre-wrap;word-break:break-all;font-size:11px;max-height:140px;overflow-y:auto;">'+syntaxHL(step.result.body||'')+'</pre>';
-    }else{
-      html+='<span style="color:var(--ink4);font-size:11px">Belum ada response — klik Run All</span>';
-    }
-    html+='</div>';
-
-    // Assertions panel
-    html+='<div class="rs-panel" id="rs-panel-'+i+'-ass">';
-    if(step.assertions.length===0){ html+='<span style="color:var(--ink4);font-size:11px">Tidak ada assertion dikonfigurasi</span>'; }
-    else{
-      step.assertions.forEach(function(a){
-        var dotC=a.result===null?'var(--ink4)':a.result?'var(--green)':'var(--red)';
-        var txt=a.result===null?'—':a.result?'✓ PASS':'✗ FAIL';
-        var txtC=a.result===null?'var(--ink3)':a.result?'var(--green)':'var(--red)';
-        html+='<div class="rs-assert-row"><span style="width:6px;height:6px;border-radius:50%;background:'+dotC+';flex-shrink:0;display:inline-block"></span><span style="flex:1;color:var(--ink2);font-size:11px">'+escHtml(a.label)+'</span><span style="font-family:var(--mono);font-size:10px;font-weight:700;color:'+txtC+'">'+txt+'</span></div>';
-      });
-    }
-    html+='</div>';
-
-    html+='</div>';// /step-body
-    html+='</div>';// /card
-
-    // Connector (not after last)
-    if(i<runnerSteps.length-1) html+='<div class="runner-connector"></div>';
+    var tmp=document.createElement('div');
+    tmp.innerHTML=buildCardHTML(step,i);
+    list.appendChild(tmp.firstChild);
   });
+}
 
-  list.innerHTML=html;
-  renderRunnerSummary();
-  renderRunnerPicker();
+// Update a single existing card in-place (used during run)
+function updateRunnerCard(i){
+  var old=document.getElementById('rcard-'+i); if(!old) return;
+  var tmp=document.createElement('div');
+  tmp.innerHTML=buildCardHTML(runnerSteps[i],i);
+  var newCard=tmp.firstChild;
+  old.parentNode.replaceChild(newCard,old);
 }
 
 function rsSwTab(el,stepIdx,panelKey){
@@ -1554,7 +1642,7 @@ function rsSwTab(el,stepIdx,panelKey){
 function renderRunnerSummary(){
   var bar=document.getElementById('runnerSummary'); if(!bar) return;
   var total=runnerSteps.length;
-  if(total===0){ bar.innerHTML='<span style="color:var(--ink4);font-size:11px">Tambah request dari panel kanan, lalu klik Run All</span>'; return; }
+  if(total===0){ bar.innerHTML='<span style="color:var(--ink4);font-size:11px">Klik <strong style="color:var(--ink2)">+ Add Step</strong> untuk menambahkan request, lalu klik <strong style="color:var(--ink2)">Run All</strong></span>'; return; }
   var pass=runnerSteps.filter(function(s){return s.status==='pass';}).length;
   var fail=runnerSteps.filter(function(s){return s.status==='fail';}).length;
   var running=runnerSteps.filter(function(s){return s.status==='running';}).length;
@@ -1570,44 +1658,26 @@ function renderRunnerSummary(){
 
 function formatElapsed(ms){ if(ms<1000) return ms+'ms'; return (ms/1000).toFixed(1)+'s'; }
 
-function renderRunnerPicker(){
-  var body=document.getElementById('runnerPickerBody'); if(!body) return;
-  var html='';
-  collectionTree.forEach(function(coll){
-    html+='<div class="rp-coll-head">'+escHtml(coll.name)+'</div>';
-    coll.requests.forEach(function(reqKey){
-      var req=dummyRequests[reqKey]; if(!req) return;
-      var inRunner=runnerSteps.some(function(s){return s.reqKey===reqKey;});
-      var methodColor={GET:'var(--green)',POST:'var(--blue)',PUT:'var(--amber)',PATCH:'var(--amber)',DELETE:'var(--red)'}[req.method]||'var(--ink)';
-      html+='<div class="rp-req-item'+(inRunner?' in-runner':'')+'" onclick="addStepToRunner(\''+reqKey+'\')" title="'+(inRunner?'Sudah ada di Runner':'Tambah ke Runner')+'">';
-      html+='<span style="font-family:var(--mono);font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;flex-shrink:0;background:transparent;color:'+methodColor+'">'+req.method+'</span>';
-      html+='<span class="rp-req-name">'+escHtml(req.name)+'</span>';
-      html+='<i class="bi bi-'+(inRunner?'check2':'plus-lg')+' rp-add-icon"></i>';
-      html+='</div>';
-    });
-  });
-  body.innerHTML=html;
-}
-
-function filterPicker(q){
-  q=q.toLowerCase();
-  document.querySelectorAll('#runnerPickerBody .rp-req-item').forEach(function(item){
-    item.style.display=item.textContent.toLowerCase().includes(q)?'':'none';
-  });
+// legacy alias — called by setMode
+function renderRunner(){
+  rebuildRunnerList();
+  renderRunnerSummary();
+  renderRadBody();
 }
 
 // --- DRAG AND DROP ---
-function rsDragStart(e,i){ dragSrcIdx=i; e.dataTransfer.effectAllowed='move'; document.getElementById('rcard-'+i).classList.add('rs-dragging'); }
+function rsDragStart(e,i){ dragSrcIdx=i; e.dataTransfer.effectAllowed='move'; var c=document.getElementById('rcard-'+i); if(c) c.classList.add('rs-dragging'); }
 function rsDragOver(e,i){ e.preventDefault(); e.dataTransfer.dropEffect='move'; if(i!==dragSrcIdx){ var el=document.getElementById('rcard-'+i); if(el) el.classList.add('rs-drag-over'); } }
 function rsDragLeave(e,i){ var el=document.getElementById('rcard-'+i); if(el) el.classList.remove('rs-drag-over'); }
 function rsDrop(e,i){
   e.preventDefault();
   var el=document.getElementById('rcard-'+i); if(el) el.classList.remove('rs-drag-over');
-  if(dragSrcIdx===null||dragSrcIdx===i) return;
+  if(dragSrcIdx===null||dragSrcIdx===i){ dragSrcIdx=null; return; }
   var moved=runnerSteps.splice(dragSrcIdx,1)[0];
   runnerSteps.splice(i,0,moved);
   dragSrcIdx=null;
-  renderRunner();
+  rebuildRunnerList();
+  renderRunnerSummary();
   toast('Urutan step diperbarui','ok');
 }
 
@@ -1615,15 +1685,13 @@ function rsDrop(e,i){
 function runAllSteps(){
   if(runnerRunning){ toast('Sudah running','err'); return; }
   if(runnerSteps.length===0){ toast('Tambah request dulu ke Runner','err'); return; }
-  runnerRunning=true;
-  runnerElapsed=0;
+  runnerRunning=true; runnerElapsed=0;
   var btn=document.getElementById('runnerRunBtn');
   if(btn){ btn.innerHTML='<i class="bi bi-stop-fill"></i> Stop'; btn.onclick=stopRunner; btn.className='btn btn-outline btn-sm'; }
-  // reset all
-  runnerSteps.forEach(function(s){ s.status='idle'; s.result=null; s.assertions.forEach(function(a){a.result=null;}); });
-  renderRunner();
-  // timer
-  runnerTimer=setInterval(function(){ runnerElapsed+=100; renderRunnerSummary(); },100);
+  runnerSteps.forEach(function(s){ s.status='idle'; s.result=null; s.assertions.forEach(function(a){a.result=null;}); s.expanded=false; });
+  rebuildRunnerList();
+  renderRunnerSummary();
+  runnerTimer=setInterval(function(){ runnerElapsed+=100; var el=document.getElementById('runnerElapsedEl'); if(el) el.textContent=formatElapsed(runnerElapsed); },100);
   runNextStep(0);
 }
 
@@ -1633,60 +1701,48 @@ function stopRunner(){
   var btn=document.getElementById('runnerRunBtn');
   if(btn){ btn.innerHTML='<i class="bi bi-play-fill"></i> Run All'; btn.onclick=runAllSteps; btn.className='btn btn-green btn-sm'; }
   toast('Runner dihentikan','err');
-  renderRunner();
 }
 
 function runNextStep(idx){
-  if(!runnerRunning||idx>=runnerSteps.length){
-    finishRunner(); return;
-  }
+  if(!runnerRunning||idx>=runnerSteps.length){ finishRunner(); return; }
   var step=runnerSteps[idx];
   step.status='running';
-  renderRunner();
-
-  // inject env vars into URL and headers
+  updateRunnerCard(idx);
+  renderRunnerSummary();
   var url=injectEnvVars(step.url);
   var fetchHeaders={};
   step.headers.filter(function(h){return h.enabled&&h.key;}).forEach(function(h){ fetchHeaders[h.key]=injectEnvVars(h.value); });
   var bodyStr=null;
-  if(step.body&&step.bodyType!=='none'&&step.method!=='GET'&&step.method!=='DELETE'){
-    bodyStr=injectEnvVars(step.body);
-  }
+  if(step.body&&step.bodyType!=='none'&&step.method!=='GET'&&step.method!=='DELETE') bodyStr=injectEnvVars(step.body);
   var fetchOpts={method:step.method,headers:fetchHeaders};
   if(bodyStr) fetchOpts.body=bodyStr;
   var t0=Date.now();
-
   fetch(url,fetchOpts)
     .then(function(res){
-      var ms=Date.now()-t0, sc=res.status, stxt=res.statusText||statusText(sc);
-      var respHeaders=[];
-      res.headers.forEach(function(v,k){respHeaders.push({key:k,value:v});});
+      var ms=Date.now()-t0,sc=res.status,stxt=res.statusText||statusText(sc);
+      var rh=[]; res.headers.forEach(function(v,k){rh.push({key:k,value:v});});
       return res.text().then(function(body){
-        var parsed=null; try{ parsed=JSON.parse(body); }catch(e){}
-        // run assertions
+        var parsed=null; try{parsed=JSON.parse(body);}catch(e){}
         var pass=0;
         step.assertions.forEach(function(a){
           switch(a.type){
             case 'status': a.result=String(sc)===String(a.expected); break;
             case 'time': a.result=ms<parseInt(a.expected,10); break;
             case 'body-exists': a.result=parsed!==null&&a.expected in parsed; break;
-            case 'header': var hk=a.expected.toLowerCase(); a.result=respHeaders.some(function(h){return h.key.toLowerCase().includes(hk);}); break;
+            case 'header': var hk=a.expected.toLowerCase(); a.result=rh.some(function(h){return h.key.toLowerCase().includes(hk);}); break;
             default: a.result=null;
           }
           if(a.result) pass++;
         });
-        // post-response extraction
-        if(parsed&&step.postRes){
-          step.postRes.forEach(function(ex){
-            if(!ex.varName||!ex.path) return;
-            var val=resolveJsonPath(parsed,ex.path);
-            if(val!==undefined){ ex.lastValue=val; setEnvVar(ex.varName,String(val)); }
-          });
-        }
-        var allAssPass=step.assertions.length===0||pass===step.assertions.length;
-        step.status=allAssPass?'pass':'fail';
-        step.result={sc:sc,stxt:stxt,ms:ms,body:body,headers:respHeaders,assPass:pass,assTotal:step.assertions.length};
-        renderRunner();
+        if(parsed&&step.postRes) step.postRes.forEach(function(ex){
+          if(!ex.varName||!ex.path) return;
+          var val=resolveJsonPath(parsed,ex.path);
+          if(val!==undefined){ ex.lastValue=val; setEnvVar(ex.varName,String(val)); }
+        });
+        step.status=(step.assertions.length===0||pass===step.assertions.length)?'pass':'fail';
+        step.result={sc:sc,stxt:stxt,ms:ms,body:body,headers:rh,assPass:pass,assTotal:step.assertions.length};
+        updateRunnerCard(idx);
+        renderRunnerSummary();
         var state=getDemoState(); state.count++; saveDemoState(state);
         setTimeout(function(){ runNextStep(idx+1); },200);
       });
@@ -1695,7 +1751,8 @@ function runNextStep(idx){
       var ms=Date.now()-t0;
       step.status='fail';
       step.result={sc:0,stxt:'Network Error',ms:ms,body:'// '+err.message,headers:[],assPass:0,assTotal:step.assertions.length};
-      renderRunner();
+      updateRunnerCard(idx);
+      renderRunnerSummary();
       setTimeout(function(){ runNextStep(idx+1); },200);
     });
 }
@@ -1709,7 +1766,7 @@ function finishRunner(){
   var fail=runnerSteps.filter(function(s){return s.status==='fail';}).length;
   var total=runnerSteps.length;
   renderRunnerSummary();
-  if(fail===0){ toast('✓ Runner selesai — '+pass+'/'+total+' step passed 🎉','ok'); }
+  if(fail===0){ toast('✓ Runner selesai — '+pass+'/'+total+' passed 🎉','ok'); }
   else{ toast('Runner selesai — '+pass+'/'+total+' pass, '+fail+' fail','err'); }
 }
 
