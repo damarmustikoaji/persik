@@ -701,14 +701,14 @@
 }
 
 /* ══════════════════════════════════
-   ENVIRONMENT MANAGER PANEL
+   ENVIRONMENT MANAGER PANEL — compact
 ══════════════════════════════════ */
 .env-manager-overlay {
     position: fixed;
     inset: 0;
     z-index: 150;
-    background: rgba(15, 15, 15, .35);
-    backdrop-filter: blur(4px);
+    background: rgba(15, 15, 15, .28);
+    backdrop-filter: blur(3px);
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
@@ -723,7 +723,7 @@
 }
 
 .env-manager-panel {
-    width: 420px;
+    width: 360px;
     max-width: 95vw;
     height: 100vh;
     background: #fff;
@@ -731,8 +731,8 @@
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
-    transition: transform .25s cubic-bezier(.34, 1.2, .64, 1);
-    box-shadow: -8px 0 32px rgba(0, 0, 0, .08);
+    transition: transform .22s cubic-bezier(.34, 1.1, .64, 1);
+    box-shadow: -6px 0 20px rgba(0, 0, 0, .07);
 }
 
 .env-manager-overlay.open .env-manager-panel {
@@ -740,7 +740,7 @@
 }
 
 .env-manager-head {
-    padding: 16px 20px;
+    padding: 10px 14px;
     border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
@@ -750,15 +750,17 @@
 }
 
 .env-manager-title {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: -.3px;
     color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .env-manager-close {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     border: 1px solid var(--line);
     background: transparent;
@@ -767,7 +769,7 @@
     align-items: center;
     justify-content: center;
     color: var(--ink3);
-    font-size: 14px;
+    font-size: 12px;
     transition: all .15s;
 }
 
@@ -776,13 +778,14 @@
     color: var(--ink);
 }
 
-/* Env tabs */
+/* Env tabs — pill style */
 .env-tabs {
     display: flex;
-    padding: 0 16px;
+    align-items: center;
+    padding: 6px 10px;
+    gap: 4px;
     border-bottom: 1px solid var(--line);
-    background: #fff;
-    gap: 0;
+    background: var(--paper2);
     flex-shrink: 0;
     overflow-x: auto;
     scrollbar-width: none;
@@ -793,41 +796,46 @@
 }
 
 .env-tab {
-    font-size: 12px;
+    font-family: var(--font);
+    font-size: 11px;
     font-weight: 500;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid transparent;
     color: var(--ink3);
-    transition: all .12s;
+    cursor: pointer;
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     user-select: none;
+    background: transparent;
+    transition: all .12s;
 }
 
 .env-tab:hover {
     color: var(--ink2);
+    background: var(--line);
 }
 
 .env-tab.active {
     color: var(--ink);
-    border-bottom-color: var(--green);
+    background: #fff;
+    border-color: var(--line);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
 }
 
 .env-tab-dot {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--green);
     flex-shrink: 0;
 }
 
 .env-add-tab {
-    font-size: 16px;
-    padding: 6px 10px;
+    font-size: 13px;
+    padding: 3px 7px;
     color: var(--ink3);
     cursor: pointer;
     background: none;
@@ -836,6 +844,7 @@
     align-items: center;
     margin-left: auto;
     transition: color .12s;
+    flex-shrink: 0;
 }
 
 .env-add-tab:hover {
@@ -850,12 +859,12 @@
     flex-direction: column;
 }
 
-/* Env header bar */
+/* Env name bar */
 .env-header-bar {
-    padding: 10px 16px;
+    padding: 7px 12px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;
     border-bottom: 1px solid var(--line);
     background: var(--paper2);
     flex-shrink: 0;
@@ -863,7 +872,7 @@
 
 .env-name-input {
     font-family: var(--font);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--ink);
     background: transparent;
@@ -873,19 +882,15 @@
     min-width: 0;
 }
 
-.env-name-input:focus {
-    border-bottom: 1px solid var(--green);
-}
-
 .env-active-badge {
     font-size: 9px;
     font-weight: 700;
-    letter-spacing: .4px;
+    letter-spacing: .3px;
     text-transform: uppercase;
     background: var(--green-bg);
     color: var(--green);
     border: 1px solid var(--green-mid);
-    padding: 2px 7px;
+    padding: 1px 6px;
     border-radius: 100px;
     flex-shrink: 0;
 }
@@ -894,61 +899,63 @@
 .env-vars-table {
     width: 100%;
     border-collapse: collapse;
-    flex: 1;
 }
 
 .env-vars-table thead th {
-    font-size: 10px;
-    font-weight: 600;
+    font-size: 9px;
+    font-weight: 700;
     letter-spacing: .6px;
     text-transform: uppercase;
     color: var(--ink3);
-    padding: 7px 12px;
+    padding: 5px 8px;
     text-align: left;
     border-bottom: 1px solid var(--line);
     background: #fff;
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 
 .env-vars-table td {
-    padding: 2px 6px;
+    padding: 0 4px;
     border-bottom: 1px solid var(--line);
+    vertical-align: middle;
 }
 
 .env-vars-table tr:hover td {
     background: var(--paper2);
 }
 
-.env-vars-table td input[type="text"] {
+.env-vars-table td input[type="text"],
+.env-vars-table td input[type="password"] {
     width: 100%;
     background: transparent;
     border: none;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 11px;
     color: var(--ink);
     outline: none;
     padding: 6px 4px;
 }
 
-.env-vars-table td input[type="text"]:focus {
+.env-vars-table td input:focus {
     background: var(--green-bg);
     border-radius: 3px;
 }
 
-.env-vars-table td input[type="text"]::placeholder {
+.env-vars-table td input::placeholder {
     color: var(--ink4);
 }
 
-/* Secret toggle */
 .env-secret-btn {
     background: none;
     border: none;
     cursor: pointer;
     color: var(--ink4);
-    font-size: 13px;
-    padding: 3px;
+    font-size: 11px;
+    padding: 4px;
     transition: color .12s;
+    line-height: 1;
 }
 
 .env-secret-btn:hover {
@@ -964,9 +971,10 @@
     border: none;
     cursor: pointer;
     color: var(--ink4);
-    font-size: 13px;
-    padding: 3px;
+    font-size: 11px;
+    padding: 4px;
     transition: color .12s;
+    line-height: 1;
 }
 
 .env-del-btn:hover {
@@ -975,7 +983,7 @@
 
 .env-add-var-btn {
     width: 100%;
-    padding: 9px 12px;
+    padding: 7px 10px;
     border: none;
     border-top: 1px solid var(--line);
     background: transparent;
@@ -987,7 +995,7 @@
     transition: all .15s;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
 }
 
 .env-add-var-btn:hover {
@@ -997,17 +1005,18 @@
 
 /* Env footer */
 .env-manager-footer {
-    padding: 12px 16px;
+    padding: 9px 12px;
     border-top: 1px solid var(--line);
     background: var(--paper2);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     flex-shrink: 0;
 }
 
 .env-footer-note {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink3);
     line-height: 1.4;
 }
@@ -1016,24 +1025,20 @@
     color: var(--ink2);
 }
 
-/* Auto-extracted chip in env */
-.env-auto-chip {
-    font-size: 9px;
-    font-weight: 600;
-    background: var(--green-bg);
-    color: var(--green);
-    border: 1px solid var(--green-mid);
-    padding: 1px 5px;
+.env-footer-note code {
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--paper3);
+    padding: 1px 3px;
     border-radius: 3px;
-    flex-shrink: 0;
-    letter-spacing: .3px;
+    color: var(--green);
 }
 
-/* Env selector button (nav) - enhanced */
+/* Env selector button */
 .env-sel-btn {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     font-family: var(--font);
     font-size: 12px;
     color: var(--ink2);
@@ -1060,25 +1065,192 @@
     flex-shrink: 0;
 }
 
-/* Variable pills in URL/body (inline hint) */
-.var-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-family: var(--mono);
+/* ══════════════════════════════════
+   UNSAVED / DIRTY INDICATOR
+══════════════════════════════════ */
+.unsaved-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--amber);
+    flex-shrink: 0;
+    display: inline-block;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: .6;
+        transform: scale(.85);
+    }
+}
+
+.unsaved-label {
     font-size: 10px;
-    font-weight: 600;
-    background: var(--amber-bg);
     color: var(--amber);
-    border: 1px solid var(--amber-mid);
-    padding: 1px 5px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.save-btn-dirty {
+    border-color: var(--amber) !important;
+    color: var(--amber) !important;
+}
+
+/* ══════════════════════════════════
+   PRE-REQUEST PANEL
+══════════════════════════════════ */
+.prereq-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.prereq-info-bar {
+    padding: 8px 14px;
+    background: var(--green-bg);
+    border-bottom: 1px solid var(--green-mid);
+    font-size: 11px;
+    color: var(--green);
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    flex-shrink: 0;
+    line-height: 1.5;
+}
+
+.prereq-info-bar i {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.prereq-info-bar strong {
+    font-weight: 600;
+}
+
+.prereq-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.prereq-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 90px auto;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+}
+
+.prereq-row.prereq-thead {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.prereq-cell {
+    padding: 5px 8px;
+    font-size: 11px;
+}
+
+.prereq-thead .prereq-cell {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: var(--ink3);
+    border-bottom: 1px solid var(--line);
+    padding: 6px 8px;
+}
+
+.prereq-row:not(.prereq-thead):hover {
+    background: var(--paper2);
+}
+
+.prereq-cell input[type="text"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+    outline: none;
+    padding: 4px 2px;
+}
+
+.prereq-cell input[type="text"]:focus {
+    background: var(--green-bg);
     border-radius: 3px;
 }
 
-.var-pill.resolved {
+.prereq-cell input[type="text"]::placeholder {
+    color: var(--ink4);
+}
+
+.prereq-cell input:disabled {
+    cursor: not-allowed;
+}
+
+.prereq-source-sel {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-family: var(--font);
+    font-size: 10px;
+    color: var(--ink2);
+    outline: none;
+    cursor: pointer;
+    padding: 4px 2px;
+}
+
+.prereq-cell-del {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 6px;
+}
+
+.prereq-del-btn {
+    color: var(--ink4);
+    cursor: pointer;
+    font-size: 12px;
+    transition: color .12s;
+    background: none;
+    border: none;
+    padding: 2px 3px;
+}
+
+.prereq-del-btn:hover {
+    color: var(--red);
+}
+
+.prereq-add-btn {
+    width: 100%;
+    padding: 7px 10px;
+    border: none;
+    border-top: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 11px;
+    color: var(--ink3);
+    text-align: left;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.prereq-add-btn:hover {
     background: var(--green-bg);
     color: var(--green);
-    border-color: var(--green-mid);
 }
 
 /* ══════════════════════════════════

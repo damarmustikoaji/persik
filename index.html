@@ -150,7 +150,8 @@
                         <p>Isi method, URL, headers, dan body lewat form intuitif. Tidak perlu hafal format cURL atau
                             syntax JSON.</p>
                         <div class="feat-demo"><span class="c-green">POST</span> /v1/auth/login<br>Authorization: Bearer
-                            <span class="c-amber">{{token}}</span><br>Content-Type: application/json</div>
+                            <span class="c-amber">{{token}}</span><br>Content-Type: application/json
+                        </div>
                     </div>
                     <div class="feat-cell">
                         <div class="feat-tag">Variable Extraction</div>
@@ -535,17 +536,24 @@
 
                     <!-- Request top bar -->
                     <div class="req-top">
-                        <input class="req-name" id="rname" value="Login User" placeholder="Nama request...">
-                        <div style="display:flex;gap:6px;align-items:center;">
+                        <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
+                            <input class="req-name" id="rname" value="Login User" placeholder="Nama request..."
+                                oninput="markDirty()">
+                            <span class="unsaved-dot" id="unsavedDot" title="Ada perubahan belum disimpan"
+                                style="display:none"></span>
+                            <span class="unsaved-label" id="unsavedLabel" style="display:none">Unsave</span>
+                        </div>
+                        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
                             <span class="req-method-badge" id="reqMethodBadge">POST</span>
-                            <button class="save-btn" onclick="toast('Simpan masuk dulu','ok')">Simpan <i
+                            <button class="save-btn" id="saveBtnMain" onclick="doSaveRequest()">Simpan <i
                                     class="bi bi-lock"></i></button>
                         </div>
                     </div>
 
                     <!-- URL Bar -->
                     <div class="url-row">
-                        <select class="m-sel" id="msel" onchange="updMethod()" style="pointer-events:none;opacity:.7;">
+                        <select class="m-sel" id="msel" onchange="updMethod(true)"
+                            style="pointer-events:none;opacity:.7;">
                             <option value="GET">GET</option>
                             <option value="POST" selected>POST</option>
                             <option value="PUT">PUT</option>
@@ -570,7 +578,7 @@
                             title="Tutup"><i class="bi bi-x"></i></button>
                     </div>
 
-                    <!-- Request Tabs: Params dihapus, tambah Post-Response -->
+                    <!-- Request Tabs -->
                     <div class="tabs-row" id="reqTabsRow">
                         <div class="tab on" onclick="swReqTab(this,'th')">
                             Headers <span class="tab-ct" id="header-count">2</span>
@@ -580,6 +588,9 @@
                         </div>
                         <div class="tab" onclick="swReqTab(this,'ta')">
                             Assertions <span class="tab-ct" id="ass-count">2</span>
+                        </div>
+                        <div class="tab" onclick="swReqTab(this,'tpreq')">
+                            Pre-Request <span class="tab-ct" id="prereq-count" style="display:none">0</span>
                         </div>
                         <div class="tab" onclick="swReqTab(this,'tpr')">
                             Post-Response <span class="tab-ct" id="postres-count" style="display:none">0</span>
@@ -614,8 +625,8 @@
                                 <button class="body-type-btn on" onclick="setBodyType(this,'json')">JSON</button>
                                 <button class="body-type-btn" onclick="setBodyType(this,'none')">None</button>
                             </div>
-                            <textarea class="body-textarea" id="req-body" spellcheck="false" oninput="updateBodyCount()"
-                                placeholder="Request body (JSON)..."></textarea>
+                            <textarea class="body-textarea" id="req-body" spellcheck="false"
+                                oninput="updateBodyCount();markDirty()" placeholder="Request body (JSON)..."></textarea>
                         </div>
 
                         <!-- ASSERTIONS — hanya tampil daftar config, tanpa result pass/fail -->
@@ -660,6 +671,58 @@
                                     </div>
                                 </div>
                                 <div class="ass-list-section" id="ass-list"></div>
+                            </div>
+                        </div>
+
+                        <!-- PRE-REQUEST: set/override variabel sebelum request dikirim -->
+                        <div class="panel" id="tpreq" style="display:none;">
+                            <div class="prereq-panel">
+                                <div class="prereq-info-bar">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                    <span>
+                                        <strong>Pre-Request</strong> — Dijalankan sebelum HIT dikirim. Gunakan untuk
+                                        set/override variabel environment, atau tambahkan kondisi awal. Nilai ditulis di
+                                        sini akan menimpa nilai environment untuk request ini saja.
+                                    </span>
+                                </div>
+                                <!-- Table header -->
+                                <div class="prereq-row prereq-thead">
+                                    <div class="prereq-cell">NAMA VARIABEL</div>
+                                    <div class="prereq-cell">NILAI / EKSPRESI</div>
+                                    <div class="prereq-cell" style="max-width:90px">SUMBER</div>
+                                    <div class="prereq-cell-del"></div>
+                                </div>
+                                <div class="prereq-list" id="prereq-list"></div>
+                                <button class="prereq-add-btn" onclick="addPreReqRow()">
+                                    <i class="bi bi-plus"></i> Tambah variabel / override
+                                </button>
+                                <!-- Quick add -->
+                                <div
+                                    style="padding:12px 14px;background:var(--paper2);border-top:1px solid var(--line);flex-shrink:0;">
+                                    <div
+                                        style="font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">
+                                        Quick set yang umum</div>
+                                    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                                        <button class="ass-chip" onclick="addPreReqRowWithVal('token','','static')">Set
+                                            {{token}} manual</button>
+                                        <button class="ass-chip"
+                                            onclick="addPreReqRowWithVal('baseUrl','https://api.example.com','static')">Override
+                                            baseUrl</button>
+                                        <button class="ass-chip"
+                                            onclick="addPreReqRowWithVal('timestamp','','timestamp')">{{timestamp}} =
+                                            now</button>
+                                        <button class="ass-chip"
+                                            onclick="addPreReqRowWithVal('randomId','','random')">{{randomId}} =
+                                            random</button>
+                                    </div>
+                                    <div
+                                        style="margin-top:10px;padding:8px 10px;background:var(--info-bg);border:1px solid var(--info-mid);border-radius:6px;font-size:11px;color:var(--info);line-height:1.5;">
+                                        <i class="bi bi-lightbulb-fill" style="margin-right:4px"></i>
+                                        <strong>Tip:</strong> Pre-Request berguna untuk: generate timestamp, set auth
+                                        header dinamis, atau override baseUrl per-request tanpa mengubah environment
+                                        global.
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -726,7 +789,6 @@
                             <span class="resp-label">Response</span>
                             <div class="status-wrap">
                                 <span class="s-badge" id="rstat" style="display:none">200 OK</span>
-                                <div class="s-tooltip" id="statTooltip"></div>
                             </div>
                             <span class="resp-meta" id="rtime" style="display:none"></span>
                             <span class="resp-meta" id="rsize" style="display:none"></span>
@@ -956,7 +1018,7 @@
                         <tr>
                             <th style="width:36%">VARIABEL</th>
                             <th style="width:44%">VALUE</th>
-                            <th style="width:32px;text-align:center">🔒</th>
+                            <th style="width:32px;text-align:center"><i class="bi bi-lock"></i></th>
                             <th style="width:32px"></th>
                         </tr>
                     </thead>
@@ -1279,8 +1341,8 @@
                 var row = document.createElement('div');
                 row.className = 'postres-row';
                 row.innerHTML =
-                    '<div class="postres-cell"><input type="text" placeholder="{{namaVariabel}}" value="' + escHtml(ex.varName || '') + '" oninput="postResExtractors[' + i + '].varName=this.value;updatePostResCount()"></div>' +
-                    '<div class="postres-cell"><input type="text" placeholder="Contoh: accessToken atau data.id" value="' + escHtml(ex.path || '') + '" oninput="postResExtractors[' + i + '].path=this.value"></div>' +
+                    '<div class="postres-cell"><input type="text" placeholder="{{namaVariabel}}" value="' + escHtml(ex.varName || '') + '" oninput="postResExtractors[' + i + '].varName=this.value;updatePostResCount();markDirty()"></div>' +
+                    '<div class="postres-cell"><input type="text" placeholder="Contoh: accessToken atau data.id" value="' + escHtml(ex.path || '') + '" oninput="postResExtractors[' + i + '].path=this.value;markDirty()"></div>' +
                     '<div class="postres-cell" style="font-family:var(--mono);font-size:11px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' +
                     (ex.lastValue !== undefined && ex.lastValue !== null
                         ? '<span style="color:var(--green);font-weight:500">' + escHtml(String(ex.lastValue).substring(0, 30)) + '</span>'
@@ -1315,7 +1377,7 @@
         }
 
         function updatePostResCount() {
-            var count = postResExtractors.filter(function (e) { return e.varName && e.path; }).length;
+            var count = postResExtractors.length;
             var ct = document.getElementById('postres-count');
             ct.textContent = count;
             ct.style.display = count ? '' : 'none';
@@ -1417,7 +1479,10 @@
             document.getElementById('rname').value = req.name;
             var msel = document.getElementById('msel');
             msel.value = req.method;
-            updMethod();
+            // updMethod without markDirty
+            var colors = { GET: 'var(--green)', POST: 'var(--blue)', PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)' };
+            msel.style.color = colors[msel.value] || 'var(--ink)';
+            document.getElementById('reqMethodBadge').textContent = msel.value;
             document.getElementById('urlin').value = req.url;
             renderKvTable('headers-body', req.headers);
             updateHeaderCount();
@@ -1428,7 +1493,10 @@
             renderAssertions();
             postResExtractors = (req.postRes || []).map(function (r) { return Object.assign({}, r); });
             renderPostResList();
+            preReqVars = (req.preReq || []).map(function (r) { return Object.assign({}, r); });
+            renderPreReqList();
             resetResponse();
+            clearDirty();
             toast(req.name + ' dimuat', 'ok');
         }
 
@@ -1443,7 +1511,7 @@
             var tr = document.createElement('tr');
             tr.innerHTML =
                 '<td style="text-align:center;width:28px"><input type="checkbox" class="kv-chk"' + (enabled ? ' checked' : '') + '></td>' +
-                '<td><input type="text" placeholder="Key" value="' + escHtml(key || '') + '" oninput="updateHeaderCount()"></td>' +
+                '<td><input type="text" placeholder="Key" value="' + escHtml(key || '') + '" oninput="updateHeaderCount();markDirty()"></td>' +
                 '<td><input type="text" placeholder="Value" value="' + escHtml(value || '') + '"></td>' +
                 '<td><span class="kv-del" onclick="this.closest(\'tr\').remove();updateHeaderCount()"><i class="bi bi-trash3"></i></span></td>';
             return tr;
@@ -1617,8 +1685,6 @@
             stat.textContent = sc + ' ' + stxt;
             var cls = sc >= 200 && sc < 300 ? 's-2xx' : sc >= 300 && sc < 400 ? 's-3xx' : sc >= 400 && sc < 500 ? 's-4xx' : 's-5xx';
             stat.className = 's-badge ' + cls;
-            var tt = document.getElementById('statTooltip');
-            tt.textContent = statusDesc[String(sc)] || sc + ' ' + stxt;
             document.getElementById('rtime').textContent = ms + 'ms';
             document.getElementById('rtime').style.display = '';
             var kb = (new Blob([body]).size / 1024).toFixed(1);
@@ -1674,6 +1740,8 @@
         ════════════════════════════════════════ */
         function doRealSend() {
             if (checkAndShowLimitBanner()) return;
+            // Apply pre-request vars first
+            applyPreReqVars();
             var btn = document.getElementById('sendb');
             var url = injectEnvVars(document.getElementById('urlin').value.trim());
             var method = document.getElementById('msel').value;
@@ -1821,11 +1889,126 @@
         }
 
         /* ── METHOD ── */
-        function updMethod() {
+        function updMethod(fromUser) {
             var s = document.getElementById('msel');
             var colors = { GET: 'var(--green)', POST: 'var(--blue)', PUT: 'var(--amber)', PATCH: 'var(--amber)', DELETE: 'var(--red)' };
             s.style.color = colors[s.value] || 'var(--ink)';
             document.getElementById('reqMethodBadge').textContent = s.value;
+            if (fromUser) markDirty();
+        }
+
+        /* ════════════════════════════════════════
+           UNSAVED / DIRTY INDICATOR
+        ════════════════════════════════════════ */
+        var isDirty = false;
+
+        function markDirty() {
+            if (isDirty) return;
+            isDirty = true;
+            var dot = document.getElementById('unsavedDot');
+            var lbl = document.getElementById('unsavedLabel');
+            var btn = document.getElementById('saveBtnMain');
+            if (dot) dot.style.display = 'inline-block';
+            if (lbl) lbl.style.display = 'inline';
+            if (btn) { btn.classList.add('save-btn-dirty'); btn.innerHTML = 'Simpan <i class="bi bi-circle-fill" style="font-size:6px;color:var(--amber)"></i>'; }
+        }
+
+        function clearDirty() {
+            isDirty = false;
+            var dot = document.getElementById('unsavedDot');
+            var lbl = document.getElementById('unsavedLabel');
+            var btn = document.getElementById('saveBtnMain');
+            if (dot) dot.style.display = 'none';
+            if (lbl) lbl.style.display = 'none';
+            if (btn) { btn.classList.remove('save-btn-dirty'); btn.innerHTML = 'Simpan <i class="bi bi-check-lg"></i>'; }
+        }
+
+        function doSaveRequest() {
+            toast('Simpan masuk dulu', 'ok');
+            // In real app: save to backend. For demo, clear dirty.
+            clearDirty();
+        }
+
+        /* ════════════════════════════════════════
+           PRE-REQUEST
+        ════════════════════════════════════════ */
+        // [{varName, value, source: 'static'|'timestamp'|'random'|'env'}]
+        var preReqVars = [];
+
+        var preReqSourceLabels = {
+            static: 'Nilai tetap',
+            timestamp: 'Timestamp (ms)',
+            random: 'Random UUID',
+            env: 'Dari env'
+        };
+
+        function renderPreReqList() {
+            var list = document.getElementById('prereq-list');
+            if (!list) return;
+            list.innerHTML = '';
+
+            preReqVars.forEach(function (v, i) {
+                var row = document.createElement('div');
+                row.className = 'prereq-row';
+                var sourceOpts = ['static', 'timestamp', 'random', 'env'].map(function (s) {
+                    return '<option value="' + s + '"' + (v.source === s ? ' selected' : '') + '>' + preReqSourceLabels[s] + '</option>';
+                }).join('');
+                var isAuto = v.source === 'timestamp' || v.source === 'random';
+                row.innerHTML =
+                    '<div class="prereq-cell"><input type="text" placeholder="{{variabel}}" value="' + escHtml(v.varName || '') + '" oninput="preReqVars[' + i + '].varName=this.value;updatePreReqCount();markDirty()"></div>' +
+                    '<div class="prereq-cell"><input type="text" placeholder="' + (isAuto ? 'Auto-generated' : 'nilai...') + '" value="' + escHtml(v.value || '') + '"' + (isAuto ? ' disabled style="opacity:.4;cursor:not-allowed"' : '') + ' oninput="preReqVars[' + i + '].value=this.value"></div>' +
+                    '<div class="prereq-cell" style="max-width:90px;padding:4px 6px;">' +
+                    '<select class="prereq-source-sel" onchange="preReqVars[' + i + '].source=this.value;renderPreReqList();updatePreReqCount()">' + sourceOpts + '</select>' +
+                    '</div>' +
+                    '<div class="prereq-cell-del"><button class="prereq-del-btn" onclick="removePreReqRow(' + i + ')"><i class="bi bi-trash3"></i></button></div>';
+                list.appendChild(row);
+            });
+            updatePreReqCount();
+        }
+
+        function addPreReqRow() {
+            preReqVars.push({ varName: '', value: '', source: 'static' });
+            renderPreReqList();
+            markDirty();
+            setTimeout(function () {
+                var inputs = document.querySelectorAll('#prereq-list .prereq-cell input[type="text"]');
+                if (inputs.length) inputs[inputs.length - 2].focus();
+            }, 50);
+        }
+
+        function addPreReqRowWithVal(varName, value, source) {
+            var exists = preReqVars.find(function (v) { return v.varName === varName; });
+            if (exists) { toast('{{' + varName + '}} sudah ada', 'ok'); return; }
+            preReqVars.push({ varName: varName, value: value, source: source || 'static' });
+            renderPreReqList();
+            markDirty();
+            toast('Ditambahkan: {{' + varName + '}}', 'ok');
+        }
+
+        function removePreReqRow(i) {
+            preReqVars.splice(i, 1);
+            renderPreReqList();
+            markDirty();
+        }
+
+        function updatePreReqCount() {
+            var count = preReqVars.filter(function (v) { return v.varName; }).length;
+            var ct = document.getElementById('prereq-count');
+            if (!ct) return;
+            ct.textContent = count;
+            ct.style.display = count ? '' : 'none';
+        }
+
+        // Resolve pre-request vars (called before fetch)
+        function applyPreReqVars() {
+            preReqVars.forEach(function (v) {
+                if (!v.varName) return;
+                var resolved = v.value;
+                if (v.source === 'timestamp') resolved = String(Date.now());
+                else if (v.source === 'random') resolved = 'id_' + Math.random().toString(36).substr(2, 9);
+                // Inject into active env (temporarily overrides for this request)
+                setEnvVar(v.varName, resolved);
+            });
         }
 
         /* ── INIT ── */
